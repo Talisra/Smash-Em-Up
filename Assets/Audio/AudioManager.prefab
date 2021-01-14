@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3080497947549905786
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3080497947549905784}
+  - component: {fileID: 3080497947549905787}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3080497947549905784
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3080497947549905786}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3080497947549905787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3080497947549905786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45ef2078f24897c40aaaa747687f4241, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Smash1
+    clip: {fileID: 8300000, guid: abea15859e4281e4382cf9cf564975c7, type: 3}
+    volume: 0.466
+    pitch: 1.42
+    source: {fileID: 0}
+  - name: Wall_Impact
+    clip: {fileID: 8300000, guid: 79c77b1244f5d0a41b88fb6e2eb44861, type: 3}
+    volume: 0.725
+    pitch: 1.2
+    source: {fileID: 0}
+  - name: Explosion1
+    clip: {fileID: 8300000, guid: ae1b0c0b3e476df43ad52f97562c41c0, type: 3}
+    volume: 0.84
+    pitch: 1.55
+    source: {fileID: 0}
+  - name: Explosion_Evaporate
+    clip: {fileID: 8300000, guid: 33cc3a56f00cd8140820d54acd2169a7, type: 3}
+    volume: 0.371
+    pitch: 0.81
+    source: {fileID: 0}
+  - name: Explosion2
+    clip: {fileID: 8300000, guid: 303870064f342504d9cbf0a4ae242eb1, type: 3}
+    volume: 0.9
+    pitch: 1.45
+    source: {fileID: 0}
+  - name: Tap
+    clip: {fileID: 8300000, guid: b79bb63c0529e60489781f74c3d02947, type: 3}
+    volume: 0.391
+    pitch: 0.78
+    source: {fileID: 0}
+  - name: MetalCollision
+    clip: {fileID: 8300000, guid: 21c3524e0330c744e882341622f05c4a, type: 3}
+    volume: 0.6
+    pitch: 1.29
+    source: {fileID: 0}
+  - name: PlayerDamage
+    clip: {fileID: 8300000, guid: 92ad902eef9eb81408e449eeea1f918f, type: 3}
+    volume: 0.73
+    pitch: 0.78
+    source: {fileID: 0}
+  - name: CuballCharge
+    clip: {fileID: 8300000, guid: 2866a8ff25d0a434aaa946bb57dfae53, type: 3}
+    volume: 0.255
+    pitch: 1.1
+    source: {fileID: 0}
+  - name: CubulletFired
+    clip: {fileID: 8300000, guid: 5543cefa2f8fc9e40bb3b5af6eac40ad, type: 3}
+    volume: 0.43
+    pitch: 1
+    source: {fileID: 0}
+  - name: CubulletDestroy
+    clip: {fileID: 8300000, guid: 303870064f342504d9cbf0a4ae242eb1, type: 3}
+    volume: 0.43
+    pitch: 1.68
+    source: {fileID: 0}
+  - name: BrickBreak
+    clip: {fileID: 8300000, guid: ae1b0c0b3e476df43ad52f97562c41c0, type: 3}
+    volume: 0.43
+    pitch: 0.83
+    source: {fileID: 0}
