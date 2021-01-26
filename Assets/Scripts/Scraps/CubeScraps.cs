@@ -15,7 +15,7 @@ public class CubeScraps : Scraps
 
     private void OnCollisionEnter(Collision collision)
     {
-        FindObjectOfType<AudioManager>().Play("Tap");
+        audioManager.Play("Tap");
     }
 
     void Update()

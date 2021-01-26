@@ -1,14 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Head : MonoBehaviour
 {
+    public GameObject leftH;
+    public GameObject rightH;
 
 
-    private void Start()
+    public void ManageAtkTrail(float delay)
     {
-        //animator = GetComponent<Animator>();
+        leftH.GetComponent<TrailRenderer>().enabled = true;
+        rightH.GetComponent<TrailRenderer>().enabled = true;
+        Invoke("StopAtkTrail", delay);
+    }
+
+    private void StopAtkTrail()
+    {
+        leftH.GetComponent<TrailRenderer>().enabled = false;
+        rightH.GetComponent<TrailRenderer>().enabled = false;
     }
 
 }

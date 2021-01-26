@@ -16,7 +16,7 @@ public class RedBallScrap : Scraps
 
     private void Explode()
     {
-        FindObjectOfType<AudioManager>().Play("Explosion_Evaporate");
+        audioManager.Play("Explosion_Evaporate");
         GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity) as GameObject;
         Destroy(explosion, explosion.GetComponent<ParticleSystem>().main.duration);
         Destroy(gameObject);

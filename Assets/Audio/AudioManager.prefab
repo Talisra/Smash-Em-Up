@@ -104,3 +104,58 @@ MonoBehaviour:
     volume: 0.43
     pitch: 0.83
     source: {fileID: 0}
+  - name: SuperSmash
+    clip: {fileID: 8300000, guid: 9b3300c0e39988c4f9fafe8392789776, type: 3}
+    volume: 0.734
+    pitch: 0.83
+    source: {fileID: 0}
+  - name: PlayerExplosion
+    clip: {fileID: 8300000, guid: ae1b0c0b3e476df43ad52f97562c41c0, type: 3}
+    volume: 1
+    pitch: 0.73
+    source: {fileID: 0}
+  - name: SmallExplosion
+    clip: {fileID: 8300000, guid: 303870064f342504d9cbf0a4ae242eb1, type: 3}
+    volume: 0.828
+    pitch: 1.36
+    source: {fileID: 0}
+  - name: BigShatter
+    clip: {fileID: 8300000, guid: a05a54ad25e8e2446a2a9c4146b180c9, type: 3}
+    volume: 0.097
+    pitch: 1.31
+    source: {fileID: 0}
+  - name: TinyShatter
+    clip: {fileID: 8300000, guid: 168d11b7cddfa4949a6f10586312055b, type: 3}
+    volume: 0.419
+    pitch: 0.81
+    source: {fileID: 0}
+  - name: Spark1
+    clip: {fileID: 8300000, guid: 45f890f64f889e142bbed70345896d77, type: 3}
+    volume: 0.245
+    pitch: 0.7
+    source: {fileID: 0}
+  - name: Spark2
+    clip: {fileID: 8300000, guid: 3487d7246cccafe4384c107c33068053, type: 3}
+    volume: 0.58
+    pitch: 0.59
+    source: {fileID: 0}
+  - name: Hit1
+    clip: {fileID: 8300000, guid: a845e29f59a72574e83b83a1dc171aff, type: 3}
+    volume: 0.312
+    pitch: 0.93
+    source: {fileID: 0}
+  - name: Hit2
+    clip: {fileID: 8300000, guid: 70d1abbd34b91f4489492914943ed011, type: 3}
+    volume: 0.606
+    pitch: 0.76
+    source: {fileID: 0}
+  - name: Spark_Dead
+    clip: {fileID: 8300000, guid: f9db8598f7bb5c7448ef99b299c7fbe3, type: 3}
+    volume: 0.391
+    pitch: 1
+    source: {fileID: 0}
+  - name: Laser
+    clip: {fileID: 8300000, guid: 135f8c24f8574b84d8a32a79fc181f05, type: 3}
+    volume: 0.606
+    pitch: 0.76
+    source: {fileID: 0}

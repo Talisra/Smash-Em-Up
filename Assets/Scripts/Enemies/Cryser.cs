@@ -1,0 +1,64 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Cryser : Enemy
+{
+    public GameObject windupAnimationPrefab;
+
+    public GameObject rightLaser;
+    public GameObject leftLaser;
+
+    public string chargeAudio;
+    public string fireAudio;
+
+    private float fireTime = 0.8f;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        StartCoroutine(Behavior());
+    }
+
+    IEnumerator Behavior()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(2);
+            ChargeLaser();
+            yield return new WaitForSeconds(5.3f);
+        }
+    }
+
+    public void ChargeLaser()
+    {
+        audioManager.Play(chargeAudio);
+        GameObject windup = Instantiate(
+            windupAnimationPrefab, transform.position, Quaternion.identity) as GameObject;
+        windup.transform.SetParent(this.transform);
+        ParticleSystem windupParticle = windup.GetComponent<ParticleSystem>();
+        //float delay = windupParticle.main.simulationSpeed * windupParticle.main.duration;
+        Destroy(windup, 2.0f);
+        Invoke("StartFire", 1.5f);
+    }
+
+    public void StartFire()
+    {
+        audioManager.Play(fireAudio);
+        rightLaser.SetActive(true);
+        leftLaser.SetActive(true);
+        Invoke("StopFire", fireTime);
+    }
+
+    public void StopFire()
+    {
+        rightLaser.SetActive(false);
+        leftLaser.SetActive(false);
+    }
+
+    // Update is called once per frame
+    protected override void Update()
+    {
+        base.Update();
+    }
+}

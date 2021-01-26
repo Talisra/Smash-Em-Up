@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class Scraps : MonoBehaviour
 {
+    protected AudioManager audioManager;
+
     public int minAmount;
     public int MaxAmount;
 
@@ -21,14 +23,8 @@ public abstract class Scraps : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        audioManager = FindObjectOfType<AudioManager>();
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public Player player;
     public GameObject LeftWall;
     public GameObject RightWall;
     public GameObject Floor;
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        player = FindObjectOfType<Player>();
         GameArea = new List<float>();
         CalculateGameArea();
         Cursor.visible = false;
@@ -52,6 +54,16 @@ public class GameManager : MonoBehaviour
     public void AddScore(int addedScore)
     {
         score += addedScore;
+        CheckScore();
+    }
+
+    public void CheckScore()
+    {
+        if (score > 5)
+        {
+            player.AddPowerUp(1);
+            score = 0;
+        }
     }
 
     public void EndGame()

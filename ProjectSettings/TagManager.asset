@@ -12,6 +12,8 @@ TagManager:
   - FxTemporaire
   - Floor
   - Bullet
+  - Scrap
+  - Hazard
   layers:
   - Default
   - TransparentFX

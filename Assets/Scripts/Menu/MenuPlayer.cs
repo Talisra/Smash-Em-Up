@@ -29,7 +29,7 @@ public class MenuPlayer : MonoBehaviour
     public void SmashMenuObject()
     {
         isBusy = true;
-        animator.Play("RegularAtkLeft");
+        animator.Play("AtkLeft");
         FindObjectOfType<AudioManager>().Play("Smash1");
         GameObject particle = Instantiate(
             smashAnimPrefab, 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RegularSpawner : MonoBehaviour
 {
-    public GameObject enemyPrefab;
+    public List<GameObject> enemyPrefabs;
     public GameObject CeilingDoor;
     public int spawnDelay = 5;
     public int spawnCounter = 30000;
@@ -31,7 +31,8 @@ public class RegularSpawner : MonoBehaviour
             yield return new WaitForSeconds(spawnDelay);
             OpenDoors();
             Vector3 spawnPos = new Vector3(0, transform.position.y, 0);
-            GameObject enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity) as GameObject;
+            GameObject enemy = Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Count)]
+                , spawnPos, Quaternion.identity) as GameObject;
             enemy.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-400,400), -500, 0));
             yield return new WaitForSeconds(1.11f);
             CloseDoors();

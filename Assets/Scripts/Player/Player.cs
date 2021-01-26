@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public GameObject head;
+    public Head head;
     public GameObject body;
     public GameObject bottom;
+    public GameObject animationAnchor;
 
     private Animator animator;
     private Rigidbody rb;
+    private AudioManager audioManager;
 
     public GameObject smashAnimPrefab;
 
@@ -49,17 +51,23 @@ public class Player : MonoBehaviour
     private float rotationCoefficient = 2.5f;
 
     // Attack
-    private bool canAttack = true;
-    private float attackDelay = 0.4f;
-    private float delay = 0;
+    public int maxPowerUps;
     public float power = 15f;
     public float basePower = 25f;
+    private int currentPowerUps = 5;
+    //private float specialModifier = 7000;
+    private bool canAttack = true;
+    private bool isAttackingSpecial = false;
+    private float attackDelay = 0.4f;
+    private float delay = 0;
+
 
     void Start()
     {
+        audioManager = FindObjectOfType<AudioManager>();
+        animator = animationAnchor.GetComponent<Animator>();
         currentHP = maxHP;
         rb = GetComponent<Rigidbody>();
-        animator = GetComponent<Animator>();
     }
 
     
@@ -71,9 +79,12 @@ public class Player : MonoBehaviour
         {
             // Hitting an enemy will add force to the enemy, depends on deltaX.
             // The higher deltaX, more force added.
-            if (collision.gameObject.tag == "Enemy" && canAttack == true)
+            if (collision.gameObject.tag == "Enemy")
             {
-                Smash(collision.gameObject);
+                if (isAttackingSpecial && canAttack)
+                    SpecialSmash(collision.gameObject);
+                else if (canAttack)
+                    Smash(collision.gameObject);
             }
             // Bullet that hitting the Head will do no damage
             else if(collision.gameObject.tag == "Bullet")
@@ -101,7 +112,17 @@ public class Player : MonoBehaviour
             FindObjectOfType<AudioManager>().Play("MetalCollision");
         }
     }
-    
+
+    public void AddPowerUp(int amount)
+    {
+        currentPowerUps += amount;
+    }
+
+    public int GetCurrentPowerUps()
+    {
+        return currentPowerUps;
+    }
+
     public Transform GetWeakPointTop()
     {
         return WeakPointTop;
@@ -145,6 +166,7 @@ public class Player : MonoBehaviour
     }
     private void CreateBigExplosion()
     {
+        CameraShake.Shake(0.7f, 1.2f);
         FindObjectOfType<AudioManager>().Play("PlayerExplosion");
         GameObject bigExp = Instantiate(
             explosionPrefabBig, transform.position, Quaternion.identity) as GameObject;
@@ -172,6 +194,7 @@ public class Player : MonoBehaviour
 
     private void CreateTinyExplosion()
     {
+        CameraShake.Shake(0.2f, 0.35f);
         FindObjectOfType<AudioManager>().Play("SmallExplosion");
         GameObject smallExp = Instantiate(
                 explosionPrefabSmall, 
@@ -183,18 +206,62 @@ public class Player : MonoBehaviour
         Destroy(smallExp, smallExp.GetComponent<ParticleSystem>().main.duration);
     }
 
-    public void Smash(GameObject enemy)
+    public void SpecialAttack()
     {
-        FindObjectOfType<AudioManager>().Play("Smash1");
+        currentPowerUps--; //use powerup
+        isInvul = true;
+        isAttackingSpecial = true;
+        if (deltaX < 0)
+            animator.Play("SpAtkRight");
+        else
+            animator.Play("SpAtkLeft");
+        head.ManageAtkTrail(0.25f);
+        Invoke("EndSpecialAttack", 0.25f);
+    }
+    public void EndSpecialAttack()
+    {
+        isAttackingSpecial = false;
+    }
+
+    // basic function of smashing an enemy
+    private void SmashActions(GameObject enemy)
+    {
+        Enemy target = enemy.GetComponent<Enemy>();
+        target.ResetComboChain();
+        target.HitByPlayer();
         canAttack = false;
+    }
+
+    public void SpecialSmash(GameObject enemy)
+    {
+        SmashActions(enemy);
+        CameraShake.Shake(0.25f, 0.3f);
+        audioManager.Play("SuperSmash");
+        // calculate the distance to know if animation is from left or right
+        Vector3 enemyPos = enemy.transform.position;
+        Vector3 playerPos = transform.position;
+        float enemyDirection = -playerPos.x * enemyPos.y + playerPos.y * enemyPos.x; // negative = left, positive = right
+        ShowSmashParticle(enemy.transform);
+        Rigidbody rbenemy = enemy.GetComponent<Rigidbody>();
+        Vector3 PowerVector = new Vector3(
+            Mathf.Sign(enemyDirection) * 7000,
+            0, 0);
+        rbenemy.AddForce(PowerVector);
+    }
+
+    public void Smash(GameObject enemy) 
+    {
+        SmashActions(enemy);
+        CameraShake.Shake(0.1f, 0.2f);
+        audioManager.Play("Smash1");
         // calculate the distance to know if animation is from left or right
         Vector3 enemyPos = enemy.transform.position;
         Vector3 playerPos = transform.position;
         float enemyDirection = -playerPos.x * enemyPos.y + playerPos.y * enemyPos.x; // negative = left, positive = right
         if (enemyDirection > 0) // play the right attack animation
-            animator.Play("RegularAtkRight");
+            animator.Play("AtkRight");
         else if (enemyDirection < 0)
-            animator.Play("RegularAtkLeft");
+            animator.Play("AtkLeft");
         ShowSmashParticle(enemy.transform);
         Rigidbody rbenemy = enemy.GetComponent<Rigidbody>();
         Vector3 PowerVector = new Vector3(
@@ -214,6 +281,9 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetMouseButtonDown(1))
+            if (currentPowerUps > 0)
+                SpecialAttack();
         mousePosition = Input.mousePosition;
         mousePosition = Camera.main.ScreenToWorldPoint(
             new Vector3(mousePosition.x, mousePosition.y, -Camera.main.transform.position.z));

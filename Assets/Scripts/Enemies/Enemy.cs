@@ -5,18 +5,20 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
+    protected AudioManager audioManager;
     // Combat
     public GameObject bullet;
     public GameObject player;
 
+    private ComboManager comboManager;
+
     // Graphics
     public GameObject body;
     public Texture normalTex;
+    public Texture flashTex;
     protected Renderer rend;
     protected Rigidbody rb;
     protected TrailRenderer tr;
-    protected Texture flashTex;
-
     protected Vector3 targetLocation;
 
     //Stats
@@ -26,8 +28,17 @@ public abstract class Enemy : MonoBehaviour
     public float flashTime = 4;
     protected float flashCounter = 0;
     protected bool isFlashing = false;
-
     protected bool isAlive = true;
+
+    //Combos
+    private bool inCombo = false;
+    private float comboCounter = 0;
+    private float comboDelay = 2f;
+
+    // Audio
+    public string afterEffectAudio;
+    public string explodeAudio;
+    public string hitAudio;
 
     // Destruction
     public List<GameObject> scraps;
@@ -36,6 +47,7 @@ public abstract class Enemy : MonoBehaviour
     private int[] numOfScraps; // visual: the number of small pieces the enemy will spawn when it dies
     void Awake()
     {
+        audioManager = FindObjectOfType<AudioManager>();
         targetLocation = new Vector3(0, 8, 0);
         curHealth = maxHealth;
         numOfScraps = new int[scraps.Count];
@@ -44,6 +56,7 @@ public abstract class Enemy : MonoBehaviour
             Scraps temp = scraps[i].GetComponent<Scraps>();
             numOfScraps[i] = temp.GenerateAmount();
         }
+        comboManager = FindObjectOfType<ComboManager>();
         rend = body.GetComponent<Renderer>();
         rb = GetComponent<Rigidbody>();
         tr = GetComponent<TrailRenderer>();
@@ -68,9 +81,25 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
+    public void ResetComboChain()
+    {
+        comboCounter = 0;
+        inCombo = true;
+    }
+
+    public void HitByPlayer()
+    {
+        audioManager.Play(hitAudio);
+    }
+
     void Damage()
     {
-        FindObjectOfType<ComboManager>().AddCombo();
+        if (inCombo)
+        {
+            ResetComboChain();
+            comboManager.AddCombo();
+        }
+        audioManager.Play(hitAudio);
         curHealth--;
         Flash();
         if (curHealth <= 0)
@@ -91,8 +120,10 @@ public abstract class Enemy : MonoBehaviour
     // Create an explosion prefab and scraps.
     void Explode()
     {
-        FindObjectOfType<AudioManager>().Play("Explosion1");
-        //FindObjectOfType<AudioManager>().Play("Explosion2");
+        CameraShake.Shake(0.3f, 0.4f);
+        audioManager.Play(explodeAudio);
+        if (afterEffectAudio != null)
+            audioManager.Play(afterEffectAudio);
         // creates small scraps
         GameObject explosion = Instantiate(explosionPrefab, transform.position, transform.rotation) as GameObject;
         ParticleSystem parts = explosion.GetComponent<ParticleSystem>();
@@ -131,6 +162,15 @@ public abstract class Enemy : MonoBehaviour
                 rend.material.SetTexture("_MainTex", normalTex);
                 isFlashing = false;
                 flashCounter = 0;
+            }
+        }
+        if (inCombo)
+        {
+            comboCounter += Time.deltaTime;
+            if (comboCounter >= comboDelay)
+            {
+                inCombo = false;
+                comboCounter = 0;
             }
         }
     }
