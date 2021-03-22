@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Scraps : MonoBehaviour
+public abstract class Scraps : MonoBehaviour, IPoolableObject
 {
     protected AudioManager audioManager;
 
@@ -17,14 +17,20 @@ public abstract class Scraps : MonoBehaviour
         return Random.Range(minAmount, MaxAmount);
     }
 
-    public float GenerateSize()
+    public virtual Vector3 GenerateSize()
     {
-        return Random.Range(minSize, maxSize);
+        float size = Random.Range(minSize, maxSize);
+        return new Vector3(size, size, size);
     }
 
     // Start is called before the first frame update
     void Awake()
     {
         audioManager = FindObjectOfType<AudioManager>();
+    }
+
+    public virtual void BackToPool()
+    {
+        ScrapsPooler.Instance.ReturnToPool(gameObject);
     }
 }

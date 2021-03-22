@@ -15,7 +15,7 @@ public class CubeScraps : Scraps
 
     private void OnCollisionEnter(Collision collision)
     {
-        audioManager.Play("Tap");
+        audioManager.Play("ScrapMetalHit");
     }
 
     void Update()
@@ -33,6 +33,6 @@ public class CubeScraps : Scraps
 
     void Dismiss()
     {
-        Destroy(gameObject);
+        BackToPool();
     }
 }

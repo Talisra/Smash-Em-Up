@@ -7,19 +7,21 @@ public class RedBallScrap : Scraps
     private float radialSpeed = 0f;
     private float accel = 1f;
 
-    private void Start()
+    private void OnEnable()
     {
-        float exploDelay = Random.Range(1f, 2f);
+        float exploDelay = Random.Range(0.5f, 1.5f);
         Invoke("Explode", exploDelay);
-        Destroy(gameObject, exploDelay);
     }
 
     private void Explode()
     {
-        audioManager.Play("Explosion_Evaporate");
-        GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity) as GameObject;
-        Destroy(explosion, explosion.GetComponent<ParticleSystem>().main.duration);
-        Destroy(gameObject);
+        if (isActiveAndEnabled)
+        {
+            audioManager.Play("Explosion_Evaporate");
+            GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity) as GameObject;
+            Destroy(explosion, explosion.GetComponent<ParticleSystem>().main.duration);
+            BackToPool();
+        }
     }
 
     // Update is called once per frame

@@ -23,6 +23,13 @@ public class Player : MonoBehaviour
     private int numOfExps = 9;
     private int numOfScraps = 20;
 
+    // Sqash
+    private Vector3 squashScaleVector = new Vector3(2, 0.15f, 1.1f);
+    private float squashTime = 1.5f;
+    private float squashCounter = 0;
+    private bool collidingFloor = false;
+    private bool collidingBox = false;
+    private bool isSquashed = false;
 
     // the enemies will target these points to do damage
     // top and bottom points depend on the y axis
@@ -36,7 +43,7 @@ public class Player : MonoBehaviour
 
     // After taking damage, gain Invulnerability for some time
     private float invTime = 0.5f;
-    private float invDelay = 0;
+    private float invCounter = 0;
     private bool isInvul = false;
 
 
@@ -106,10 +113,47 @@ public class Player : MonoBehaviour
                 collision.gameObject.GetComponent<BasicBullet>().Explode();
             }
         }
-        // Any collision of unpassable objects
+        // Any collision of unpassable objects, play a sound
         if (collision.gameObject.tag == "Unpassable")
         {
-            FindObjectOfType<AudioManager>().Play("MetalCollision");
+            audioManager.Play("MetalCollision");
+        }
+
+        // Toggle ON floor/box collision
+        if (collision.gameObject.tag == "Floor")
+            collidingFloor = true;
+        else if (collision.gameObject.tag == "EnemyBox")
+            collidingBox = true;
+
+        // Squash
+        if(collidingFloor && collidingBox)
+        {
+            // prevents a bug where some other GO are counted as the other collider
+            if (collision.gameObject.tag == "EnemyBox")
+            {
+                collision.gameObject.GetComponent<Rigidbody>().AddForce(
+                    new Vector3(
+                        collision.gameObject.transform.position.x - transform.position.x,
+                        //collision.gameObject.transform.position.y - transform.position.y,
+                        5,
+                        0),
+                        ForceMode.VelocityChange);
+                Squash();
+            }
+
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        // Toggle OFF floor/box collision
+        if (collision.gameObject.tag == "Floor")
+        {
+            collidingFloor = false;
+        }
+        else if (collision.gameObject.tag == "EnemyBox")
+        {
+            collidingBox = false;
         }
     }
 
@@ -142,6 +186,20 @@ public class Player : MonoBehaviour
     {
         return currentHP;
     }
+
+    public void Squash()
+    {
+        if (!isSquashed)
+        {
+            isSquashed = true;
+            TakeDamage();
+            MoveSpeed = 0.9f;
+            transform.localScale = squashScaleVector;
+        }
+
+    }
+
+
     public void TakeDamage()
     {
         if (!isInvul)
@@ -173,7 +231,8 @@ public class Player : MonoBehaviour
         Destroy(bigExp, bigExp.GetComponent<ParticleSystem>().main.duration);
         for (int j = 0; j < numOfScraps; j++)
         {
-            GameObject createdScrap = Instantiate(scrapPrefab1, transform.position, Quaternion.identity) as GameObject;
+            GameObject createdScrap = 
+                ScrapsPooler.Instance.Get(scrapPrefab1.name, transform.position, Quaternion.identity) as GameObject;
             // each scrap has random size and rotation
             float size = Random.Range(0.1f, 0.5f);
             createdScrap.transform.localScale = new Vector3(size, size, size);
@@ -182,7 +241,8 @@ public class Player : MonoBehaviour
         }
         for (int j = 0; j < numOfScraps; j++)
         {
-            GameObject createdScrap = Instantiate(scrapPrefab2, transform.position, Quaternion.identity) as GameObject;
+            GameObject createdScrap = 
+                ScrapsPooler.Instance.Get(scrapPrefab2.name, transform.position, Quaternion.identity) as GameObject;
             // each scrap has random size and rotation
             float size = Random.Range(0.1f, 0.5f);
             createdScrap.transform.localScale = new Vector3(size, size, size);
@@ -215,7 +275,7 @@ public class Player : MonoBehaviour
             animator.Play("SpAtkRight");
         else
             animator.Play("SpAtkLeft");
-        head.ManageAtkTrail(0.25f);
+        head.ManageAttack(0.25f);
         Invoke("EndSpecialAttack", 0.25f);
     }
     public void EndSpecialAttack()
@@ -281,9 +341,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
-            if (currentPowerUps > 0)
-                SpecialAttack();
+        // Movement
         mousePosition = Input.mousePosition;
         mousePosition = Camera.main.ScreenToWorldPoint(
             new Vector3(mousePosition.x, mousePosition.y, -Camera.main.transform.position.z));
@@ -294,25 +352,54 @@ public class Player : MonoBehaviour
         Quaternion rotationTarget = Quaternion.Euler(0, 0, deltaX * rotationCoefficient);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotationTarget, Time.deltaTime * 5f);
 
-        //handle attack speed
-        if (canAttack == false)
+        if (!isSquashed)
         {
-            delay += Time.deltaTime;
-            if (delay >= attackDelay)
+            // Special attack
+            if (Input.GetMouseButtonDown(1))
+                if (currentPowerUps > 0)
+                    SpecialAttack();
+           
+            //handle attack speed
+            if (canAttack == false)
             {
-                delay = 0;
-                canAttack = true;
+                delay += Time.deltaTime;
+                if (delay >= attackDelay)
+                {
+                    delay = 0;
+                    canAttack = true;
+                }
             }
         }
 
         //handle Invulnerability
         if (isInvul)
         {
-            invDelay += Time.deltaTime;
-            if (invDelay >= invTime)
+            invCounter += Time.deltaTime;
+            if (invCounter >= invTime)
             {
                 isInvul = false;
-                invDelay = 0;
+                invCounter = 0;
+            }
+
+        }
+        //handle Squash
+        if (isSquashed)
+        {
+            MoveSpeed -= Time.deltaTime/5;
+            squashCounter += Time.deltaTime;
+
+            //squashScaleVector is Vector3(2, 0.15f, 1.1f);
+            transform.localScale += new Vector3(
+                    -(squashScaleVector.x - 1)/ squashTime * Time.deltaTime,
+                    (1 - squashScaleVector.y)/ squashTime * Time.deltaTime,
+                    (squashScaleVector.z - 1)/ squashTime * Time.deltaTime
+                );
+            if (squashCounter >= squashTime)
+            {
+                isSquashed = false;
+                squashCounter = 0;
+                MoveSpeed = 0.1f;
+                transform.localScale = new Vector3(1, 1, 1);
             }
 
         }

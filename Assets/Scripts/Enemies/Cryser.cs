@@ -20,7 +20,7 @@ public class Cryser : Enemy
         StartCoroutine(Behavior());
     }
 
-    IEnumerator Behavior()
+    protected override IEnumerator Behavior()
     {
         while (true)
         {
@@ -54,6 +54,11 @@ public class Cryser : Enemy
     {
         rightLaser.SetActive(false);
         leftLaser.SetActive(false);
+    }
+
+    public override void BackToPool()
+    {
+        CryserPool.Instance.ReturnToPool(this);
     }
 
     // Update is called once per frame

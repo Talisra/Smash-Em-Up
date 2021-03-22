@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 4769872432637989941}
   - component: {fileID: 5568951326135358986}
   - component: {fileID: 8119005327941698312}
-  m_Layer: 0
+  - component: {fileID: 1650854114947467462}
+  m_Layer: 12
   m_Name: Edge (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,6 +96,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1650854114947467462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823550017855525222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5aba5590c6b6045bed5ccb26fbfad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &824752703760337054
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,7 +120,8 @@ GameObject:
   - component: {fileID: 7251074475624165539}
   - component: {fileID: 5387520614841458735}
   - component: {fileID: 1158856651469099189}
-  m_Layer: 0
+  - component: {fileID: 8832472388146798843}
+  m_Layer: 12
   m_Name: Edge (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,6 +204,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8832472388146798843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 824752703760337054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5aba5590c6b6045bed5ccb26fbfad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1634765968791742940
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,7 +225,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2878491873278920856}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Support
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -241,7 +267,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4434854807938337395}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -280,7 +306,8 @@ GameObject:
   - component: {fileID: 2418395334830761535}
   - component: {fileID: 582248028566257031}
   - component: {fileID: 2189235607326345858}
-  m_Layer: 0
+  - component: {fileID: 4925881808527742937}
+  m_Layer: 12
   m_Name: Edge (8) top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -363,6 +390,130 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4925881808527742937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2178454176789272214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5aba5590c6b6045bed5ccb26fbfad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &2393725349422150727
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6227855295319770250}
+  - component: {fileID: 2201969798368259527}
+  - component: {fileID: 5619978820676634519}
+  - component: {fileID: 5368128172934246012}
+  - component: {fileID: 6629407598631630597}
+  m_Layer: 12
+  m_Name: ExplosionKernel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &6227855295319770250
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2393725349422150727}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.60479, y: 1.60479, z: 1.60479}
+  m_Children: []
+  m_Father: {fileID: 103513451436580023}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &2201969798368259527
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2393725349422150727}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &5619978820676634519
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2393725349422150727}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!135 &5368128172934246012
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2393725349422150727}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &6629407598631630597
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2393725349422150727}
+  serializedVersion: 2
+  m_Mass: 5000
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2777380058521691050
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,9 +525,9 @@ GameObject:
   - component: {fileID: 103513451436580023}
   - component: {fileID: 428358035897121670}
   - component: {fileID: 3892413497911291187}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: SpawnBox
-  m_TagString: Untagged
+  m_TagString: EnemyBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -390,10 +541,11 @@ Transform:
   m_GameObject: {fileID: 2777380058521691050}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 4434854807938337395}
   - {fileID: 2878491873278920856}
+  - {fileID: 6227855295319770250}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -405,7 +557,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2777380058521691050}
   serializedVersion: 2
-  m_Mass: 20
+  m_Mass: 5000
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -422,10 +574,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2777380058521691050}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a299a5d3e09e3124d90edfd0505dc4a4, type: 3}
+  m_Script: {fileID: 11500000, guid: 50ef96572f0f6ec46895364115ff2ddb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies: []
+  kernel: {fileID: 2393725349422150727}
+  box: {fileID: 2111260938304453282}
+  supports: {fileID: 1634765968791742940}
 --- !u!1 &3048357516630580260
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,7 +592,8 @@ GameObject:
   - component: {fileID: 573183505070096122}
   - component: {fileID: 4300804469459072395}
   - component: {fileID: 9191489756188683545}
-  m_Layer: 0
+  - component: {fileID: 8770240444397037698}
+  m_Layer: 12
   m_Name: Edge (6) top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -521,6 +676,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8770240444397037698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3048357516630580260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5aba5590c6b6045bed5ccb26fbfad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3514526092828758777
 GameObject:
   m_ObjectHideFlags: 0
@@ -533,7 +700,8 @@ GameObject:
   - component: {fileID: 9015542319361443641}
   - component: {fileID: 4812364342381114318}
   - component: {fileID: 5040531770782070008}
-  m_Layer: 0
+  - component: {fileID: 2132465593715028573}
+  m_Layer: 12
   m_Name: Edge (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -616,6 +784,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2132465593715028573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3514526092828758777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5aba5590c6b6045bed5ccb26fbfad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4044434380595399690
 GameObject:
   m_ObjectHideFlags: 0
@@ -628,7 +808,8 @@ GameObject:
   - component: {fileID: 4731909239422057986}
   - component: {fileID: 3583549143236874754}
   - component: {fileID: 867873995543442081}
-  m_Layer: 0
+  - component: {fileID: 124478089475335978}
+  m_Layer: 12
   m_Name: Plate (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -711,6 +892,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &124478089475335978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4044434380595399690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5aba5590c6b6045bed5ccb26fbfad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4832845765253651251
 GameObject:
   m_ObjectHideFlags: 0
@@ -723,7 +916,8 @@ GameObject:
   - component: {fileID: 7645981469089291665}
   - component: {fileID: 7229801567726470243}
   - component: {fileID: 3861055162578259904}
-  m_Layer: 0
+  - component: {fileID: 598815907363182801}
+  m_Layer: 12
   m_Name: Edge (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -806,6 +1000,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &598815907363182801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4832845765253651251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5aba5590c6b6045bed5ccb26fbfad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4866328461900168899
 GameObject:
   m_ObjectHideFlags: 0
@@ -818,7 +1024,8 @@ GameObject:
   - component: {fileID: 3499120654788192198}
   - component: {fileID: 927582522725837131}
   - component: {fileID: 348903540044961120}
-  m_Layer: 0
+  - component: {fileID: 9104236625644418035}
+  m_Layer: 12
   m_Name: Plate (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -901,6 +1108,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &9104236625644418035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4866328461900168899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5aba5590c6b6045bed5ccb26fbfad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5222310450655740344
 GameObject:
   m_ObjectHideFlags: 0
@@ -913,7 +1132,8 @@ GameObject:
   - component: {fileID: 7106190151357490976}
   - component: {fileID: 3947484567087701297}
   - component: {fileID: 109723952703538605}
-  m_Layer: 0
+  - component: {fileID: 3859602077579278393}
+  m_Layer: 12
   m_Name: Edge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -996,6 +1216,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3859602077579278393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5222310450655740344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5aba5590c6b6045bed5ccb26fbfad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5268550645074162305
 GameObject:
   m_ObjectHideFlags: 0
@@ -1008,7 +1240,8 @@ GameObject:
   - component: {fileID: 8491935647860704954}
   - component: {fileID: 3463672153361646413}
   - component: {fileID: 7042689168195695079}
-  m_Layer: 0
+  - component: {fileID: 6328412932982410750}
+  m_Layer: 12
   m_Name: Plate (4) surface
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1091,6 +1324,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6328412932982410750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5268550645074162305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5aba5590c6b6045bed5ccb26fbfad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5947135993609933393
 GameObject:
   m_ObjectHideFlags: 0
@@ -1103,7 +1348,8 @@ GameObject:
   - component: {fileID: 3233204638777074797}
   - component: {fileID: 7444216863393098414}
   - component: {fileID: 1490709264659107418}
-  m_Layer: 0
+  - component: {fileID: 8140871405034143168}
+  m_Layer: 12
   m_Name: Edge (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1186,6 +1432,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8140871405034143168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5947135993609933393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5aba5590c6b6045bed5ccb26fbfad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5987746779417321172
 GameObject:
   m_ObjectHideFlags: 0
@@ -1198,7 +1456,8 @@ GameObject:
   - component: {fileID: 1392893660021817319}
   - component: {fileID: 8145407978089543990}
   - component: {fileID: 7755330989348729765}
-  m_Layer: 0
+  - component: {fileID: 423841878023887168}
+  m_Layer: 12
   m_Name: Plate (5) top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1281,6 +1540,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &423841878023887168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5987746779417321172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5aba5590c6b6045bed5ccb26fbfad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6157719462187253174
 GameObject:
   m_ObjectHideFlags: 0
@@ -1293,7 +1564,8 @@ GameObject:
   - component: {fileID: 4456040342620688532}
   - component: {fileID: 6520357004804008255}
   - component: {fileID: 5586889652911952988}
-  m_Layer: 0
+  - component: {fileID: 6632947518704502560}
+  m_Layer: 12
   m_Name: Edge (5) top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1376,6 +1648,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6632947518704502560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6157719462187253174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5aba5590c6b6045bed5ccb26fbfad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6729694510746193921
 GameObject:
   m_ObjectHideFlags: 0
@@ -1388,7 +1672,8 @@ GameObject:
   - component: {fileID: 6840598033993269295}
   - component: {fileID: 5141990380998645642}
   - component: {fileID: 4241882783305152614}
-  m_Layer: 0
+  - component: {fileID: 9076475012574000356}
+  m_Layer: 12
   m_Name: Plate (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1471,6 +1756,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &9076475012574000356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6729694510746193921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5aba5590c6b6045bed5ccb26fbfad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7858912346176989915
 GameObject:
   m_ObjectHideFlags: 0
@@ -1483,7 +1780,8 @@ GameObject:
   - component: {fileID: 5191451987762568379}
   - component: {fileID: 5127081889974874622}
   - component: {fileID: 1703693829648013897}
-  m_Layer: 0
+  - component: {fileID: 7864999557109306684}
+  m_Layer: 12
   m_Name: Edge (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1566,6 +1864,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7864999557109306684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7858912346176989915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5aba5590c6b6045bed5ccb26fbfad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8073224453060438626
 GameObject:
   m_ObjectHideFlags: 0
@@ -1578,7 +1888,8 @@ GameObject:
   - component: {fileID: 8032538941726228780}
   - component: {fileID: 2144498098272731207}
   - component: {fileID: 3219092327014759218}
-  m_Layer: 0
+  - component: {fileID: 2640466356359338037}
+  m_Layer: 12
   m_Name: Plate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1661,6 +1972,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2640466356359338037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8073224453060438626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5aba5590c6b6045bed5ccb26fbfad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8598620573873599883
 GameObject:
   m_ObjectHideFlags: 0
@@ -1673,7 +1996,8 @@ GameObject:
   - component: {fileID: 451149201799697697}
   - component: {fileID: 8494813205145070833}
   - component: {fileID: 6180272622284716912}
-  m_Layer: 0
+  - component: {fileID: 1157129015842782803}
+  m_Layer: 12
   m_Name: Edge (7) top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1756,6 +2080,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1157129015842782803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8598620573873599883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5aba5590c6b6045bed5ccb26fbfad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8820913080681125343
 GameObject:
   m_ObjectHideFlags: 0
@@ -1768,7 +2104,8 @@ GameObject:
   - component: {fileID: 1191243152238623798}
   - component: {fileID: 1311002749722923050}
   - component: {fileID: 6717328214652490998}
-  m_Layer: 0
+  - component: {fileID: 2080813022913043966}
+  m_Layer: 12
   m_Name: Edge (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1851,3 +2188,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2080813022913043966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8820913080681125343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5aba5590c6b6045bed5ccb26fbfad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

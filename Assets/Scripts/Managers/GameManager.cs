@@ -11,6 +11,12 @@ public class GameManager : MonoBehaviour
     public GameObject Floor;
     public GameObject Ceiling;
 
+    public Spawner spawner;
+
+    public int Wave = 1;
+
+    private int enemiesCounter = 0;
+
     private bool gameOver = false;
     private int score = 0;
 
@@ -23,10 +29,29 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        spawner = FindObjectOfType<Spawner>();
         player = FindObjectOfType<Player>();
         GameArea = new List<float>();
         CalculateGameArea();
         Cursor.visible = false;
+        StartCoroutine(spawner.Spawn());
+    }
+
+    public void AddEnemy()
+    {
+        enemiesCounter++;
+    }
+
+    public void RemoveEnemy()
+    {
+        enemiesCounter--;
+        if (enemiesCounter == 0)
+            CompleteWave();
+    }
+
+    public List<Dictionary<string, int>> GetWave(int wave)
+    {
+        return WaveDictionary.Waves[wave];
     }
 
     void CalculateGameArea()
@@ -64,6 +89,12 @@ public class GameManager : MonoBehaviour
             player.AddPowerUp(1);
             score = 0;
         }
+    }
+
+    public void CompleteWave()
+    {
+        Wave++;
+        StartCoroutine(spawner.Spawn());
     }
 
     public void EndGame()

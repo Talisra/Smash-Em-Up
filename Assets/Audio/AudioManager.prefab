@@ -51,7 +51,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Wall_Impact
     clip: {fileID: 8300000, guid: 79c77b1244f5d0a41b88fb6e2eb44861, type: 3}
-    volume: 0.725
+    volume: 0.517
     pitch: 1.2
     source: {fileID: 0}
   - name: Explosion1
@@ -158,4 +158,9 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 135f8c24f8574b84d8a32a79fc181f05, type: 3}
     volume: 0.606
     pitch: 0.76
+    source: {fileID: 0}
+  - name: ScrapMetalHit
+    clip: {fileID: 8300000, guid: 92d23b21d53d20f41b7118b64fce910e, type: 3}
+    volume: 0.15
+    pitch: 1.71
     source: {fileID: 0}

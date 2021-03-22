@@ -17,7 +17,7 @@ public class CrystalScrap : Scraps
         audioManager.Play("TinyShatter");
         GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity) as GameObject;
         Destroy(explosion, explosion.GetComponent<ParticleSystem>().main.duration);
-        Destroy(gameObject);
+        BackToPool();
     }
     // Start is called before the first frame update
     void Start()
@@ -29,6 +29,6 @@ public class CrystalScrap : Scraps
     void Update()
     {
         if (transform.position.y < -15)
-            Destroy(gameObject);
+            BackToPool();
     }
 }

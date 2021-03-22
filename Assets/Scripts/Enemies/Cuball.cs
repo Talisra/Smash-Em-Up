@@ -7,19 +7,17 @@ public class Cuball : Enemy
     public GameObject windupAnimationPrefab;
     public GameObject bulletPrefab;
 
-    private void Start()
-    {
-        GenerateTargetLocation();
-        StartCoroutine(Behavior());
-    }
-
-    IEnumerator Behavior()
+    public float minAtkRate = 0.7f;
+    public float maxAtkRate = 1.3f;
+    public float minIdleTime = 5.6f;
+    public float maxIdleTime = 7.5f;
+    protected override IEnumerator Behavior()
     {
         while(true)
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(Random.Range(minAtkRate, maxAtkRate));
             ChargeAttack();
-            yield return new WaitForSeconds(6.5f);
+            yield return new WaitForSeconds(Random.Range(minIdleTime, maxIdleTime));
         }
     }
 
@@ -31,22 +29,20 @@ public class Cuball : Enemy
         windup.transform.SetParent(this.transform);
         ParticleSystem windupParticle = windup.GetComponent<ParticleSystem>();
         //float delay = windupParticle.main.simulationSpeed * windupParticle.main.duration;
-        Destroy(windup, 2.3f);
+        Destroy(windup, 2.3f); // 2.3f is the animation windup time, no need to change!
         Invoke("Shoot", 2.3f);
     }
 
     private void Shoot()
     {
-        Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+        if (isAlive)
+            BasicBulletPool.Instance.Get(transform.position, Quaternion.identity);
     }
 
-    private void GenerateTargetLocation()
+    public override void BackToPool()
     {
-        List<float> availableArea = FindObjectOfType<GameManager>().GetGameArea();
-        targetLocation = new Vector3(
-            Random.Range(availableArea[0],availableArea[2]),
-            Random.Range(availableArea[1], availableArea[3]),
-            0);
+        base.BackToPool();
+        CuballPool.Instance.ReturnToPool(this);
     }
 
     protected override void Update()

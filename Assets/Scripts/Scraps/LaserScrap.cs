@@ -8,19 +8,27 @@ public class LaserScrap : Scraps
 
     void Explode()
     {
-        audioManager.Play("TinyShatter");
-        GameObject explosion1 = Instantiate(explosionPrefab, 
-            transform.position + new Vector3(-0.5f, 0, 0), Quaternion.identity) as GameObject;
-        Destroy(explosion1, explosion1.GetComponent<ParticleSystem>().main.duration);
-        GameObject explosion2 = Instantiate(explosionPrefab,
-            transform.position + new Vector3(0.5f, 0, 0), Quaternion.identity) as GameObject;
-        Destroy(explosion2, explosion2.GetComponent<ParticleSystem>().main.duration);
-        Destroy(gameObject);
+        if (isActiveAndEnabled)
+        {
+            audioManager.Play("TinyShatter");
+            GameObject explosion1 = Instantiate(explosionPrefab, 
+                transform.position + new Vector3(-0.5f, 0, 0), Quaternion.identity) as GameObject;
+            Destroy(explosion1, explosion1.GetComponent<ParticleSystem>().main.duration);
+            GameObject explosion2 = Instantiate(explosionPrefab,
+                transform.position + new Vector3(0.5f, 0, 0), Quaternion.identity) as GameObject;
+            Destroy(explosion2, explosion2.GetComponent<ParticleSystem>().main.duration);
+            BackToPool();
+        }
+
     }
-    // Start is called before the first frame update
-    void Start()
+
+    public override Vector3 GenerateSize()
     {
-        transform.localScale = new Vector3(0.3f, 0.6f, 0.3f);
+        return new Vector3(0.3f, 0.6f, 0.3f);
+    }
+
+    void OnEnable()
+    {
         Invoke("Explode", Random.Range(0.8f, 1.4f));
     }
 
@@ -28,6 +36,6 @@ public class LaserScrap : Scraps
     void Update()
     {
         if (transform.position.y < -15)
-            Destroy(gameObject);
+            BackToPool();
     }
 }

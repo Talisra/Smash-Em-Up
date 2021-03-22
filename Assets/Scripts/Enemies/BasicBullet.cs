@@ -12,7 +12,7 @@ public class BasicBullet : MonoBehaviour
     private Transform dest;
     private Rigidbody rb;
 
-    private void Start()
+    private void OnEnable()
     {
         if (FindObjectOfType<GameManager>().CheckGameOver())
             return;
@@ -34,11 +34,7 @@ public class BasicBullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Unpassable")
-        {
-            Explode();
-        }
-
+        Explode();
     }
 
     private void Update()
@@ -53,6 +49,6 @@ public class BasicBullet : MonoBehaviour
         GameObject exp = Instantiate(
             destroyAnimation, transform.position, Quaternion.identity) as GameObject;
         Destroy(exp, exp.GetComponent<ParticleSystem>().main.duration);
-        Destroy(gameObject);
+        BasicBulletPool.Instance.ReturnToPool(this);
     }
 }

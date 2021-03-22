@@ -3,23 +3,23 @@ using System.Collections;
 using UnityEngine;
 
 
-public abstract class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour, IPoolableObject
 {
-    protected AudioManager audioManager;
-    // Combat
+    // References
     public GameObject bullet;
     public GameObject player;
 
+    protected AudioManager audioManager;
+    protected Rigidbody rb;
     private ComboManager comboManager;
+    private GameManager gameManager;
 
     // Graphics
     public GameObject body;
     public Texture normalTex;
     public Texture flashTex;
     protected Renderer rend;
-    protected Rigidbody rb;
     protected TrailRenderer tr;
-    protected Vector3 targetLocation;
 
     //Stats
     public float moveSpeed = 10f;
@@ -29,6 +29,7 @@ public abstract class Enemy : MonoBehaviour
     protected float flashCounter = 0;
     protected bool isFlashing = false;
     protected bool isAlive = true;
+    protected float minVelocityForDamage = 5f;
 
     //Combos
     private bool inCombo = false;
@@ -47,9 +48,8 @@ public abstract class Enemy : MonoBehaviour
     private int[] numOfScraps; // visual: the number of small pieces the enemy will spawn when it dies
     void Awake()
     {
+        gameManager = FindObjectOfType<GameManager>();
         audioManager = FindObjectOfType<AudioManager>();
-        targetLocation = new Vector3(0, 8, 0);
-        curHealth = maxHealth;
         numOfScraps = new int[scraps.Count];
         for (int i = 0; i < scraps.Count; i++)
         {
@@ -62,7 +62,19 @@ public abstract class Enemy : MonoBehaviour
         tr = GetComponent<TrailRenderer>();
     }
 
-    IEnumerator Behavior()
+    private void OnEnable()
+    {
+        isAlive = true;
+        curHealth = maxHealth;
+        StartCoroutine(Behavior());
+    }
+
+    private void OnDisable()
+    {
+        //StopAllCoroutines();
+    }
+
+    protected virtual IEnumerator Behavior()
     {
         //Implement at children
         yield return new WaitForSeconds(0);
@@ -70,14 +82,17 @@ public abstract class Enemy : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Unpassable" && isAlive && !isFlashing)
+        if (rb.velocity.magnitude > minVelocityForDamage) // damage is only possible when the enemy has some acceleration
         {
-            // when colliding on the wall, damage the enemy.
-            Damage();
-        }
-        else if (collision.gameObject.tag == "Enemy" && isAlive && !isFlashing)
-        {
-            Damage();
+            if (collision.gameObject.tag == "Unpassable" && isAlive && !isFlashing)
+            {
+                // when colliding on the wall, damage the enemy.
+                Damage();
+            }
+            else if (collision.gameObject.tag == "Enemy" && isAlive && !isFlashing)
+            {
+                Damage();
+            }
         }
     }
 
@@ -114,6 +129,7 @@ public abstract class Enemy : MonoBehaviour
     {
         isFlashing = true;
         rend.material.SetTexture("_MainTex", flashTex);
+
     }
 
     // Handle Destruction when enemy is 0 HP:
@@ -129,23 +145,22 @@ public abstract class Enemy : MonoBehaviour
         ParticleSystem parts = explosion.GetComponent<ParticleSystem>();
         float totalDuration = parts.main.duration;
         Destroy(explosion, totalDuration);
-
         for (int i = 0; i < scraps.Count; i++)
         {
             for (int j = 0; j < numOfScraps[i]; j++)
             {
                 GameObject scrap = scraps[i];
-                GameObject createdScrap = Instantiate(scrap, transform.position, Quaternion.identity) as GameObject;
+                GameObject createdScrap = ScrapsPooler.Instance.Get(
+                    scraps[i].name, transform.position, Quaternion.identity) as GameObject;
                 // each scrap has random size and rotation
-                float size = scrap.GetComponent<Scraps>().GenerateSize();
-                scrap.transform.localScale = new Vector3(size, size, size);
+                Vector3 size = scrap.GetComponent<Scraps>().GenerateSize();
+                createdScrap.transform.localScale = size;
                 Quaternion rotationTarget = Quaternion.Euler(Random.Range(0, 359), Random.Range(0, 359), Random.Range(0, 359));
-                scrap.transform.rotation = Quaternion.Slerp(scrap.transform.rotation, rotationTarget, 0);
+                createdScrap.transform.rotation = Quaternion.Slerp(createdScrap.transform.rotation, rotationTarget, 0);
             }
         }
-        Destroy(gameObject);
+        BackToPool();
     }
-
 
     // Update is called once per frame
     protected virtual void Update()
@@ -173,5 +188,11 @@ public abstract class Enemy : MonoBehaviour
                 comboCounter = 0;
             }
         }
+    }
+
+    public virtual void BackToPool()
+    {
+        gameManager.RemoveEnemy();
+        //Implement at Inherited enemy
     }
 }

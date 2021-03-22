@@ -195,6 +195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftH: {fileID: 4215508480738577512}
   rightH: {fileID: 5038468844698764963}
+  colliders: []
 --- !u!65 &7497138384347466681
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -393,9 +394,9 @@ MonoBehaviour:
   WeakPointBot: {fileID: 5217579780876939408}
   MoveSpeed: 0.1
   smoothTime: 0.1
+  maxPowerUps: 0
   power: 10
   basePower: 25
-  specialModifier: 7000
 --- !u!54 &1496912950484240348
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Wall : MonoBehaviour
 {
     public GameObject hitParticle;
+    private AudioManager audioManager;
     // Start is called before the first frame update
 
     private void OnCollisionEnter(Collision collision)
@@ -18,12 +19,12 @@ public class Wall : MonoBehaviour
     void HitWall(Vector3 coordinates)
     {
         Instantiate(hitParticle, coordinates, Quaternion.identity);
-        FindObjectOfType<AudioManager>().Play("Wall_Impact");
+        audioManager.Play("Wall_Impact");
     }
 
     void Start()
     {
-        
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     // Update is called once per frame
