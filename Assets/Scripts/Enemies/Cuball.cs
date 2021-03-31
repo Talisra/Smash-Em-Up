@@ -6,6 +6,7 @@ public class Cuball : Enemy
 {
     public GameObject windupAnimationPrefab;
     public GameObject bulletPrefab;
+    public GameObject attackWindup;
 
     public float minAtkRate = 0.7f;
     public float maxAtkRate = 1.3f;
@@ -20,16 +21,31 @@ public class Cuball : Enemy
             yield return new WaitForSeconds(Random.Range(minIdleTime, maxIdleTime));
         }
     }
+    public override void Squash(GameObject colliderObj, ContactPoint point)
+    {
+        // must be before base.Squash() because the former changes the isSquash variable to true
+        if (!isSquashed) 
+        {
+            if (attackWindup) // set the attackWindup effect to inactive if the enemy is squashed
+                attackWindup.SetActive(false);
+        }
+        base.Squash(colliderObj, point);
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
 
     private void ChargeAttack()
     {
         //FindObjectOfType<AudioManager>().Play("CuballCharge");
-        GameObject windup = Instantiate(
+        attackWindup = Instantiate(
             windupAnimationPrefab, transform.position, Quaternion.identity) as GameObject;
-        windup.transform.SetParent(this.transform);
-        ParticleSystem windupParticle = windup.GetComponent<ParticleSystem>();
+        attackWindup.transform.SetParent(this.transform);
+        //ParticleSystem windupParticle = attackWindup.GetComponent<ParticleSystem>();
         //float delay = windupParticle.main.simulationSpeed * windupParticle.main.duration;
-        Destroy(windup, 2.3f); // 2.3f is the animation windup time, no need to change!
+        Destroy(attackWindup, 2.3f); // 2.3f is the animation windup time, no need to change!
         Invoke("Shoot", 2.3f);
     }
 

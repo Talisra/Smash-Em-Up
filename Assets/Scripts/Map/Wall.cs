@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Wall : MonoBehaviour
 {
+    public int type; // type defines the wall type: 0: Wall, 1: Ceiling
     public GameObject hitParticle;
     private AudioManager audioManager;
     // Start is called before the first frame update
@@ -13,6 +14,10 @@ public class Wall : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             HitWall(collision.transform.position);
+        }
+        if (collision.gameObject.tag == "Player")
+        {
+            audioManager.Play("MetalCollision");
         }
     }
 

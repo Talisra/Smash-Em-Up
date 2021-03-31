@@ -11,6 +11,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
 
     protected AudioManager audioManager;
     protected Rigidbody rb;
+    protected Collider enemyCollider;
     private ComboManager comboManager;
     private GameManager gameManager;
 
@@ -31,6 +32,13 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     protected bool isAlive = true;
     protected float minVelocityForDamage = 5f;
 
+    //Squash
+    public bool isSquashable;
+    public bool isTouchingPlayer = false;
+    public bool isSquashed = false;
+    public Vector3 squashVector;
+    private Vector3 normalScale;
+
     //Combos
     private bool inCombo = false;
     private float comboCounter = 0;
@@ -48,6 +56,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     private int[] numOfScraps; // visual: the number of small pieces the enemy will spawn when it dies
     void Awake()
     {
+        normalScale = transform.localScale;
         gameManager = FindObjectOfType<GameManager>();
         audioManager = FindObjectOfType<AudioManager>();
         numOfScraps = new int[scraps.Count];
@@ -60,11 +69,13 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
         rend = body.GetComponent<Renderer>();
         rb = GetComponent<Rigidbody>();
         tr = GetComponent<TrailRenderer>();
+        enemyCollider = GetComponent<Collider>();
     }
 
     private void OnEnable()
     {
         isAlive = true;
+        enemyCollider.enabled = true;
         curHealth = maxHealth;
         StartCoroutine(Behavior());
     }
@@ -87,11 +98,19 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
             if (collision.gameObject.tag == "Unpassable" && isAlive && !isFlashing)
             {
                 // when colliding on the wall, damage the enemy.
-                Damage();
+                Damage(1);
             }
             else if (collision.gameObject.tag == "Enemy" && isAlive && !isFlashing)
             {
-                Damage();
+                Damage(1);
+            }
+        }
+
+        if (collision.gameObject.tag == "Unpassable")
+        {
+            if (isTouchingPlayer)
+            {
+                Squash(collision.gameObject, collision.GetContact(0));
             }
         }
     }
@@ -107,21 +126,48 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
         audioManager.Play(hitAudio);
     }
 
-    void Damage()
+    public virtual void Squash(GameObject colliderObj, ContactPoint point)
     {
-        if (inCombo)
+        if (!isSquashed)
         {
-            ResetComboChain();
-            comboManager.AddCombo();
+            StopAllCoroutines();
+            audioManager.Play("Squash");
+            isSquashed = true;
+            int wallType = colliderObj.GetComponent<Wall>().type;
+            rb.MovePosition(
+                point.point + (wallType == 0 ?
+                new Vector3(-Mathf.Sign(transform.position.x) * squashVector.x / 2, 0, 0) :
+                new Vector3(0, -squashVector.x / 2, 0))) ;
+            rb.isKinematic = true;
+            rb.MoveRotation(wallType == 0 ?// rotate to the wall or the ceiling?
+            Quaternion.Euler(0, 0, 0) : Quaternion.Euler(0, 0, 90));
+            transform.localScale = squashVector;
+            enemyCollider.enabled = false;
+            Damage(curHealth);
         }
-        audioManager.Play(hitAudio);
-        curHealth--;
-        Flash();
-        if (curHealth <= 0)
+    }
+
+    void Damage(int amount)
+    {
+        if (isAlive)
         {
-            // destroy this object and spawn scraps (visual only)
-            isAlive = false;
-            Explode();
+            if (inCombo)
+            {
+                ResetComboChain();
+                comboManager.AddCombo();
+            }
+            audioManager.Play(hitAudio);
+            curHealth -= amount;
+            Flash();
+            if (curHealth <= 0)
+            {
+                // destroy this object and spawn scraps (visual only)
+                isAlive = false;
+                if (isSquashed)
+                    Invoke("Explode", isSquashable ? Random.Range(0.3f, 1.1f) : 0);
+                else
+                    Explode();
+            }
         }
     }
 
@@ -192,7 +238,11 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
 
     public virtual void BackToPool()
     {
+        //Debug.Log("Enemy #" +this.GetInstanceID() + " " + this.name + " got back to pool");
         gameManager.RemoveEnemy();
+        transform.localScale = normalScale;
+        isSquashed = false;
+        rb.isKinematic = false;
         //Implement at Inherited enemy
     }
 }

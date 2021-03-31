@@ -76,12 +76,12 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: MetalCollision
     clip: {fileID: 8300000, guid: 21c3524e0330c744e882341622f05c4a, type: 3}
-    volume: 0.6
-    pitch: 1.29
+    volume: 0.254
+    pitch: 1.14
     source: {fileID: 0}
   - name: PlayerDamage
     clip: {fileID: 8300000, guid: 92ad902eef9eb81408e449eeea1f918f, type: 3}
-    volume: 0.73
+    volume: 0.444
     pitch: 0.78
     source: {fileID: 0}
   - name: CuballCharge
@@ -163,4 +163,29 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 92d23b21d53d20f41b7118b64fce910e, type: 3}
     volume: 0.15
     pitch: 1.71
+    source: {fileID: 0}
+  - name: Squash
+    clip: {fileID: 8300000, guid: 13ce31399306b9e4085acf3c01c4d901, type: 3}
+    volume: 0.778
+    pitch: 0.96
+    source: {fileID: 0}
+  - name: BoxImpact
+    clip: {fileID: 8300000, guid: a845e29f59a72574e83b83a1dc171aff, type: 3}
+    volume: 0.211
+    pitch: 0.46
+    source: {fileID: 0}
+  - name: BoxOpen
+    clip: {fileID: 8300000, guid: cf542ffa44858844f8bf2195202cf86a, type: 3}
+    volume: 0.989
+    pitch: 0.91
+    source: {fileID: 0}
+  - name: Screech
+    clip: {fileID: 8300000, guid: 4b3f8254cde360a4ab643dcc42bbac11, type: 3}
+    volume: 0.364
+    pitch: 1.71
+    source: {fileID: 0}
+  - name: DoorClosed
+    clip: {fileID: 8300000, guid: ae9cbaebdc168bb4ab72e6f88ed63654, type: 3}
+    volume: 1
+    pitch: 1.22
     source: {fileID: 0}

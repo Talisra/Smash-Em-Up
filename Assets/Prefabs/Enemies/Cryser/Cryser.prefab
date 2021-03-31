@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 1609573327253599598}
   - component: {fileID: 1619430947349692268}
   - component: {fileID: 8623533975564854888}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: RightLaser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,7 +205,7 @@ GameObject:
   - component: {fileID: 5263401370397832257}
   - component: {fileID: 381956467479510943}
   - component: {fileID: 4072018587587585017}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: LeftLaser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -348,6 +348,9 @@ MonoBehaviour:
   moveSpeed: 10
   maxHealth: 4
   flashTime: 50
+  isSquashable: 0
+  isSquashed: 0
+  squashVector: {x: 1, y: 1, z: 1}
   afterEffectAudio: Spark1
   explodeAudio: BigShatter
   hitAudio: Hit2
@@ -720,6 +723,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SimpleLightningBoltAnimatedPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 178460, guid: a84cb58ef7faa67488076810242453b9, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 430986, guid: a84cb58ef7faa67488076810242453b9, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -822,6 +829,10 @@ PrefabInstance:
     - target: {fileID: 178460, guid: a84cb58ef7faa67488076810242453b9, type: 3}
       propertyPath: m_Name
       value: SimpleLightningBoltAnimatedPrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 178460, guid: a84cb58ef7faa67488076810242453b9, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 430986, guid: a84cb58ef7faa67488076810242453b9, type: 3}
       propertyPath: m_RootOrder

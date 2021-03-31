@@ -8,9 +8,11 @@ public class BoxPart : MonoBehaviour
     private MeshRenderer meshRenderer;
     private Color originalColor;
     private float fadeRate = 0.0005f;
+    private BoxCollider partCollider;
     // Start is called before the first frame update
     void Awake()
     {
+        partCollider = GetComponent<BoxCollider>();
         meshRenderer = GetComponent<MeshRenderer>();
         originalColor = meshRenderer.materials[0].color;
     }
@@ -18,11 +20,13 @@ public class BoxPart : MonoBehaviour
     public void OnEnable()
     {
         meshRenderer.materials[0].color = originalColor;
+        isFading = false;
     }
 
     public void StartFade()
     {
         isFading = true;
+        partCollider.enabled = true;
     }
 
     // Update is called once per frame
@@ -39,6 +43,8 @@ public class BoxPart : MonoBehaviour
             else
             {
                 isFading = false;
+                gameObject.SetActive(false);
+                partCollider.enabled = false;
             }    
         }
     }

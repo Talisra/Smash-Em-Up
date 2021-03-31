@@ -15,6 +15,7 @@ TagManager:
   - Scrap
   - Hazard
   - EnemyBox
+  - SemiCollider
   layers:
   - Default
   - TransparentFX

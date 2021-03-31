@@ -83,6 +83,7 @@
     <Compile Include="Assets\Scripts\Pooling\CuballPool.cs" />
     <Compile Include="Assets\Scripts\Map\Fan.cs" />
     <Compile Include="Assets\Scripts\Enemies\EnemyBox\EnemyBox.cs" />
+    <Compile Include="Assets\Scripts\General\WaveDictionary.cs" />
     <Compile Include="Assets\Scripts\General\Spawner.cs" />
     <Compile Include="Assets\Imports\JMO Assets\Cartoon FX\Scripts\CFX_AutoDestructShuriken.cs" />
     <Compile Include="Assets\Imports\Particle Ribbon by Moonflower Carnivore\Scripts\rotation.cs" />
@@ -116,7 +117,12 @@
     <Compile Include="Assets\Scripts\Pooling\ScrapsPooler.cs" />
     <Compile Include="Assets\Scripts\Scraps\CrystalScrap.cs" />
     <Compile Include="Assets\Scripts\Enemies\LaserBeam.cs" />
-    <Compile Include="Assets\Scripts\General\WaveDictionary.cs" />
+    <Compile Include="Assets\Imports\PowerUp\Scripts\CustomizablePowerUp.cs" />
+    <Compile Include="Assets\Imports\PowerUp\Scripts\ScaleParticles.cs" />
+    <Compile Include="Assets\Imports\PowerUp\Scripts\Utility\Singleton.cs" />
+    <Compile Include="Assets\Imports\PowerUp\Scripts\TakeablePowerUp.cs" />
+    <Compile Include="Assets\Imports\PowerUp\Scripts\PowerUpRotation.cs" />
+    <Compile Include="Assets\Imports\PowerUp\Scripts\PowerUpManager.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />

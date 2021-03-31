@@ -58,6 +58,7 @@ public class Cryser : Enemy
 
     public override void BackToPool()
     {
+        base.BackToPool();
         CryserPool.Instance.ReturnToPool(this);
     }
 

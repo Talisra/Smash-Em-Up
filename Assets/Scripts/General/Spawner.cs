@@ -6,6 +6,7 @@ public class Spawner : MonoBehaviour
 {
     public GameObject CeilingDoor;
     private GameManager gm;
+    private AudioManager audioManager;
     public float spawnDelay = 1f;
 
     public float boxDelay = 1.5f;
@@ -16,6 +17,7 @@ public class Spawner : MonoBehaviour
 
     private void Awake()
     {
+        audioManager = FindObjectOfType<AudioManager>();
         doorsAnimator = CeilingDoor.GetComponent<Animator>();
         gm = FindObjectOfType<GameManager>();
         List<float> area = gm.GetGameArea();
@@ -25,6 +27,7 @@ public class Spawner : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         OpenDoors();
+        audioManager.Play("Screech");
         List<Dictionary<string, int>> wave = GetWaveDict(gm.Wave);
         List<EnemyBox> boxes = new List<EnemyBox>();
         foreach(Dictionary<string, int> subWave in wave)
@@ -34,6 +37,8 @@ public class Spawner : MonoBehaviour
         }
         yield return new WaitForSeconds(0.5f);
         CloseDoors();
+        audioManager.Play("DoorClosed");
+        yield return new WaitForSeconds(0.3f);
         foreach (EnemyBox box in boxes)
             box.SpawnEnemies();
     }

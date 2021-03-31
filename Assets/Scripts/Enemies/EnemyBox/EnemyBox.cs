@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyBox : MonoBehaviour, IPoolableObject
 {
     public Dictionary<string, int> enemies;
+    public BoxCollider boxCollider;
 
     private List<Transform> boxParts;
     private List<Transform> supportParts;
@@ -66,6 +67,21 @@ public class EnemyBox : MonoBehaviour, IPoolableObject
         enemies = dict;
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Floor" || collision.gameObject.tag == "EnemyBox")
+            audioManager.Play("BoxImpact");
+        if (collision.gameObject.tag == "Player")
+        {
+            audioManager.Play("MetalCollision");
+            Player player = collision.gameObject.GetComponent<Player>();
+            if (player.collidingFloor)
+                player.Squash(this.gameObject);
+            else if(player.collidingBoxesID.Count > 1)
+                player.Squash(this.gameObject);
+        }
+    }
+
     private void TakeEnemyFromPool(string enemyName)
     {
         Enemy enemy;
@@ -86,6 +102,7 @@ public class EnemyBox : MonoBehaviour, IPoolableObject
 
     public void SpawnEnemies()
     {
+        audioManager.Play("BoxOpen");
         foreach (string enemyString in enemies.Keys)
         {
             for (int i = 0; i < enemies[enemyString]; i++)
@@ -95,6 +112,7 @@ public class EnemyBox : MonoBehaviour, IPoolableObject
         }
         RemoveChildren(box.transform, boxParts);
         RemoveChildren(supports.transform, supportParts);
+        boxCollider.enabled = false;
         box.transform.SetParent(null);
         supports.transform.SetParent(null);
         kernel.SetActive(true);
@@ -114,7 +132,6 @@ public class EnemyBox : MonoBehaviour, IPoolableObject
             BoxPart boxPart = child.gameObject.GetComponent<BoxPart>();
             child.SetParent(null);
             child.gameObject.AddComponent<Rigidbody>();
-            boxPart.gameObject.SetActive(true);
             boxPart.StartFade();
             storage.Add(child);
         }
@@ -130,6 +147,8 @@ public class EnemyBox : MonoBehaviour, IPoolableObject
         int counter = 0;
         foreach(Transform child in partList)
         {
+            BoxPart boxPart = child.gameObject.GetComponent<BoxPart>();
+            boxPart.gameObject.SetActive(true);
             child.SetParent(parent);
             Destroy(child.gameObject.GetComponent<Rigidbody>());
             child.transform.position = positions[counter];
@@ -146,6 +165,7 @@ public class EnemyBox : MonoBehaviour, IPoolableObject
         ReconstructPart(supports.transform, supportParts, supportStartPos, supportStartQart);
         box.transform.SetParent(this.transform);
         supports.transform.SetParent(this.transform);
+        boxCollider.enabled = true;
         BackToPool();
     }
 

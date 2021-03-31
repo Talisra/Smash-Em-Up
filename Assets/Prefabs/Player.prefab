@@ -390,6 +390,8 @@ MonoBehaviour:
     type: 3}
   explosionPrefabSmall: {fileID: 1337198075554910, guid: 25c7aa9ad705fe143a4d71c1c8deb7d4,
     type: 3}
+  collidingFloor: 0
+  collidingBoxesID: 
   WeakPointTop: {fileID: 7235213930963446119}
   WeakPointBot: {fileID: 5217579780876939408}
   MoveSpeed: 0.1

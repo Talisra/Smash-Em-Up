@@ -32,7 +32,7 @@ public class WaveDictionary
                 3, new List<Dictionary<string, int>>() {
                     new Dictionary<string, int>()
                     {
-                        { "Cuball", 1 }
+                        { "Cryser", 1 }
                     },
                     new Dictionary<string, int>()
                     {
@@ -48,7 +48,7 @@ public class WaveDictionary
                     },
                     new Dictionary<string, int>()
                     {
-                        { "Cuball", 1 }
+                        { "Cryser", 1 }
                     }
                 }
             },
@@ -56,7 +56,7 @@ public class WaveDictionary
                 5, new List<Dictionary<string, int>>() {
                     new Dictionary<string, int>()
                     {
-                        { "Cuball", 4 }
+                        { "Cuball", 3 }
                     }
                 }
             },
@@ -73,6 +73,66 @@ public class WaveDictionary
                     new Dictionary<string, int>()
                     {
                         { "Cuball", 1 }
+                    }
+                }
+            },
+            {
+                7, new List<Dictionary<string, int>>() {
+                    new Dictionary<string, int>()
+                    {
+                        { "Cuball", 1 }
+                    },
+                    new Dictionary<string, int>()
+                    {
+                        { "Cryser", 1 }
+                    },
+                    new Dictionary<string, int>()
+                    {
+                        { "Cuball", 1 }
+                    }
+                }
+            },
+            {
+                8, new List<Dictionary<string, int>>() {
+                    new Dictionary<string, int>()
+                    {
+                        { "Cryser", 1 }
+                    },
+                    new Dictionary<string, int>()
+                    {
+                        { "Cryser", 2 }
+                    }
+                }
+            },
+            {
+                9, new List<Dictionary<string, int>>() {
+                    new Dictionary<string, int>()
+                    {
+                        { "Cryser", 1 }
+                    },
+                    new Dictionary<string, int>()
+                    {
+                        { "Cryser", 2 }
+                    },
+                    new Dictionary<string, int>()
+                    {
+                        { "Cuball", 1 }
+                    }
+                }
+            },
+            {
+                10, new List<Dictionary<string, int>>() {
+                    new Dictionary<string, int>()
+                    {
+                        { "Cryser", 2 }
+                    },
+                    new Dictionary<string, int>()
+                    {
+                        { "Cuball", 2 }
+                    },
+                    new Dictionary<string, int>()
+                    {
+                        { "Cryser", 1 }
                     }
                 }
             },

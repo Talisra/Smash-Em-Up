@@ -25,11 +25,12 @@ public class Player : MonoBehaviour
 
     // Sqash
     private Vector3 squashScaleVector = new Vector3(2, 0.15f, 1.1f);
-    private float squashTime = 1.5f;
+    private float squashTime = 1.0f;
     private float squashCounter = 0;
-    private bool collidingFloor = false;
-    private bool collidingBox = false;
     private bool isSquashed = false;
+
+    public bool collidingFloor = false;
+    public List<int> collidingBoxesID = new List<int>();
 
     // the enemies will target these points to do damage
     // top and bottom points depend on the y axis
@@ -55,7 +56,7 @@ public class Player : MonoBehaviour
     private Vector3 position = Vector3.zero;
     private float deltaX;
     private float deltaY;
-    private float rotationCoefficient = 2.5f;
+    private float rotationCoefficient = 0.9f;
 
     // Attack
     public int maxPowerUps;
@@ -77,8 +78,6 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    
-
     private void OnCollisionEnter(Collision collision)
     {
         // Head Collision
@@ -88,10 +87,15 @@ public class Player : MonoBehaviour
             // The higher deltaX, more force added.
             if (collision.gameObject.tag == "Enemy")
             {
-                if (isAttackingSpecial && canAttack)
-                    SpecialSmash(collision.gameObject);
-                else if (canAttack)
-                    Smash(collision.gameObject);
+                Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+                enemy.isTouchingPlayer = true;
+                if (!enemy.isSquashed)
+                {
+                    if (isAttackingSpecial && canAttack)
+                        SpecialSmash(collision.gameObject);
+                    else if (canAttack)
+                        Smash(collision.gameObject);
+                }
             }
             // Bullet that hitting the Head will do no damage
             else if(collision.gameObject.tag == "Bullet")
@@ -105,7 +109,9 @@ public class Player : MonoBehaviour
             // Enemy hitting the body will damage the player
             if (collision.gameObject.tag == "Enemy")
             {
-                TakeDamage();
+                Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+                if (!enemy.isSquashed)
+                    TakeDamage();
             }
             else if (collision.gameObject.tag == "Bullet")
             {
@@ -113,47 +119,34 @@ public class Player : MonoBehaviour
                 collision.gameObject.GetComponent<BasicBullet>().Explode();
             }
         }
-        // Any collision of unpassable objects, play a sound
-        if (collision.gameObject.tag == "Unpassable")
-        {
-            audioManager.Play("MetalCollision");
-        }
 
-        // Toggle ON floor/box collision
         if (collision.gameObject.tag == "Floor")
-            collidingFloor = true;
-        else if (collision.gameObject.tag == "EnemyBox")
-            collidingBox = true;
-
-        // Squash
-        if(collidingFloor && collidingBox)
         {
-            // prevents a bug where some other GO are counted as the other collider
-            if (collision.gameObject.tag == "EnemyBox")
-            {
-                collision.gameObject.GetComponent<Rigidbody>().AddForce(
-                    new Vector3(
-                        collision.gameObject.transform.position.x - transform.position.x,
-                        //collision.gameObject.transform.position.y - transform.position.y,
-                        5,
-                        0),
-                        ForceMode.VelocityChange);
-                Squash();
-            }
-
+            collidingFloor = true;
+        }
+        else if (collision.gameObject.tag == "EnemyBox")
+        {
+            if (!collidingBoxesID.Contains(collision.gameObject.GetInstanceID()))
+                collidingBoxesID.Add(collision.gameObject.GetInstanceID());
         }
     }
 
     private void OnCollisionExit(Collision collision)
     {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+            enemy.isTouchingPlayer = false;
+        }
         // Toggle OFF floor/box collision
         if (collision.gameObject.tag == "Floor")
         {
             collidingFloor = false;
         }
-        else if (collision.gameObject.tag == "EnemyBox")
+        if (collision.gameObject.tag == "EnemyBox")
         {
-            collidingBox = false;
+            if (collidingBoxesID.Contains(collision.gameObject.GetInstanceID()))
+                collidingBoxesID.Remove(collision.gameObject.GetInstanceID());
         }
     }
 
@@ -187,16 +180,17 @@ public class Player : MonoBehaviour
         return currentHP;
     }
 
-    public void Squash()
+    public void Squash(GameObject colliderObj)
     {
         if (!isSquashed)
         {
+            audioManager.Play("Squash");
             isSquashed = true;
             TakeDamage();
             MoveSpeed = 0.9f;
             transform.localScale = squashScaleVector;
+            colliderObj.GetComponent<Rigidbody>().AddForce(new Vector3(colliderObj.transform.position.x - transform.position.x,20,0), ForceMode.VelocityChange);
         }
-
     }
 
 
@@ -347,10 +341,7 @@ public class Player : MonoBehaviour
             new Vector3(mousePosition.x, mousePosition.y, -Camera.main.transform.position.z));
         position = Vector3.Lerp(transform.position, mousePosition, MoveSpeed);
         deltaX = (position.x - mousePosition.x);
-        deltaY = (position.y - mousePosition.y);
-        // tilt the player based on deltaX, only visual.
-        Quaternion rotationTarget = Quaternion.Euler(0, 0, deltaX * rotationCoefficient);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotationTarget, Time.deltaTime * 5f);
+        deltaY = (position.y - mousePosition.y) * (isSquashed ? squashCounter/squashTime : 1f);      
 
         if (!isSquashed)
         {
@@ -407,6 +398,9 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         rb.AddForce(new Vector3(-deltaX* velocity, -deltaY* velocity, 0) - rb.velocity, ForceMode.VelocityChange);
+        // tilt the player based on deltaX, only visual, but done through rigidBody to not ruin the physics
+        Quaternion rotationTarget = Quaternion.Euler(0, 0, deltaX * rotationCoefficient);
+        rb.MoveRotation(rotationTarget);
     }
 
 }

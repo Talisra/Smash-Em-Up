@@ -5,6 +5,7 @@ using UnityEngine;
 public class CubeScraps : Scraps
 {
     public float FadeRate = 1000f;
+    private bool hasCollided = false;
 
     private Renderer rend;
 
@@ -15,7 +16,11 @@ public class CubeScraps : Scraps
 
     private void OnCollisionEnter(Collision collision)
     {
-        audioManager.Play("ScrapMetalHit");
+        if (!hasCollided)
+        {
+            hasCollided = true;
+            audioManager.Play("ScrapMetalHit");
+        }
     }
 
     void Update()
@@ -33,6 +38,7 @@ public class CubeScraps : Scraps
 
     void Dismiss()
     {
+        hasCollided = false;
         BackToPool();
     }
 }
