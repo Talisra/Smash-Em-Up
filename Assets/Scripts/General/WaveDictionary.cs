@@ -16,7 +16,7 @@ public class WaveDictionary
                 1, new List<Dictionary<string, int>>() {
                     new Dictionary<string, int>()
                     {
-                        { "Cuball", 1 }
+                        { "Cryser", 1 }
                     }
                 }
             },

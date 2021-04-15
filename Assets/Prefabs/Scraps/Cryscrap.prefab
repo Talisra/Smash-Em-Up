@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 1000010728489230}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.16405499, y: 0.16405499, z: 0.16405499}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -42,7 +42,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1000010728489230}
-  m_Mesh: {fileID: 4300000, guid: 3be870bd3141f9741b70abdfb4242cb6, type: 3}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &23000012424984624
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a4463aa2c9c2a0446bd29dfed0068d4e, type: 2}
+  - {fileID: 2100000, guid: da9147a830dbd8649a3b67f42f471b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -98,8 +98,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minAmount: 16
   MaxAmount: 22
-  minSize: 0.11
-  maxSize: 0.23
+  minSize: 0.3
+  maxSize: 0.5
   explosionPrefab: {fileID: 1750940742320366, guid: d13c3e2485679d949b08e27937104e7b,
     type: 3}
 --- !u!54 &-8919648856403351580
@@ -129,5 +129,5 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.1126641
-  m_Center: {x: -0.00000047683716, y: 0, z: -0.00000017881393}
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}

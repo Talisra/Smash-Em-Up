@@ -6,6 +6,12 @@ public class Head : MonoBehaviour
     public GameObject rightH;
     public BoxCollider[] colliders;
 
+    // Charge
+    public float minVelocityCharge;
+    public float maxVelocityCharge;
+    public float chargeSpeedMultiplier;
+    public float chargeSpeedReducer;
+
     private float headBigHitBox = 2.0f;
 
     private float headNormalHitboxX = 1.33f;

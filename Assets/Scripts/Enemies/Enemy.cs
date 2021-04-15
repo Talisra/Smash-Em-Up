@@ -11,7 +11,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
 
     protected AudioManager audioManager;
     protected Rigidbody rb;
-    protected Collider enemyCollider;
+    protected Collider[] enemyColliders;
     private ComboManager comboManager;
     private GameManager gameManager;
 
@@ -69,13 +69,17 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
         rend = body.GetComponent<Renderer>();
         rb = GetComponent<Rigidbody>();
         tr = GetComponent<TrailRenderer>();
-        enemyCollider = GetComponent<Collider>();
+        enemyColliders = GetComponentsInChildren<Collider>();
     }
 
     private void OnEnable()
     {
+        transform.localScale = normalScale;
+        isSquashed = false;
+        rb.isKinematic = false;
         isAlive = true;
-        enemyCollider.enabled = true;
+        foreach (Collider c in enemyColliders)
+            c.enabled = true;
         curHealth = maxHealth;
         StartCoroutine(Behavior());
     }
@@ -108,7 +112,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
 
         if (collision.gameObject.tag == "Unpassable")
         {
-            if (isTouchingPlayer)
+            if (isTouchingPlayer && isAlive)
             {
                 Squash(collision.gameObject, collision.GetContact(0));
             }
@@ -142,7 +146,8 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
             rb.MoveRotation(wallType == 0 ?// rotate to the wall or the ceiling?
             Quaternion.Euler(0, 0, 0) : Quaternion.Euler(0, 0, 90));
             transform.localScale = squashVector;
-            enemyCollider.enabled = false;
+            foreach (Collider c in enemyColliders)
+                c.enabled = false;
             Damage(curHealth);
         }
     }
@@ -238,11 +243,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
 
     public virtual void BackToPool()
     {
-        //Debug.Log("Enemy #" +this.GetInstanceID() + " " + this.name + " got back to pool");
         gameManager.RemoveEnemy();
-        transform.localScale = normalScale;
-        isSquashed = false;
-        rb.isKinematic = false;
         //Implement at Inherited enemy
     }
 }

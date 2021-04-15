@@ -5,13 +5,14 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public Head head;
-    public GameObject body;
-    public GameObject bottom;
+    public RegularBody body;
+    public PlayerBottom bottom;
     public GameObject animationAnchor;
 
     private Animator animator;
     private Rigidbody rb;
     private AudioManager audioManager;
+    private GameManager gameManager;
 
     public GameObject smashAnimPrefab;
 
@@ -23,7 +24,7 @@ public class Player : MonoBehaviour
     private int numOfExps = 9;
     private int numOfScraps = 20;
 
-    // Sqash
+    // Squash
     private Vector3 squashScaleVector = new Vector3(2, 0.15f, 1.1f);
     private float squashTime = 1.0f;
     private float squashCounter = 0;
@@ -39,24 +40,26 @@ public class Player : MonoBehaviour
 
 
     // Attributes
-    private float maxHP = 10;
+    public float maxHP = 10;
     private float currentHP;
-
-    // After taking damage, gain Invulnerability for some time
-    private float invTime = 0.5f;
-    private float invCounter = 0;
-    private bool isInvul = false;
 
 
     // Movement
     public float MoveSpeed = 0.1f;
     public float smoothTime = 0.1f; // lower smoothTime means better control with the mouse.
-    private float velocity = 3f;
+    public float normalRotationCoefficient = 1f;
+    public float deltaCap = 50f;
+    private float MaxSpeed = 8.0f;
+    private float velocity = 2.5f;
     private Vector3 mousePosition;
     private Vector3 position = Vector3.zero;
     private float deltaX;
     private float deltaY;
-    private float rotationCoefficient = 0.9f;
+    private float momentum = 10;
+    private float currentMomentum;
+    private float accelerationX = 1f;
+    private float accelerationY = 1f;
+    private float rotationCoefficient;
 
     // Attack
     public int maxPowerUps;
@@ -67,14 +70,33 @@ public class Player : MonoBehaviour
     private bool canAttack = true;
     private bool isAttackingSpecial = false;
     private float attackDelay = 0.4f;
-    private float delay = 0;
+    private float atkDelayCounter = 0;
 
+    // Charge
+    private bool isFullCharge = false;
+    public float deltaMin = 40;
+    private float chargeStunAmount = 0.5f;
+    private float chargeDirection = 0; // positive number for right, and negative for left. (math)
+    private float chargeRecovery = 1; // handles the rotation after charging into the wall. must be between 1 to 90.
+
+    //Invulnerability
+    private bool isInvul = false;
+    private float invTime = 0.75f;
+    private float invDelayCounter = 0;
+
+    // Stun
+    private bool isStunned = false;
+    private float stunDelay = 0.5f;
+    private float stunDelayCounter = 0;
 
     void Start()
     {
+        gameManager = FindObjectOfType<GameManager>();
         audioManager = FindObjectOfType<AudioManager>();
         animator = animationAnchor.GetComponent<Animator>();
         currentHP = maxHP;
+        currentMomentum = momentum;
+        rotationCoefficient = normalRotationCoefficient;
         rb = GetComponent<Rigidbody>();
     }
 
@@ -88,9 +110,11 @@ public class Player : MonoBehaviour
             if (collision.gameObject.tag == "Enemy")
             {
                 Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-                enemy.isTouchingPlayer = true;
+                if (isFullCharge)
+                    enemy.isTouchingPlayer = true;
                 if (!enemy.isSquashed)
                 {
+                    GainInv(0.2f);
                     if (isAttackingSpecial && canAttack)
                         SpecialSmash(collision.gameObject);
                     else if (canAttack)
@@ -111,7 +135,9 @@ public class Player : MonoBehaviour
             {
                 Enemy enemy = collision.gameObject.GetComponent<Enemy>();
                 if (!enemy.isSquashed)
+                {
                     TakeDamage();
+                }
             }
             else if (collision.gameObject.tag == "Bullet")
             {
@@ -119,7 +145,17 @@ public class Player : MonoBehaviour
                 collision.gameObject.GetComponent<BasicBullet>().Explode();
             }
         }
-
+        // General Collisions
+        if (collision.gameObject.tag == "Unpassable")
+        {
+            if (isFullCharge)
+            {
+                collision.gameObject.GetComponent<Wall>().SlamWall(head.transform.position);
+                CameraShake.Shake(0.2f, 0.6f);
+                Stun(chargeStunAmount);
+                StopCharge();
+            }
+        }
         if (collision.gameObject.tag == "Floor")
         {
             collidingFloor = true;
@@ -180,6 +216,13 @@ public class Player : MonoBehaviour
         return currentHP;
     }
 
+    public void Heal(int amount)
+    {
+        if (currentHP + amount >= maxHP)
+            currentHP = maxHP;
+        else
+            currentHP += amount;
+    }
     public void Squash(GameObject colliderObj)
     {
         if (!isSquashed)
@@ -193,16 +236,32 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void Stun(float delay)
+    {
+        chargeRecovery = 90;
+        isStunned = true;
+        stunDelayCounter = 0;
+        stunDelay = delay;
+    }
+
+    public void GainInv(float amount)
+    {
+        isInvul = true;
+        invDelayCounter = 0;
+        invTime = amount;
+    }
 
     public void TakeDamage()
     {
-        if (!isInvul)
+        if (!isInvul && !isFullCharge)
         {
             FindObjectOfType<HitFlash>().FlashDamage();
+            body.ShowDamage();
+            bottom.ShowDamage();
             currentHP--;
             if (currentHP <= 0)
                 Die();
-            isInvul = true;
+            GainInv(0.75f);
         }
     }
 
@@ -263,7 +322,7 @@ public class Player : MonoBehaviour
     public void SpecialAttack()
     {
         currentPowerUps--; //use powerup
-        isInvul = true;
+        GainInv(0.5f);
         isAttackingSpecial = true;
         if (deltaX < 0)
             animator.Play("SpAtkRight");
@@ -335,41 +394,51 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Movement
-        mousePosition = Input.mousePosition;
-        mousePosition = Camera.main.ScreenToWorldPoint(
-            new Vector3(mousePosition.x, mousePosition.y, -Camera.main.transform.position.z));
-        position = Vector3.Lerp(transform.position, mousePosition, MoveSpeed);
-        deltaX = (position.x - mousePosition.x);
-        deltaY = (position.y - mousePosition.y) * (isSquashed ? squashCounter/squashTime : 1f);      
-
         if (!isSquashed)
         {
             // Special attack
             if (Input.GetMouseButtonDown(1))
-                if (currentPowerUps > 0)
+                if (currentPowerUps > 0 && !isFullCharge)
                     SpecialAttack();
-           
+
             //handle attack speed
             if (canAttack == false)
             {
-                delay += Time.deltaTime;
-                if (delay >= attackDelay)
+                atkDelayCounter += Time.deltaTime;
+                if (atkDelayCounter >= attackDelay)
                 {
-                    delay = 0;
+                    atkDelayCounter = 0;
                     canAttack = true;
                 }
             }
         }
 
+        //handle Stun
+        if (isStunned)
+        {
+            stunDelayCounter += Time.deltaTime;
+            if (stunDelayCounter >= stunDelay)
+            {
+                isStunned = false;
+                stunDelayCounter = 0;
+            }
+        }
+
+        if (chargeRecovery > 1)
+        {
+            chargeRecovery -= Time.deltaTime * 100;
+            if (chargeRecovery < 1)
+                chargeRecovery = 1;
+        }
+
         //handle Invulnerability
         if (isInvul)
         {
-            invCounter += Time.deltaTime;
-            if (invCounter >= invTime)
+            invDelayCounter += Time.deltaTime;
+            if (invDelayCounter >= invTime)
             {
                 isInvul = false;
-                invCounter = 0;
+                invDelayCounter = 0;
             }
 
         }
@@ -395,12 +464,85 @@ public class Player : MonoBehaviour
 
         }
     }
+
+    private void StopCharge()
+    {
+        isFullCharge = false;
+        accelerationX = 1;
+        accelerationY = 3;
+        currentMomentum = momentum;
+        Invoke("StopChargeAnimation", chargeStunAmount-0.8f);
+    }
+
+    private void StopChargeAnimation()
+    {
+        animator.SetBool("Charging", false);
+    }
+
+    private void CheckCharging()
+    {
+        if (Mathf.Abs(rb.velocity.x) >= 60 && !isFullCharge)
+        {
+            animator.SetBool("Charging", true);
+            isFullCharge = true;
+            currentMomentum += Time.fixedDeltaTime * 10;
+            accelerationX += Time.fixedDeltaTime * currentMomentum * 10;
+            accelerationY = 0.5f;
+            chargeDirection = Mathf.Sign(deltaX);
+        }
+        if(isFullCharge)
+        {
+            currentMomentum += Time.fixedDeltaTime*10;
+            accelerationX += Time.fixedDeltaTime * currentMomentum*10;
+        }
+        
+    }
+
+    private void TranslateCursorCoordinates()
+    {
+        mousePosition = Input.mousePosition;
+        mousePosition = Camera.main.ScreenToWorldPoint(
+            new Vector3(mousePosition.x, mousePosition.y, -Camera.main.transform.position.z));
+        mousePosition.x = mousePosition.x < gameManager.GetGameArea()[0] - deltaCap ? gameManager.GetGameArea()[0] :
+            (mousePosition.x > gameManager.GetGameArea()[2] + deltaCap ? gameManager.GetGameArea()[2] : mousePosition.x);
+        mousePosition.y = mousePosition.y > gameManager.GetGameArea()[1] + deltaCap ? gameManager.GetGameArea()[1] :
+            (mousePosition.y < gameManager.GetGameArea()[3] - deltaCap ? gameManager.GetGameArea()[3] : mousePosition.y);
+        position = Vector3.Lerp(transform.position, mousePosition, MoveSpeed);
+    }
+
     private void FixedUpdate()
     {
-        rb.AddForce(new Vector3(-deltaX* velocity, -deltaY* velocity, 0) - rb.velocity, ForceMode.VelocityChange);
-        // tilt the player based on deltaX, only visual, but done through rigidBody to not ruin the physics
-        Quaternion rotationTarget = Quaternion.Euler(0, 0, deltaX * rotationCoefficient);
-        rb.MoveRotation(rotationTarget);
+        // Movement 
+        TranslateCursorCoordinates();
+        deltaX = Mathf.Clamp(position.x - mousePosition.x, -deltaCap, deltaCap);
+        deltaY = (position.y - mousePosition.y) * (isSquashed ? squashCounter / squashTime : 1f);
+
+        //Debug.Log(rb.velocity);
+
+        // lets the player "follow" the mouse
+        if (!isStunned)
+        {
+            //CheckCharging();
+            if (!isFullCharge)
+            {
+                float xForce = velocity * -deltaX * accelerationX - rb.velocity.x;
+                xForce = Mathf.Clamp(xForce, -MaxSpeed, MaxSpeed);
+                float yForce = -deltaY * velocity * accelerationY - rb.velocity.y;
+                rb.AddForce(new Vector3(xForce, yForce, 0), ForceMode.VelocityChange);
+
+            }
+            else if(isFullCharge)
+            {
+                rb.AddForce(new Vector3(-chargeDirection * accelerationX * 10, 0,0));
+                rb.AddForce(new Vector3(0, (-deltaY * velocity * accelerationY) - rb.velocity.y, 0), ForceMode.VelocityChange);
+            }
+            Quaternion rotationTarget = Quaternion.Euler(0, 0,
+            Mathf.Clamp(
+                isFullCharge ? accelerationX * chargeDirection * chargeRecovery : deltaX * rotationCoefficient * chargeRecovery,
+                -90, 90));
+            rb.MoveRotation(rotationTarget);
+        }
+
     }
 
 }

@@ -244,7 +244,7 @@ MonoBehaviour:
   normalTex: {fileID: 2800000, guid: 1f7dbfc667702d844af37a833d267dac, type: 3}
   flashTex: {fileID: 2800000, guid: 67473669facfb204abbe8bcd40aa5cca, type: 3}
   moveSpeed: 30
-  maxHealth: 5
+  maxHealth: 50
   flashTime: 50
   isSquashable: 1
   isTouchingPlayer: 0

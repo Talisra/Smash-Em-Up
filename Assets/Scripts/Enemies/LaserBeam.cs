@@ -36,20 +36,10 @@ public class LaserBeam : MonoBehaviour
     {
         if (laserImpact)
         {
-            if (CanFire())
-                laserImpact.SetActive(true);
+            laserImpact.SetActive(true);
         }
     }
 
-    private bool CanFire()
-    {
-        List<float> area = gameManager.GetGameArea();
-        if (transform.position.x < area[0] || transform.position.x > area[2])
-            return false;
-        if (transform.position.y < area[1] || transform.position.y > area[3])
-            return false;
-        else return true;
-    }
 
     // Update is called once per frame
     void LateUpdate()

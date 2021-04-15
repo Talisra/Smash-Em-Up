@@ -189,3 +189,13 @@ MonoBehaviour:
     volume: 1
     pitch: 1.22
     source: {fileID: 0}
+  - name: Slam_metal
+    clip: {fileID: 8300000, guid: 94df3e728a4f9d54c9e2aa699b494859, type: 3}
+    volume: 0.862
+    pitch: 0.68
+    source: {fileID: 0}
+  - name: Heal
+    clip: {fileID: 8300000, guid: 82164710d5a3b2144bae86de65e8ebd3, type: 3}
+    volume: 0.85
+    pitch: 0.94
+    source: {fileID: 0}

@@ -27,13 +27,13 @@ MonoBehaviour:
     value: {x: -1.37, y: 0.5}
   intensity:
     overrideState: 1
-    value: 0.697
+    value: 0.684
   smoothness:
     overrideState: 1
-    value: 0.309
+    value: 0.221
   roundness:
     overrideState: 1
-    value: 0.319
+    value: 0
   rounded:
     overrideState: 0
     value: 0
@@ -44,6 +44,32 @@ MonoBehaviour:
   opacity:
     overrideState: 0
     value: 1
+--- !u!114 &-8437727310460293191
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6050e2d5de785ce4d931e4dbdbf2d755, type: 3}
+  m_Name: ChromaticAberration
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  spectralLut:
+    overrideState: 0
+    value: {fileID: 2800000, guid: 99e09a9bd0f10384fa2a3bcbd5c65c9d, type: 3}
+    defaultState: 1
+  intensity:
+    overrideState: 1
+    value: 0.17
+  fastMode:
+    overrideState: 0
+    value: 0
 --- !u!114 &-8182259698065235514
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1385,10 +1411,10 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 0.173
+    value: 0.303
   size:
     overrideState: 1
-    value: 3
+    value: 0.45
   lumContrib:
     overrideState: 0
     value: 0.16
@@ -1410,7 +1436,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 32
+    value: 25
   intensityX:
     overrideState: 0
     value: 1
@@ -1419,13 +1445,13 @@ MonoBehaviour:
     value: 1
   centerX:
     overrideState: 0
-    value: 0
+    value: 0.91
   centerY:
     overrideState: 0
-    value: 0
+    value: 0.38
   scale:
     overrideState: 0
-    value: 0.91
+    value: 0.43
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1444,6 +1470,7 @@ MonoBehaviour:
   - {fileID: -8182259698065235514}
   - {fileID: 5920783422568206668}
   - {fileID: -7475848540515499595}
+  - {fileID: -8437727310460293191}
 --- !u!114 &5920783422568206668
 MonoBehaviour:
   m_ObjectHideFlags: 3
