@@ -7,20 +7,27 @@ public class BasicBullet : MonoBehaviour
     //public GameObject player;
     public GameObject fireOutAnimation;
     public GameObject destroyAnimation;
+    public AudioManager audioManager;
     public float speed = 1000;
     private float radialSpeed = 100;
+    private Player player;
     private Transform dest;
     private Rigidbody rb;
+
+    private void Awake()
+    {
+        audioManager = FindObjectOfType<AudioManager>();
+        player = FindObjectOfType<Player>();
+    }
 
     private void OnEnable()
     {
         if (FindObjectOfType<GameManager>().CheckGameOver())
             return;
-        FindObjectOfType<AudioManager>().Play("CubulletFired");
-        Player playerScript = FindObjectOfType<Player>().GetComponent<Player>();
+        audioManager.Play("CubulletFired");
         rb = GetComponent<Rigidbody>();
-        dest = (transform.position.y > playerScript.transform.position.y) ?
-            playerScript.GetWeakPointTop() : playerScript.GetWeakPointBot();
+        dest = (transform.position.y > player.transform.position.y) ?
+            player.GetWeakPointTop() : player.GetWeakPointBot();
         //dest = player.transform.position;
         //dest = player
         GameObject fired = Instantiate(
@@ -45,7 +52,7 @@ public class BasicBullet : MonoBehaviour
 
     public void Explode()
     {
-        FindObjectOfType<AudioManager>().Play("CubulletDestroy");
+        audioManager.Play("CubulletDestroy");
         GameObject exp = Instantiate(
             destroyAnimation, transform.position, Quaternion.identity) as GameObject;
         Destroy(exp, exp.GetComponent<ParticleSystem>().main.duration);

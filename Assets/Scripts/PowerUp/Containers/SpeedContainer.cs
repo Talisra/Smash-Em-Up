@@ -10,6 +10,9 @@ public class SpeedContainer : MonoBehaviour
     private Rigidbody rb;
     private bool isTriggered = false;
 
+    public float minVelocity;
+    public float maxVelocity;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -17,6 +20,7 @@ public class SpeedContainer : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        // hit by player: activation
         if (collision.contacts[0].thisCollider.gameObject.name == "Button")
         {
             if (!isTriggered)
@@ -28,6 +32,37 @@ public class SpeedContainer : MonoBehaviour
             }
 
         }
+        // Hit the wall: reward check
+        if (collision.gameObject.tag == "Unpassable")
+        {
+            if (rb.velocity.x > maxVelocity) // Too fast
+            {
+
+            }
+            else if (rb.velocity.x < minVelocity) // Too slow
+            {
+
+            }
+            else // Get reward
+            {
+
+            }
+        }
+    }
+
+    private void Break()
+    {
+        
+    }
+
+    private void Lock()
+    {
+
+    }
+
+    private void Open()
+    {
+
     }
 
     public void Activate()

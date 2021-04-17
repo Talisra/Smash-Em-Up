@@ -91,13 +91,13 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: CubulletFired
     clip: {fileID: 8300000, guid: 5543cefa2f8fc9e40bb3b5af6eac40ad, type: 3}
-    volume: 0.43
-    pitch: 1
+    volume: 0.417
+    pitch: 1.98
     source: {fileID: 0}
   - name: CubulletDestroy
     clip: {fileID: 8300000, guid: 303870064f342504d9cbf0a4ae242eb1, type: 3}
-    volume: 0.43
-    pitch: 1.68
+    volume: 0.548
+    pitch: 1.88
     source: {fileID: 0}
   - name: BrickBreak
     clip: {fileID: 8300000, guid: ae1b0c0b3e476df43ad52f97562c41c0, type: 3}

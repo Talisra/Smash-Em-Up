@@ -121,6 +121,7 @@
     <Compile Include="Assets\Scripts\Enemies\Cryser.cs" />
     <Compile Include="Assets\Scripts\Enemies\CryserBody.cs" />
     <Compile Include="Assets\Scripts\Menu\MenuPlayer.cs" />
+    <Compile Include="Assets\Scripts\PowerUp\Containers\SpeedContainer.cs" />
     <Compile Include="Assets\Imports\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_RandomDirectionTranslate.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerBottom.cs" />
     <Compile Include="Assets\Scripts\Pooling\Enemies\CryserPool.cs" />
@@ -132,7 +133,6 @@
     <Compile Include="Assets\Scripts\Pooling\Scraps\ScrapsPooler.cs" />
     <Compile Include="Assets\Scripts\Scraps\CrystalScrap.cs" />
     <Compile Include="Assets\Scripts\Enemies\LaserBeam.cs" />
-    <Compile Include="Assets\Scripts\PowerUp\Containers\SpeedContainer.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
