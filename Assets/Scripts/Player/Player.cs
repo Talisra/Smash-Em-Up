@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
     // Movement
     public float MoveSpeed = 0.1f;
     public float smoothTime = 0.1f; // lower smoothTime means better control with the mouse.
-    public float normalRotationCoefficient = 1f;
+    public float normalRotationCoefficient = 1.2f;
     public float deltaCap = 50f;
     private float MaxSpeed = 8.0f;
     private float velocity = 2.5f;

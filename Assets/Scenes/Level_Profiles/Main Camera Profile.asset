@@ -1411,10 +1411,10 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 0.303
+    value: 0.236
   size:
     overrideState: 1
-    value: 0.45
+    value: 1.67
   lumContrib:
     overrideState: 0
     value: 0.16

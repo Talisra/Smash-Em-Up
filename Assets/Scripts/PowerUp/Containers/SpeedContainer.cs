@@ -6,9 +6,13 @@ public class SpeedContainer : MonoBehaviour
 {
     public GameObject[] cogs;
     public int[] cogsRotSpeed;
+    public GameObject button;
 
     private Rigidbody rb;
+    private Renderer bodyRenderer;
     private bool isTriggered = false;
+    private bool isFading = false;
+    private float bodyCutoff = 0;
 
     public float minVelocity;
     public float maxVelocity;
@@ -16,6 +20,8 @@ public class SpeedContainer : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        bodyRenderer = GetComponent<Renderer>();
+        bodyRenderer.sharedMaterial.SetFloat("_Cutoff", bodyCutoff);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -25,7 +31,7 @@ public class SpeedContainer : MonoBehaviour
         {
             if (!isTriggered)
             {
-                collision.contacts[0].thisCollider.gameObject.transform.position -= 
+                collision.contacts[0].thisCollider.gameObject.transform.position += 
                     new Vector3(0.2f * transform.localScale.x, 0, 0);
                 isTriggered = true;
                 Activate();
@@ -67,16 +73,25 @@ public class SpeedContainer : MonoBehaviour
 
     public void Activate()
     {
+        button.SetActive(false);
         rb.isKinematic = false;
-        rb.AddForce(new Vector3(-100,0,0));
+        rb.AddForce(new Vector3(-10,0,0), ForceMode.VelocityChange);
     }
 
     // Update is called once per frame
     void Update()
     {
-        for(int i=0; i<cogs.Length; i++)
+        if (isTriggered)
         {
-            cogs[i].transform.Rotate(0, cogsRotSpeed[i] * Time.deltaTime, 0, Space.Self);
+            for (int i = 0; i < cogs.Length; i++)
+            {
+                cogs[i].transform.Rotate(0, cogsRotSpeed[i] * Time.deltaTime, 0, Space.Self);
+            }
+        }
+        if (isFading)
+        {
+            bodyRenderer.sharedMaterial.SetFloat("_Cutoff", bodyCutoff);
+            bodyCutoff += Time.deltaTime / 5;
         }
     }
 }

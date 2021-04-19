@@ -317,7 +317,7 @@ MonoBehaviour:
   flashTex: {fileID: 2800000, guid: 67473669facfb204abbe8bcd40aa5cca, type: 3}
   moveSpeed: 10
   maxHealth: 4
-  flashTime: 50
+  flashTime: 100
   isSquashable: 0
   isTouchingPlayer: 0
   isSquashed: 0
