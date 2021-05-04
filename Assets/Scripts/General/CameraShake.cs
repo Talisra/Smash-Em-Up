@@ -2,7 +2,7 @@
 using UnityEngine;
 public class CameraShake : MonoBehaviour
 {
-
+    public VHSPostProcessEffect glitchEffect;
     public static CameraShake instance;
 
     private Vector3 _originalPos;
@@ -23,11 +23,32 @@ public class CameraShake : MonoBehaviour
         _timeAtLastFrame = _timeAtCurrentFrame;
     }
 
+
     public static void Shake(float duration, float amount)
     {
         instance._originalPos = instance.gameObject.transform.localPosition;
         instance.StopAllCoroutines();
         instance.StartCoroutine(instance.cShake(duration, amount));
+        instance.Glitch(duration, amount);
+    }
+
+    private void Glitch(float duration, float amount)
+    {
+        if (amount >= 0.9f)
+        {
+            glitchEffect.SetScan(true);
+        }
+        if (duration >= 0.5f)
+        {
+            glitchEffect.enabled = true;
+            Invoke("StopGlitch", duration*0.75f);
+        }
+    }
+
+    private void StopGlitch()
+    {
+        glitchEffect.enabled = false;
+        glitchEffect.SetScan(false);
     }
 
     public IEnumerator cShake(float duration, float amount)

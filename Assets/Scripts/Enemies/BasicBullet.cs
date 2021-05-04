@@ -13,23 +13,23 @@ public class BasicBullet : MonoBehaviour
     private Player player;
     private Transform dest;
     private Rigidbody rb;
+    private bool isDead = false;
 
     private void Awake()
     {
         audioManager = FindObjectOfType<AudioManager>();
         player = FindObjectOfType<Player>();
+        rb = GetComponent<Rigidbody>();
     }
 
     private void OnEnable()
     {
+        isDead = false;
         if (FindObjectOfType<GameManager>().CheckGameOver())
             return;
         audioManager.Play("CubulletFired");
-        rb = GetComponent<Rigidbody>();
         dest = (transform.position.y > player.transform.position.y) ?
             player.GetWeakPointTop() : player.GetWeakPointBot();
-        //dest = player.transform.position;
-        //dest = player
         GameObject fired = Instantiate(
             fireOutAnimation,
             transform.position,
@@ -52,10 +52,15 @@ public class BasicBullet : MonoBehaviour
 
     public void Explode()
     {
-        audioManager.Play("CubulletDestroy");
-        GameObject exp = Instantiate(
-            destroyAnimation, transform.position, Quaternion.identity) as GameObject;
-        Destroy(exp, exp.GetComponent<ParticleSystem>().main.duration);
-        BasicBulletPool.Instance.ReturnToPool(this);
+        if (!isDead)
+        {
+            isDead = true;
+            audioManager.Play("CubulletDestroy");
+            GameObject exp = Instantiate(
+                destroyAnimation, transform.position, Quaternion.identity) as GameObject;
+            Destroy(exp, exp.GetComponent<ParticleSystem>().main.duration);
+            rb.velocity = Vector3.zero;
+            BasicBulletPool.Instance.ReturnToPool(this);
+        }
     }
 }

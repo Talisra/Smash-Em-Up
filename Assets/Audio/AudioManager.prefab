@@ -199,3 +199,53 @@ MonoBehaviour:
     volume: 0.85
     pitch: 0.94
     source: {fileID: 0}
+  - name: Click
+    clip: {fileID: 8300000, guid: 094883d45533c884f941a7dab201bcbc, type: 3}
+    volume: 0.621
+    pitch: 1.25
+    source: {fileID: 0}
+  - name: ContainerOpen
+    clip: {fileID: 8300000, guid: 5f8878b1c07279948945dd37f46af396, type: 3}
+    volume: 0.742
+    pitch: 1.54
+    source: {fileID: 0}
+  - name: ContainerSummon
+    clip: {fileID: 8300000, guid: 32a085624b9f652458773be29e8fc6c1, type: 3}
+    volume: 0.817
+    pitch: 1.26
+    source: {fileID: 0}
+  - name: ContainerBreak
+    clip: {fileID: 8300000, guid: 523ebf68884d98049942c0866eb29b2c, type: 3}
+    volume: 0.78
+    pitch: 1.41
+    source: {fileID: 0}
+  - name: Cannon_Norm
+    clip: {fileID: 8300000, guid: 13249423054df0a4981afc94dac599d4, type: 3}
+    volume: 0.913
+    pitch: 1
+    source: {fileID: 0}
+  - name: Cannon_8bit
+    clip: {fileID: 8300000, guid: d6f2f510ef6e8dd4b9d72f4fe76ce4c1, type: 3}
+    volume: 0.476
+    pitch: 1
+    source: {fileID: 0}
+  - name: Cannon_Dub
+    clip: {fileID: 8300000, guid: 3094a9a294925b245aa8a35f28370c01, type: 3}
+    volume: 0.78
+    pitch: 1
+    source: {fileID: 0}
+  - name: Concrete_Hit
+    clip: {fileID: 8300000, guid: 503c91320c7d3874fad75d7b3b1440c4, type: 3}
+    volume: 0.35
+    pitch: 1
+    source: {fileID: 0}
+  - name: Pipe_Hit
+    clip: {fileID: 8300000, guid: b0b77778861a05141b4a812748c1ab70, type: 3}
+    volume: 0.35
+    pitch: 1
+    source: {fileID: 0}
+  - name: Floor_Hit
+    clip: {fileID: 8300000, guid: 92d23b21d53d20f41b7118b64fce910e, type: 3}
+    volume: 0.25
+    pitch: 1
+    source: {fileID: 0}

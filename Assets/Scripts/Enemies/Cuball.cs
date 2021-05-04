@@ -51,7 +51,7 @@ public class Cuball : Enemy
 
     private void Shoot()
     {
-        if (isAlive)
+        if (isAlive && !tempDisable)
             BasicBulletPool.Instance.Get(transform.position, Quaternion.identity);
     }
 

@@ -14,15 +14,17 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     protected Collider[] enemyColliders;
     private ComboManager comboManager;
     private GameManager gameManager;
+    public bool tempDisable = false;
 
     // Graphics
     public GameObject body;
+    public GameObject superSpeedKernel;
     public Texture normalTex;
     public Texture flashTex;
     protected Renderer rend;
     protected TrailRenderer tr;
 
-    //Stats
+    // Stats
     public float moveSpeed = 10f;
     public int maxHealth;
     protected int curHealth; // number of times the enemy can hit the walls before exploding
@@ -32,17 +34,23 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     protected bool isAlive = true;
     protected float minVelocityForDamage = 5f;
 
-    //Squash
+    // Squash
     public bool isSquashable;
     public bool isTouchingPlayer = false;
     public bool isSquashed = false;
     public Vector3 squashVector;
     private Vector3 normalScale;
 
-    //Combos
+    // Combos
     private bool inCombo = false;
     private float comboCounter = 0;
     private float comboDelay = 2f;
+
+    // SuperSpeed
+    private bool isSuperSpeed = false;
+    private float superSpeedCounter = 0;
+    private float superSpeedDelay;
+    private float superSpeedMagnitude = 0;
 
     // Audio
     public string afterEffectAudio;
@@ -57,6 +65,8 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     void Awake()
     {
         normalScale = transform.localScale;
+        superSpeedKernel.transform.localScale = 
+            superSpeedKernel.transform.localScale + (new Vector3(1, 1, 1) - normalScale);
         gameManager = FindObjectOfType<GameManager>();
         audioManager = FindObjectOfType<AudioManager>();
         numOfScraps = new int[scraps.Count];
@@ -74,14 +84,25 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
 
     private void OnEnable()
     {
-        transform.localScale = normalScale;
-        isSquashed = false;
-        rb.isKinematic = false;
-        isAlive = true;
-        foreach (Collider c in enemyColliders)
-            c.enabled = true;
-        curHealth = maxHealth;
-        StartCoroutine(Behavior());
+        if (tempDisable)
+        {
+            tempDisable = false;
+            StartCoroutine(Behavior());
+        }
+        else
+        {
+            // fix all the things with delay and counter: ESPECIALLY SUPER SPEED!
+            transform.localScale = normalScale;
+            isSquashed = false;
+            rb.isKinematic = false;
+            isSuperSpeed = false;
+            superSpeedKernel.SetActive(false);
+            isAlive = true;
+            foreach (Collider c in enemyColliders)
+                c.enabled = true;
+            curHealth = maxHealth;
+            StartCoroutine(Behavior());
+        }
     }
 
     private void OnDisable()
@@ -137,7 +158,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
             StopAllCoroutines();
             audioManager.Play("Squash");
             isSquashed = true;
-            int wallType = colliderObj.GetComponent<Wall>().type;
+            int wallType = colliderObj.GetComponent<Unpassable>().type;
             rb.MovePosition(
                 point.point + (wallType == 0 ?
                 new Vector3(-Mathf.Sign(transform.position.x) * squashVector.x / 2, 0, 0) :
@@ -180,14 +201,13 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     {
         isFlashing = true;
         rend.material.SetTexture("_MainTex", flashTex);
-
     }
 
     // Handle Destruction when enemy is 0 HP:
     // Create an explosion prefab and scraps.
     void Explode()
     {
-        CameraShake.Shake(0.3f, 0.4f);
+        CameraShake.Shake(0.5f, 0.4f);
         audioManager.Play(explodeAudio);
         if (afterEffectAudio != null)
             audioManager.Play(afterEffectAudio);
@@ -210,14 +230,28 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
                 createdScrap.transform.rotation = Quaternion.Slerp(createdScrap.transform.rotation, rotationTarget, 0);
             }
         }
+        StopMovement();
         BackToPool();
+    }
+
+    public void GiveSuperSpeed(float duration)
+    {
+        isSuperSpeed = true;
+        superSpeedKernel.SetActive(true);
+        superSpeedDelay = duration;
+    }
+
+    public void StopMovement()
+    {
+        rb.velocity = Vector3.zero;
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
         if (rb.velocity.magnitude > 20f)
-            tr.enabled = true;
+            if (!isSuperSpeed)
+                tr.enabled = true;
         else
             tr.enabled = false;
         if (isFlashing)
@@ -237,6 +271,34 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
             {
                 inCombo = false;
                 comboCounter = 0;
+            }
+        }
+        if (isSuperSpeed)
+        {
+
+            superSpeedCounter += Time.deltaTime;
+            if (superSpeedCounter >= superSpeedDelay)
+            {
+                isSuperSpeed = false;
+                superSpeedCounter = 0;
+                superSpeedMagnitude = 0;
+                superSpeedKernel.SetActive(false);
+            }
+        }
+    }
+
+    private void FixedUpdate()
+    {
+
+        if (isSuperSpeed)
+        {
+            if (superSpeedMagnitude == 0 && rb.velocity.magnitude > 0)
+            {
+                superSpeedMagnitude = rb.velocity.magnitude;
+            }
+            if (rb.velocity.magnitude < superSpeedMagnitude)
+            {
+                rb.velocity = rb.velocity.normalized * superSpeedMagnitude;
             }
         }
     }

@@ -1,0 +1,133 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: _etalrust_holo 1
+  m_Shader: {fileID: 4800000, guid: 8842c84d9ff79e24abe4295f91ae4a7a, type: 3}
+  m_ShaderKeywords: _EMISSION _METALLICGLOSSMAP _NORMALMAP _PARALLAXMAP
+  m_LightmapFlags: 0
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 2800000, guid: 715562c7d2c7efd4dbdaf71f569c7f1a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HeightMap:
+        m_Texture: {fileID: 2800000, guid: c948ff4a46d9e134ab96d61acf2022ab, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 6161702f68c203b43921a3da68b99612, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0.59789205, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 2800000, guid: 412b321e6f9e3d549b08ff8e1f1bd651, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseTex:
+        m_Texture: {fileID: 2800000, guid: 6161702f68c203b43921a3da68b99612, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normal:
+        m_Texture: {fileID: 2800000, guid: 2858dc3cfe7a9ea41a5e3b6db3269a5c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 2800000, guid: 88925b76c8bbf5d4e960fa20cb74e9fc, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 2800000, guid: 92a9eda4812e0444bad6bf64cda22973, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SnowNormal:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Amplitude: 1
+    - _BlendOp: 0
+    - _BlurAmount: 0.013
+    - _BumpScale: 1
+    - _CameraFadingEnabled: 0
+    - _CameraFarFadeDistance: 2
+    - _CameraNearFadeDistance: 1
+    - _Cull: 0
+    - _Cutoff: -0.0019353493
+    - _DetailNormalMapScale: 1
+    - _DistortionBlend: 0.5
+    - _DistortionEnabled: 0
+    - _DistortionStrength: 1
+    - _DistortionStrengthScaled: 0
+    - _DstBlend: 0
+    - _EdgeWidth: 0
+    - _EmissionEnabled: 0
+    - _FlipbookMode: 0
+    - _FresnelPower: 5.79
+    - _GlossMapScale: 1
+    - _Glossiness: 0.264
+    - _GlossyReflections: 1
+    - _LightingEnabled: 1
+    - _Metallic: 0.333
+    - _Mode: 0
+    - _NormalStrength: 0.25
+    - _OcclusionStrength: 0.734
+    - _OutlineWidth: 0.25
+    - _Parallax: 0.08
+    - _Smoothness: 0.289
+    - _SmoothnessTextureChannel: 0
+    - _SnowAmount: 0.75
+    - _SnowGlossiness: 0.5
+    - _SnowMetallic: 0
+    - _SoftParticlesEnabled: 0
+    - _SoftParticlesFarFadeDistance: 1
+    - _SoftParticlesNearFadeDistance: 0
+    - _SpecularHighlights: 1
+    - _Speed: 1.25
+    - _SrcBlend: 1
+    - _UVSec: 0
+    - _ZWrite: 1
+    m_Colors:
+    - _BoxDims: {r: 5, g: 5, b: 5, a: 1}
+    - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
+    - _Color: {r: 0.8679245, g: 0.8679245, b: 0.8679245, a: 1}
+    - _EdgeColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Emission1: {r: 2.56, g: 0, b: 0, a: 1}
+    - _Emission2: {r: 0, g: 1.95, b: 2.52, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FlowDirection: {r: 1, g: 0, b: 0, a: 0}
+    - _MovementDirection: {r: 0, g: -1, b: 0, a: 1}
+    - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
+    - _ScrollDirection: {r: 1.28, g: 0, b: 0, a: 0}
+    - _SnowColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SnowDirection: {r: 0, g: 1, b: 0, a: 1}
+    - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
+    - _WindDirection: {r: 1, g: 0, b: 0, a: 1}
+  m_BuildTextureStacks: []

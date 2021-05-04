@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
         player = FindObjectOfType<Player>();
         GameArea = new List<float>();
         CalculateGameArea();
-        Cursor.visible = false;
+        //Cursor.visible = false;
         StartCoroutine(spawner.Spawn());
     }
 
@@ -57,9 +57,9 @@ public class GameManager : MonoBehaviour
     void CalculateGameArea()
     {
         float mapX = LeftWall.transform.position.x + LeftWall.GetComponent<Collider>().bounds.size.x/2;
-        float mapY = Ceiling.transform.position.y + Ceiling.GetComponent<Collider>().bounds.size.y/2;
+        float mapY = Floor.transform.position.y + Floor.GetComponent<Collider>().bounds.size.y/2;
         float mapW = RightWall.transform.position.x - RightWall.GetComponent<Collider>().bounds.size.x/2;
-        float mapH = Floor.transform.position.y - Floor.GetComponent<Collider>().bounds.size.y/2;
+        float mapH = Ceiling.transform.position.y - Ceiling.GetComponent<Collider>().bounds.size.y/2;
         GameArea.Add(mapX);
         GameArea.Add(mapY);
         GameArea.Add(mapW);
@@ -94,7 +94,19 @@ public class GameManager : MonoBehaviour
     public void CompleteWave()
     {
         Wave++;
+        StartCoroutine(StartWave());
+    }
+
+    public IEnumerator StartWave()
+    {
+        yield return new WaitForSeconds(0.5f);
+        StartCoroutine(spawner.SpawnBonuses());
+        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(
+            spawner.lastBonusAmount > 0? 5f + spawner.lastBonusAmount*0.5f : 0.1f);
         StartCoroutine(spawner.Spawn());
+        yield return new WaitForSeconds(Random.Range(3, 7));
+        StartCoroutine(spawner.SpawnWaveBonuses());
     }
 
     public void EndGame()
@@ -117,6 +129,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Cursor.visible = true;
+            SceneManager.LoadScene(0);
+        }
     }
 }

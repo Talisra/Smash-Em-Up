@@ -150,7 +150,7 @@ public class Player : MonoBehaviour
         {
             if (isFullCharge)
             {
-                collision.gameObject.GetComponent<Wall>().SlamWall(head.transform.position);
+                collision.gameObject.GetComponent<Unpassable>().SlamWall(head.transform.position);
                 CameraShake.Shake(0.2f, 0.6f);
                 Stun(chargeStunAmount);
                 StopCharge();
@@ -214,6 +214,10 @@ public class Player : MonoBehaviour
     public float GetCurrentHp()
     {
         return currentHP;
+    }
+    public float GetDeltaX()
+    {
+        return deltaX;
     }
 
     public void Heal(int amount)
@@ -329,7 +333,7 @@ public class Player : MonoBehaviour
         else
             animator.Play("SpAtkLeft");
         head.ManageAttack(0.25f);
-        Invoke("EndSpecialAttack", 0.25f);
+        Invoke("EndSpecialAttack", 0.45f);
     }
     public void EndSpecialAttack()
     {
@@ -360,6 +364,7 @@ public class Player : MonoBehaviour
             Mathf.Sign(enemyDirection) * 7000,
             0, 0);
         rbenemy.AddForce(PowerVector);
+        enemy.GetComponent<Enemy>().GiveSuperSpeed(0.5f);
     }
 
     public void Smash(GameObject enemy) 
@@ -389,80 +394,6 @@ public class Player : MonoBehaviour
             smashAnimPrefab, pos.position, Quaternion.identity) as GameObject;
         ParticleSystem parts = particle.GetComponent<ParticleSystem>();
         Destroy(particle, parts.main.duration);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (!isSquashed)
-        {
-            // Special attack
-            if (Input.GetMouseButtonDown(1))
-                if (currentPowerUps > 0 && !isFullCharge)
-                    SpecialAttack();
-
-            //handle attack speed
-            if (canAttack == false)
-            {
-                atkDelayCounter += Time.deltaTime;
-                if (atkDelayCounter >= attackDelay)
-                {
-                    atkDelayCounter = 0;
-                    canAttack = true;
-                }
-            }
-        }
-
-        //handle Stun
-        if (isStunned)
-        {
-            stunDelayCounter += Time.deltaTime;
-            if (stunDelayCounter >= stunDelay)
-            {
-                isStunned = false;
-                stunDelayCounter = 0;
-            }
-        }
-
-        if (chargeRecovery > 1)
-        {
-            chargeRecovery -= Time.deltaTime * 100;
-            if (chargeRecovery < 1)
-                chargeRecovery = 1;
-        }
-
-        //handle Invulnerability
-        if (isInvul)
-        {
-            invDelayCounter += Time.deltaTime;
-            if (invDelayCounter >= invTime)
-            {
-                isInvul = false;
-                invDelayCounter = 0;
-            }
-
-        }
-        //handle Squash
-        if (isSquashed)
-        {
-            MoveSpeed -= Time.deltaTime/5;
-            squashCounter += Time.deltaTime;
-
-            //squashScaleVector is Vector3(2, 0.15f, 1.1f);
-            transform.localScale += new Vector3(
-                    -(squashScaleVector.x - 1)/ squashTime * Time.deltaTime,
-                    (1 - squashScaleVector.y)/ squashTime * Time.deltaTime,
-                    (squashScaleVector.z - 1)/ squashTime * Time.deltaTime
-                );
-            if (squashCounter >= squashTime)
-            {
-                isSquashed = false;
-                squashCounter = 0;
-                MoveSpeed = 0.1f;
-                transform.localScale = new Vector3(1, 1, 1);
-            }
-
-        }
     }
 
     private void StopCharge()
@@ -509,6 +440,81 @@ public class Player : MonoBehaviour
             (mousePosition.y < gameManager.GetGameArea()[3] - deltaCap ? gameManager.GetGameArea()[3] : mousePosition.y);
         position = Vector3.Lerp(transform.position, mousePosition, MoveSpeed);
     }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (!isSquashed)
+        {
+            // Special attack
+            if (Input.GetMouseButtonDown(1))
+                if (currentPowerUps > 0 && !isFullCharge && !isAttackingSpecial)
+                    SpecialAttack();
+
+            //handle attack speed
+            if (canAttack == false)
+            {
+                atkDelayCounter += Time.deltaTime;
+                if (atkDelayCounter >= attackDelay)
+                {
+                    atkDelayCounter = 0;
+                    canAttack = true;
+                }
+            }
+        }
+
+        //handle Stun
+        if (isStunned)
+        {
+            stunDelayCounter += Time.deltaTime;
+            if (stunDelayCounter >= stunDelay)
+            {
+                isStunned = false;
+                stunDelayCounter = 0;
+            }
+        }
+
+        if (chargeRecovery > 1)
+        {
+            chargeRecovery -= Time.deltaTime * 100;
+            if (chargeRecovery < 1)
+                chargeRecovery = 1;
+        }
+
+        //handle Invulnerability
+        if (isInvul)
+        {
+            invDelayCounter += Time.deltaTime;
+            if (invDelayCounter >= invTime)
+            {
+                isInvul = false;
+                invDelayCounter = 0;
+            }
+
+        }
+        //handle Squash
+        if (isSquashed)
+        {
+            MoveSpeed -= Time.deltaTime / 5;
+            squashCounter += Time.deltaTime;
+
+            //squashScaleVector is Vector3(2, 0.15f, 1.1f);
+            transform.localScale += new Vector3(
+                    -(squashScaleVector.x - 1) / squashTime * Time.deltaTime,
+                    (1 - squashScaleVector.y) / squashTime * Time.deltaTime,
+                    (squashScaleVector.z - 1) / squashTime * Time.deltaTime
+                );
+            if (squashCounter >= squashTime)
+            {
+                isSquashed = false;
+                squashCounter = 0;
+                MoveSpeed = 0.1f;
+                transform.localScale = new Vector3(1, 1, 1);
+            }
+
+        }
+    }
+
 
     private void FixedUpdate()
     {

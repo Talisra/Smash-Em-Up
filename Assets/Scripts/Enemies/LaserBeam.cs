@@ -40,26 +40,46 @@ public class LaserBeam : MonoBehaviour
         }
     }
 
+    private bool checkCanFire()
+    {
+        List<float> area = gameManager.GetGameArea();
+        if (transform.position.x < area[0] || transform.position.x > area[2])
+        {
+            return false;
+        }
+        if (transform.position.y < area[1] || transform.position.y > area[3])
+        {
+            return false;
+        }
+        return true;
+    }
 
-    // Update is called once per frame
     void LateUpdate()
     {
-        lr.SetPosition(0, transform.position);
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, 
-            transform.TransformDirection(new Vector3(0,0,1)),
-            out hit))
+        if (checkCanFire())
         {
-            if (hit.collider)
+            lr.SetPosition(0, transform.position);
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position,
+                transform.TransformDirection(new Vector3(0, 0, 1)),
+                out hit))
             {
-                if (hit.collider.tag == "PlayerBody")
+                if (hit.collider)
                 {
-                    Player player = hit.collider.gameObject.GetComponentInParent<Player>();
-                    player.TakeDamage();
+                    if (hit.collider.tag == "PlayerBody")
+                    {
+                        Player player = hit.collider.gameObject.GetComponentInParent<Player>();
+                        player.TakeDamage();
+                    }
+                    laserImpact.transform.position = hit.point;
+                    lr.SetPosition(1, hit.point);
                 }
-                laserImpact.transform.position = hit.point;
-                lr.SetPosition(1, hit.point);
             }
+        }
+        else
+        {
+            lr.SetPosition(0, transform.position);
+            lr.SetPosition(1, transform.position);
         }
         //capCollider.center = (lr.GetPosition(1) + lr.GetPosition(1)) / 2;
         //capCollider.height = Vector3.Distance(lr.GetPosition(0), lr.GetPosition(1));

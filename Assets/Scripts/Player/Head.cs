@@ -6,6 +6,9 @@ public class Head : MonoBehaviour
     public GameObject rightH;
     public BoxCollider[] colliders;
 
+    // Material
+    private Renderer headRenderer;
+
     // Charge
     public float minVelocityCharge;
     public float maxVelocityCharge;
@@ -20,6 +23,9 @@ public class Head : MonoBehaviour
     private void Start()
     {
         colliders = GetComponents<BoxCollider>();
+        headRenderer = GetComponent<Renderer>();
+        headRenderer.material.EnableKeyword("_EmissiveIntensity");
+        headRenderer.material.SetFloat("_EmissiveIntensity", 0);
     }
 
     public void ManageAttack(float delay)
