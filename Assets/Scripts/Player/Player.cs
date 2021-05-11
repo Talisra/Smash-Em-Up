@@ -8,13 +8,15 @@ public class Player : MonoBehaviour
     public RegularBody body;
     public PlayerBottom bottom;
     public GameObject animationAnchor;
-
-    private Animator animator;
-    private Rigidbody rb;
-    private AudioManager audioManager;
-    private GameManager gameManager;
+    public Animator animator;
+    public Rigidbody rb;
+    public AudioManager audioManager;
+    public GameManager gameManager;
 
     public GameObject smashAnimPrefab;
+    // Skills
+    private Skill[] skills;
+    private Skill currentSkill = null; // -1 idle, while any other skill indicates the current skill active.
 
     // Death
     public GameObject scrapPrefab1;
@@ -60,6 +62,7 @@ public class Player : MonoBehaviour
     private float accelerationX = 1f;
     private float accelerationY = 1f;
     private float rotationCoefficient;
+    private bool inControl = true;
 
     // Attack
     public int maxPowerUps;
@@ -68,7 +71,6 @@ public class Player : MonoBehaviour
     private int currentPowerUps = 5;
     //private float specialModifier = 7000;
     private bool canAttack = true;
-    private bool isAttackingSpecial = false;
     private float attackDelay = 0.4f;
     private float atkDelayCounter = 0;
 
@@ -100,6 +102,11 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
+    public void AssignSkills(Skill[] skills) // skills[0] is left mouse, while skills[1] is right mouse
+    {
+        this.skills = skills;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         // Head Collision
@@ -115,10 +122,10 @@ public class Player : MonoBehaviour
                 if (!enemy.isSquashed)
                 {
                     GainInv(0.2f);
-                    if (isAttackingSpecial && canAttack)
-                        SpecialSmash(collision.gameObject);
+                    if (currentSkill != null && canAttack)
+                        OnSmash(enemy);
                     else if (canAttack)
-                        Smash(collision.gameObject);
+                        BasicSmash(enemy);
                 }
             }
             // Bullet that hitting the Head will do no damage
@@ -148,12 +155,9 @@ public class Player : MonoBehaviour
         // General Collisions
         if (collision.gameObject.tag == "Unpassable")
         {
-            if (isFullCharge)
+            if (currentSkill != null)
             {
-                collision.gameObject.GetComponent<Unpassable>().SlamWall(head.transform.position);
-                CameraShake.Shake(0.2f, 0.6f);
-                Stun(chargeStunAmount);
-                StopCharge();
+                currentSkill.OnWallCollision(collision);
             }
         }
         if (collision.gameObject.tag == "Floor")
@@ -190,6 +194,7 @@ public class Player : MonoBehaviour
     {
         currentPowerUps += amount;
     }
+
 
     public int GetCurrentPowerUps()
     {
@@ -238,6 +243,16 @@ public class Player : MonoBehaviour
             transform.localScale = squashScaleVector;
             colliderObj.GetComponent<Rigidbody>().AddForce(new Vector3(colliderObj.transform.position.x - transform.position.x,20,0), ForceMode.VelocityChange);
         }
+    }
+
+    public void GiveControl()
+    {
+        inControl = true;
+    }
+
+    public void TakeControl()
+    {
+        inControl = false;
     }
 
     public void Stun(float delay)
@@ -323,51 +338,47 @@ public class Player : MonoBehaviour
         Destroy(smallExp, smallExp.GetComponent<ParticleSystem>().main.duration);
     }
 
-    public void SpecialAttack()
+    private void PerformSkill(Skill skill)
     {
-        currentPowerUps--; //use powerup
-        GainInv(0.5f);
-        isAttackingSpecial = true;
-        if (deltaX < 0)
-            animator.Play("SpAtkRight");
-        else
-            animator.Play("SpAtkLeft");
-        head.ManageAttack(0.25f);
-        Invoke("EndSpecialAttack", 0.45f);
+        AddPowerUp(-skill.cost); // reduce the powerup cost
+        currentSkill = skill;
+        GainInv(skill.invTime);
+        if (skill.takeControl)
+            TakeControl();
+        skill.OnStartAction();
     }
-    public void EndSpecialAttack()
+
+    public bool canUseSkill(Skill skill)
     {
-        isAttackingSpecial = false;
+        if (currentPowerUps >= skill.cost && currentSkill == null)
+            return true;
+        return false;
+    }
+
+    public void BackToIdle()
+    {
+        if (currentSkill)
+        {
+            currentSkill.OnEndAction();
+            currentSkill = null;
+        }
     }
 
     // basic function of smashing an enemy
-    private void SmashActions(GameObject enemy)
+    private void SmashActions(Enemy enemy)
     {
-        Enemy target = enemy.GetComponent<Enemy>();
-        target.ResetComboChain();
-        target.HitByPlayer();
+        enemy.ResetComboChain();
+        enemy.HitByPlayer();
         canAttack = false;
     }
-
-    public void SpecialSmash(GameObject enemy)
+   
+    public void OnSmash(Enemy enemy)
     {
         SmashActions(enemy);
-        CameraShake.Shake(0.25f, 0.3f);
-        audioManager.Play("SuperSmash");
-        // calculate the distance to know if animation is from left or right
-        Vector3 enemyPos = enemy.transform.position;
-        Vector3 playerPos = transform.position;
-        float enemyDirection = -playerPos.x * enemyPos.y + playerPos.y * enemyPos.x; // negative = left, positive = right
-        ShowSmashParticle(enemy.transform);
-        Rigidbody rbenemy = enemy.GetComponent<Rigidbody>();
-        Vector3 PowerVector = new Vector3(
-            Mathf.Sign(enemyDirection) * 7000,
-            0, 0);
-        rbenemy.AddForce(PowerVector);
-        enemy.GetComponent<Enemy>().GiveSuperSpeed(0.5f);
+        currentSkill.OnSmash(enemy);
     }
 
-    public void Smash(GameObject enemy) 
+    public void BasicSmash(Enemy enemy) 
     {
         SmashActions(enemy);
         CameraShake.Shake(0.1f, 0.2f);
@@ -441,6 +452,8 @@ public class Player : MonoBehaviour
         position = Vector3.Lerp(transform.position, mousePosition, MoveSpeed);
     }
 
+
+
     // Update is called once per frame
     void Update()
     {
@@ -448,9 +461,9 @@ public class Player : MonoBehaviour
         {
             // Special attack
             if (Input.GetMouseButtonDown(1))
-                if (currentPowerUps > 0 && !isFullCharge && !isAttackingSpecial)
-                    SpecialAttack();
-
+                if (canUseSkill(skills[0]))
+                    PerformSkill(skills[0]);
+                     
             //handle attack speed
             if (canAttack == false)
             {
@@ -472,13 +485,6 @@ public class Player : MonoBehaviour
                 isStunned = false;
                 stunDelayCounter = 0;
             }
-        }
-
-        if (chargeRecovery > 1)
-        {
-            chargeRecovery -= Time.deltaTime * 100;
-            if (chargeRecovery < 1)
-                chargeRecovery = 1;
         }
 
         //handle Invulnerability
@@ -518,37 +524,26 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Movement 
-        TranslateCursorCoordinates();
-        deltaX = Mathf.Clamp(position.x - mousePosition.x, -deltaCap, deltaCap);
-        deltaY = (position.y - mousePosition.y) * (isSquashed ? squashCounter / squashTime : 1f);
-
-        //Debug.Log(rb.velocity);
-
-        // lets the player "follow" the mouse
-        if (!isStunned)
+        if (inControl)
         {
-            //CheckCharging();
-            if (!isFullCharge)
+            // Movement 
+            TranslateCursorCoordinates();
+            deltaX = Mathf.Clamp(position.x - mousePosition.x, -deltaCap, deltaCap);
+            deltaY = (position.y - mousePosition.y) * (isSquashed ? squashCounter / squashTime : 1f);
+
+            // lets the player "follow" the mouse
+            if (!isStunned)
             {
                 float xForce = velocity * -deltaX * accelerationX - rb.velocity.x;
                 xForce = Mathf.Clamp(xForce, -MaxSpeed, MaxSpeed);
                 float yForce = -deltaY * velocity * accelerationY - rb.velocity.y;
                 rb.AddForce(new Vector3(xForce, yForce, 0), ForceMode.VelocityChange);
-
+                Quaternion rotationTarget = Quaternion.Euler(0, 0,
+                Mathf.Clamp(
+                    isFullCharge ? accelerationX * chargeDirection * chargeRecovery : deltaX * rotationCoefficient * chargeRecovery,
+                    -90, 90));
+                rb.MoveRotation(rotationTarget);
             }
-            else if(isFullCharge)
-            {
-                rb.AddForce(new Vector3(-chargeDirection * accelerationX * 10, 0,0));
-                rb.AddForce(new Vector3(0, (-deltaY * velocity * accelerationY) - rb.velocity.y, 0), ForceMode.VelocityChange);
-            }
-            Quaternion rotationTarget = Quaternion.Euler(0, 0,
-            Mathf.Clamp(
-                isFullCharge ? accelerationX * chargeDirection * chargeRecovery : deltaX * rotationCoefficient * chargeRecovery,
-                -90, 90));
-            rb.MoveRotation(rotationTarget);
         }
-
     }
-
 }

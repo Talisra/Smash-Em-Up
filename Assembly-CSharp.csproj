@@ -64,11 +64,12 @@
      <Compile Include="Assets\Imports\Particle Ribbon by Moonflower Carnivore\Scripts\ReverseNormals.cs" />
      <Compile Include="Assets\Scripts\Scraps\RedBallScrap.cs" />
      <Compile Include="Assets\Scripts\General\HitFlash.cs" />
+     <Compile Include="Assets\Scripts\Player\Skills\ChargeAtk.cs" />
      <Compile Include="Assets\Scripts\PowerUps\HealthUp.cs" />
+     <Compile Include="Assets\Scripts\Profile\Profile.cs" />
      <Compile Include="Assets\Imports\PowerUp\Scripts\CustomizablePowerUp.cs" />
      <Compile Include="Assets\Imports\PowerUp\Scripts\ScaleParticles.cs" />
      <Compile Include="Assets\Scripts\Pooling\Powerups\HealthUpPool.cs" />
-     <Compile Include="Assets\Scripts\Environment\Wall.cs" />
      <Compile Include="Assets\Imports\LightningBolt\LightningBoltScript.cs" />
      <Compile Include="Assets\Imports\Ultimate 10 Plus Shaders\Shaders\Plexus\Plexus.cs" />
      <Compile Include="Assets\Imports\JMO Assets\Cartoon FX\Demo\Assets\CFX_AutoStopLoopedEffect.cs" />
@@ -88,6 +89,7 @@
      <Compile Include="Assets\Imports\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_RotateCamera.cs" />
      <Compile Include="Assets\Scripts\Pooling\Enemies\CuballPool.cs" />
      <Compile Include="Assets\Scripts\Environment\Fan.cs" />
+     <Compile Include="Assets\Scripts\Player\Skills\Skill.cs" />
      <Compile Include="Assets\Scripts\Enemies\EnemyBox\EnemyBox.cs" />
      <Compile Include="Assets\Scripts\General\WaveDictionary.cs" />
      <Compile Include="Assets\Scripts\General\Spawner.cs" />
@@ -100,6 +102,7 @@
      <Compile Include="Assets\Scripts\Managers\ComboManager.cs" />
      <Compile Include="Assets\Imports\JMO Assets\Cartoon FX\Scripts\CFX_LightIntensityFade.cs" />
      <Compile Include="Assets\Scripts\Managers\AudioManager.cs" />
+     <Compile Include="Assets\Scripts\Player\Skills\RoundAtk.cs" />
      <Compile Include="Assets\Imports\Ultimate 10 Plus Shaders\Scripts\U10PS_ExampleReview.cs" />
      <Compile Include="Assets\Scripts\UI\PowerupCounterText.cs" />
      <Compile Include="Assets\Scripts\Scraps\Scraps.cs" />
@@ -119,6 +122,7 @@
      <Compile Include="Assets\Imports\Ultimate 10 Plus Shaders\Scripts\U10PS_MouseRotation.cs" />
      <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
      <Compile Include="Assets\Imports\VHS\Scripts\VHSPostProcessEffect.cs" />
+     <Compile Include="Assets\Imports\Environment\_SNAPS_PrototypingAssets\About\Scripts\Readme.cs" />
      <Compile Include="Assets\Scripts\IPoolableObject.cs" />
      <Compile Include="Assets\Scripts\Player\Head.cs" />
      <Compile Include="Assets\Scripts\Enemies\Cryser.cs" />
@@ -140,7 +144,6 @@
      <Compile Include="Assets\Scripts\Pooling\Scraps\ScrapsPooler.cs" />
      <Compile Include="Assets\Scripts\Scraps\CrystalScrap.cs" />
      <Compile Include="Assets\Scripts\Enemies\LaserBeam.cs" />
-     <Compile Include="Assets\AssetStoreOriginals\_SNAPS_PrototypingAssets\About\Scripts\Readme.cs" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\Imports\Pixelate\Pixelate.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
@@ -194,6 +197,15 @@
  <Reference Include="Unity.VSCode.Editor">
  <HintPath>C:/Users/User/Documents/GitHub/Smash &apos;em Up/Smash-Em-Up/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.ProBuilder">
+ <HintPath>C:/Users/User/Documents/GitHub/Smash &apos;em Up/Smash-Em-Up/Library/ScriptAssemblies/Unity.ProBuilder.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.ProBuilder.Editor">
+ <HintPath>C:/Users/User/Documents/GitHub/Smash &apos;em Up/Smash-Em-Up/Library/ScriptAssemblies/Unity.ProBuilder.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.ProBuilder.AssetIdRemapUtility">
+ <HintPath>C:/Users/User/Documents/GitHub/Smash &apos;em Up/Smash-Em-Up/Library/ScriptAssemblies/Unity.ProBuilder.AssetIdRemapUtility.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.ProGrids.Editor">
  <HintPath>C:/Users/User/Documents/GitHub/Smash &apos;em Up/Smash-Em-Up/Library/ScriptAssemblies/Unity.ProGrids.Editor.dll</HintPath>
  </Reference>
@@ -224,23 +236,14 @@
  <Reference Include="Unity.VisualStudio.Editor">
  <HintPath>C:/Users/User/Documents/GitHub/Smash &apos;em Up/Smash-Em-Up/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.ProBuilder.AddOns.Editor">
+ <HintPath>C:/Users/User/Documents/GitHub/Smash &apos;em Up/Smash-Em-Up/Library/ScriptAssemblies/Unity.ProBuilder.AddOns.Editor.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.TextMeshPro">
  <HintPath>C:/Users/User/Documents/GitHub/Smash &apos;em Up/Smash-Em-Up/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
  <HintPath>C:/Users/User/Documents/GitHub/Smash &apos;em Up/Smash-Em-Up/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
- </Reference>
- <Reference Include="Unity.ProBuilder">
- <HintPath>C:/Users/User/Documents/GitHub/Smash &apos;em Up/Smash-Em-Up/Library/ScriptAssemblies/Unity.ProBuilder.dll</HintPath>
- </Reference>
- <Reference Include="Unity.ProBuilder.Editor">
- <HintPath>C:/Users/User/Documents/GitHub/Smash &apos;em Up/Smash-Em-Up/Library/ScriptAssemblies/Unity.ProBuilder.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.ProBuilder.AssetIdRemapUtility">
- <HintPath>C:/Users/User/Documents/GitHub/Smash &apos;em Up/Smash-Em-Up/Library/ScriptAssemblies/Unity.ProBuilder.AssetIdRemapUtility.dll</HintPath>
- </Reference>
- <Reference Include="Unity.ProBuilder.AddOns.Editor">
- <HintPath>C:/Users/User/Documents/GitHub/Smash &apos;em Up/Smash-Em-Up/Library/ScriptAssemblies/Unity.ProBuilder.AddOns.Editor.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.1.12f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

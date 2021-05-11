@@ -130,14 +130,6 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
                 Damage(1);
             }
         }
-
-        if (collision.gameObject.tag == "Unpassable")
-        {
-            if (isTouchingPlayer && isAlive)
-            {
-                Squash(collision.gameObject, collision.GetContact(0));
-            }
-        }
     }
 
     public void ResetComboChain()
@@ -151,29 +143,42 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
         audioManager.Play(hitAudio);
     }
 
-    public virtual void Squash(GameObject colliderObj, ContactPoint point)
+    public virtual void Squash()
     {
         if (!isSquashed)
         {
             StopAllCoroutines();
             audioManager.Play("Squash");
             isSquashed = true;
-            int wallType = colliderObj.GetComponent<Unpassable>().type;
-            rb.MovePosition(
-                point.point + (wallType == 0 ?
-                new Vector3(-Mathf.Sign(transform.position.x) * squashVector.x / 2, 0, 0) :
-                new Vector3(0, -squashVector.x / 2, 0))) ;
             rb.isKinematic = true;
-            rb.MoveRotation(wallType == 0 ?// rotate to the wall or the ceiling?
-            Quaternion.Euler(0, 0, 0) : Quaternion.Euler(0, 0, 90));
             transform.localScale = squashVector;
+            rb.MoveRotation(Quaternion.Euler(0, 0, 0));
+            AttachToWall();
             foreach (Collider c in enemyColliders)
                 c.enabled = false;
             Damage(curHealth);
+
         }
     }
 
-    void Damage(int amount)
+    private void AttachToWall()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, new Vector3(Mathf.Sign(rb.velocity.x),0,0), out hit)) 
+        { 
+
+
+        }
+        /*
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, new Vector3(Mathf.Sign(rb.velocity.x), 0, 0), out hit))
+        {
+            transform.position = transform.position + new Vector3(hit.transform.position.x * Mathf.Sign(rb.velocity.x), 0 ,0);
+        }
+        */
+    }
+
+    public void Damage(int amount)
     {
         if (isAlive)
         {
@@ -289,7 +294,6 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
 
     private void FixedUpdate()
     {
-
         if (isSuperSpeed)
         {
             if (superSpeedMagnitude == 0 && rb.velocity.magnitude > 0)

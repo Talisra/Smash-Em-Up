@@ -21,7 +21,7 @@ public class Cuball : Enemy
             yield return new WaitForSeconds(Random.Range(minIdleTime, maxIdleTime));
         }
     }
-    public override void Squash(GameObject colliderObj, ContactPoint point)
+    public override void Squash()
     {
         // must be before base.Squash() because the former changes the isSquash variable to true
         if (!isSquashed) 
@@ -29,7 +29,7 @@ public class Cuball : Enemy
             if (attackWindup) // set the attackWindup effect to inactive if the enemy is squashed
                 attackWindup.SetActive(false);
         }
-        base.Squash(colliderObj, point);
+        base.Squash();
     }
 
     private void OnDisable()

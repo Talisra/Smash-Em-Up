@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public Profile profile;
     public Player player;
     public GameObject LeftWall;
     public GameObject RightWall;
@@ -31,6 +32,7 @@ public class GameManager : MonoBehaviour
     {
         spawner = FindObjectOfType<Spawner>();
         player = FindObjectOfType<Player>();
+        player.AssignSkills(profile.skills);
         GameArea = new List<float>();
         CalculateGameArea();
         //Cursor.visible = false;

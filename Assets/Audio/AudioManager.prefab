@@ -164,10 +164,10 @@ MonoBehaviour:
     volume: 0.15
     pitch: 1.71
     source: {fileID: 0}
-  - name: Squash
+  - name: ChargeHit
     clip: {fileID: 8300000, guid: 13ce31399306b9e4085acf3c01c4d901, type: 3}
-    volume: 0.778
-    pitch: 0.96
+    volume: 0.697
+    pitch: 1.25
     source: {fileID: 0}
   - name: BoxImpact
     clip: {fileID: 8300000, guid: a845e29f59a72574e83b83a1dc171aff, type: 3}
@@ -247,5 +247,10 @@ MonoBehaviour:
   - name: Floor_Hit
     clip: {fileID: 8300000, guid: 92d23b21d53d20f41b7118b64fce910e, type: 3}
     volume: 0.25
+    pitch: 1
+    source: {fileID: 0}
+  - name: Squash
+    clip: {fileID: 8300000, guid: fc4e39efd6e2922428c81beb3f6e37ea, type: 3}
+    volume: 0.306
     pitch: 1
     source: {fileID: 0}

@@ -57,10 +57,10 @@
   <ItemGroup>
      <Compile Include="Assets\Imports\LightningBolt\Editor\LightningBoltEditor.cs" />
      <Compile Include="Assets\Imports\JMO Assets\Cartoon FX Easy Editor\Editor\CFXEasyEditor.cs" />
-     <Compile Include="Assets\AssetStoreOriginals\_SNAPS_PrototypingAssets\About\Scripts\Editor\ReadmeEditor.cs" />
-     <Compile Include="Assets\AssetStoreOriginals\_SNAPS_PrototypingAssets\Scripts\Editor\PackageChecker\PackageChecker.cs" />
-     <None Include="Assets\AssetStoreOriginals\_SNAPS_PrototypingAssets\Scripts\Editor\PackageChecker\settings\PackageImportList_ShaderGraph.txt" />
-     <None Include="Assets\AssetStoreOriginals\_SNAPS_PrototypingAssets\Scripts\Editor\PackageChecker\PackageImportList.txt" />
+     <Compile Include="Assets\Imports\Environment\_SNAPS_PrototypingAssets\About\Scripts\Editor\ReadmeEditor.cs" />
+     <Compile Include="Assets\Imports\Environment\_SNAPS_PrototypingAssets\Scripts\Editor\PackageChecker\PackageChecker.cs" />
+     <None Include="Assets\Imports\Environment\_SNAPS_PrototypingAssets\Scripts\Editor\PackageChecker\settings\PackageImportList_ShaderGraph.txt" />
+     <None Include="Assets\Imports\Environment\_SNAPS_PrototypingAssets\Scripts\Editor\PackageChecker\PackageImportList.txt" />
  <Reference Include="UnityEditor.TestRunner">
  <HintPath>C:/Users/User/Documents/GitHub/Smash &apos;em Up/Smash-Em-Up/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
  </Reference>
@@ -75,6 +75,15 @@
  </Reference>
  <Reference Include="Unity.VSCode.Editor">
  <HintPath>C:/Users/User/Documents/GitHub/Smash &apos;em Up/Smash-Em-Up/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.ProBuilder">
+ <HintPath>C:/Users/User/Documents/GitHub/Smash &apos;em Up/Smash-Em-Up/Library/ScriptAssemblies/Unity.ProBuilder.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.ProBuilder.Editor">
+ <HintPath>C:/Users/User/Documents/GitHub/Smash &apos;em Up/Smash-Em-Up/Library/ScriptAssemblies/Unity.ProBuilder.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.ProBuilder.AssetIdRemapUtility">
+ <HintPath>C:/Users/User/Documents/GitHub/Smash &apos;em Up/Smash-Em-Up/Library/ScriptAssemblies/Unity.ProBuilder.AssetIdRemapUtility.dll</HintPath>
  </Reference>
  <Reference Include="Unity.ProGrids.Editor">
  <HintPath>C:/Users/User/Documents/GitHub/Smash &apos;em Up/Smash-Em-Up/Library/ScriptAssemblies/Unity.ProGrids.Editor.dll</HintPath>
@@ -106,23 +115,14 @@
  <Reference Include="Unity.VisualStudio.Editor">
  <HintPath>C:/Users/User/Documents/GitHub/Smash &apos;em Up/Smash-Em-Up/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.ProBuilder.AddOns.Editor">
+ <HintPath>C:/Users/User/Documents/GitHub/Smash &apos;em Up/Smash-Em-Up/Library/ScriptAssemblies/Unity.ProBuilder.AddOns.Editor.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.TextMeshPro">
  <HintPath>C:/Users/User/Documents/GitHub/Smash &apos;em Up/Smash-Em-Up/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
  <HintPath>C:/Users/User/Documents/GitHub/Smash &apos;em Up/Smash-Em-Up/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
- </Reference>
- <Reference Include="Unity.ProBuilder">
- <HintPath>C:/Users/User/Documents/GitHub/Smash &apos;em Up/Smash-Em-Up/Library/ScriptAssemblies/Unity.ProBuilder.dll</HintPath>
- </Reference>
- <Reference Include="Unity.ProBuilder.Editor">
- <HintPath>C:/Users/User/Documents/GitHub/Smash &apos;em Up/Smash-Em-Up/Library/ScriptAssemblies/Unity.ProBuilder.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.ProBuilder.AssetIdRemapUtility">
- <HintPath>C:/Users/User/Documents/GitHub/Smash &apos;em Up/Smash-Em-Up/Library/ScriptAssemblies/Unity.ProBuilder.AssetIdRemapUtility.dll</HintPath>
- </Reference>
- <Reference Include="Unity.ProBuilder.AddOns.Editor">
- <HintPath>C:/Users/User/Documents/GitHub/Smash &apos;em Up/Smash-Em-Up/Library/ScriptAssemblies/Unity.ProBuilder.AddOns.Editor.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.1.12f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

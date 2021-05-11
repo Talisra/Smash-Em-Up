@@ -24,18 +24,15 @@ public class Head : MonoBehaviour
     {
         colliders = GetComponents<BoxCollider>();
         headRenderer = GetComponent<Renderer>();
-        headRenderer.material.EnableKeyword("_EmissiveIntensity");
-        headRenderer.material.SetFloat("_EmissiveIntensity", 0);
     }
 
-    public void ManageAttack(float delay)
+    public void EnableAttackEffect()
     {
         ManageAtkTrail();
         ManageHitBox();
-        Invoke("StopAttack", delay);
     }
 
-    public void StopAttack()
+    public void DisableAttackEffect()
     {
         RevertHitBox();
         StopAtkTrail();

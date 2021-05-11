@@ -70,5 +70,35 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 4300000, guid: 07ae09abf6445c843975328e2a063842, type: 2}
+    - target: {fileID: 65173266984609022, guid: d386f8832054e9c4ebb7feebef84fb0c,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 3.0223265
+      objectReference: {fileID: 0}
+    - target: {fileID: 65173266984609022, guid: d386f8832054e9c4ebb7feebef84fb0c,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.26888943
+      objectReference: {fileID: 0}
+    - target: {fileID: 65173266984609022, guid: d386f8832054e9c4ebb7feebef84fb0c,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 65173266984609022, guid: d386f8832054e9c4ebb7feebef84fb0c,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 1.4972123
+      objectReference: {fileID: 0}
+    - target: {fileID: 65173266984609022, guid: d386f8832054e9c4ebb7feebef84fb0c,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 0.1237392
+      objectReference: {fileID: 0}
+    - target: {fileID: 65173266984609022, guid: d386f8832054e9c4ebb7feebef84fb0c,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 1.4999999
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d386f8832054e9c4ebb7feebef84fb0c, type: 3}

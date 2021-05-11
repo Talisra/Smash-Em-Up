@@ -16,6 +16,8 @@ TagManager:
   - Hazard
   - EnemyBox
   - SemiCollider
+  - Trigger
+  - Container
   layers:
   - Default
   - TransparentFX
@@ -26,7 +28,7 @@ TagManager:
   - 
   - 
   - Lighting
-  - Ground
+  - Unpassable
   - Postprocessing
   - CeilingDoor
   - Enemies
