@@ -9,7 +9,7 @@ public class Unpassable : MonoBehaviour
     public GameObject slamParticle;
     public string slamSound;
     public string hitSound;
-    private AudioManager audioManager;
+
     // Start is called before the first frame update
 
     private void OnCollisionEnter(Collision collision)
@@ -20,28 +20,23 @@ public class Unpassable : MonoBehaviour
         }
         if (collision.gameObject.tag == "Player")
         {
-            audioManager.Play("MetalCollision");
+            AudioManager.Instance.Play("MetalCollision");
         }
     }
 
     void HitWall(Vector3 coordinates)
     {
         Instantiate(hitParticle, coordinates, Quaternion.identity);
-        audioManager.Play(hitSound);
+        AudioManager.Instance.Play(hitSound);
     }
 
     public void SlamWall(Vector3 coordinates)
     {
-        audioManager.Play(slamSound);
+        AudioManager.Instance.Play(slamSound);
         GameObject dust = Instantiate(slamParticle, coordinates, Quaternion.identity);
         ParticleSystem parts = dust.GetComponent<ParticleSystem>();
         float totalDuration = parts.main.duration;
         Destroy(dust, totalDuration);
-    }
-
-    void Start()
-    {
-        audioManager = FindObjectOfType<AudioManager>();
     }
 
     // Update is called once per frame

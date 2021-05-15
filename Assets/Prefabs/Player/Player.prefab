@@ -403,8 +403,6 @@ MonoBehaviour:
   animationAnchor: {fileID: 4221636198573038547}
   animator: {fileID: 0}
   rb: {fileID: 0}
-  audioManager: {fileID: 0}
-  gameManager: {fileID: 0}
   smashAnimPrefab: {fileID: 100004, guid: 0c9385306dae9b04ca34b9f67fe0b536, type: 3}
   scrapPrefab1: {fileID: 1065284531111118047, guid: 8fde1fd14d5851542946485ef6d4fb59,
     type: 3}
@@ -426,7 +424,6 @@ MonoBehaviour:
   maxPowerUps: 0
   power: 10
   basePower: 25
-  deltaMin: 40
 --- !u!54 &1496912950484240348
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -762,7 +759,7 @@ GameObject:
   - component: {fileID: 5859076279779572523}
   m_Layer: 0
   m_Name: AnimationAnchor
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

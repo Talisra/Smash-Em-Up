@@ -58,7 +58,6 @@
      <Compile Include="Assets\Imports\JMO Assets\Cartoon FX\Scripts\CFX_LightFlicker.cs" />
      <Compile Include="Assets\Imports\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_Translate.cs" />
      <Compile Include="Assets\Scripts\Scraps\CubeScraps.cs" />
-     <Compile Include="Assets\Scripts\Pooling\GenericPoolObject.cs" />
      <Compile Include="Assets\Scripts\Player\Player.cs" />
      <Compile Include="Assets\Scripts\Enemies\Cuball.cs" />
      <Compile Include="Assets\Imports\Particle Ribbon by Moonflower Carnivore\Scripts\ReverseNormals.cs" />
@@ -141,9 +140,14 @@
      <Compile Include="Assets\Scripts\PowerUps\Containers\SpeedContainer.cs" />
      <Compile Include="Assets\Imports\Ultimate 10 Plus Shaders\Scripts\U10PS_SnowOverTime.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
-     <Compile Include="Assets\Scripts\Pooling\Scraps\ScrapsPooler.cs" />
+     <Compile Include="Assets\Scripts\Pooling\Scraps\PrefabPooler.cs" />
      <Compile Include="Assets\Scripts\Scraps\CrystalScrap.cs" />
      <Compile Include="Assets\Scripts\Enemies\LaserBeam.cs" />
+     <Compile Include="Assets\Audio\Session.cs" />
+     <Compile Include="Assets\Audio\Track.cs" />
+     <Compile Include="Assets\Scripts\General\ShieldFX.cs" />
+     <Compile Include="Assets\Scripts\Pooling\Powerups\ShieldUpPool.cs" />
+     <Compile Include="Assets\Scripts\PowerUps\ShieldUp.cs" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\Imports\Pixelate\Pixelate.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />

@@ -8,13 +8,11 @@ public class LaserBeam : MonoBehaviour
     private GameObject laserImpact;
     private LineRenderer lr;
     private CapsuleCollider capCollider;
-    private GameManager gameManager;
     //private float fireTime = 0.6f;
     //private int laserLength = 5000;
 
     private void Awake()
     {
-        gameManager = FindObjectOfType<GameManager>();
         capCollider = GetComponent<CapsuleCollider>();
         gameObject.SetActive(false);
         lr = GetComponent<LineRenderer>();
@@ -42,7 +40,7 @@ public class LaserBeam : MonoBehaviour
 
     private bool checkCanFire()
     {
-        List<float> area = gameManager.GetGameArea();
+        List<float> area = GameManager.Instance.GetGameArea();
         if (transform.position.x < area[0] || transform.position.x > area[2])
         {
             return false;

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScrapsPooler : MonoBehaviour
+public class PrefabPooler : MonoBehaviour
 {
-    public static ScrapsPooler Instance;
+    public static PrefabPooler Instance;
 
     [System.Serializable]
     public class Pool

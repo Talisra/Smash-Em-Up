@@ -32,7 +32,7 @@ public class Cryser : Enemy
 
     public void ChargeLaser()
     {
-        audioManager.Play(chargeAudio);
+        AudioManager.Instance.Play(chargeAudio);
         GameObject windup = Instantiate(
             windupAnimationPrefab, transform.position, Quaternion.identity) as GameObject;
         windup.transform.SetParent(this.transform);
@@ -44,7 +44,7 @@ public class Cryser : Enemy
 
     public void StartFire()
     {
-        audioManager.Play(fireAudio);
+        AudioManager.Instance.Play(fireAudio);
         rightLaser.SetActive(true);
         leftLaser.SetActive(true);
         Invoke("StopFire", fireTime);

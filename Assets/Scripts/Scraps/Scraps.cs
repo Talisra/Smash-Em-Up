@@ -31,6 +31,6 @@ public abstract class Scraps : MonoBehaviour, IPoolableObject
 
     public virtual void BackToPool()
     {
-        ScrapsPooler.Instance.ReturnToPool(gameObject);
+        PrefabPooler.Instance.ReturnToPool(gameObject);
     }
 }

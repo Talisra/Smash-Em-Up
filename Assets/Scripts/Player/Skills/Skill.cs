@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class Skill : MonoBehaviour
 {
+    public bool isCharge; // decides if the skill is just one click or click and hold.
+    public bool isMultiHit;
     public int cost;
     public string animationName;
     public float invTime;
@@ -11,7 +13,6 @@ public abstract class Skill : MonoBehaviour
     public GameObject hitPrefab;
 
     protected Player player;
-    protected AudioManager audioManager;
 
     protected void ShowHitParticle(Transform pos)
     {
@@ -24,7 +25,6 @@ public abstract class Skill : MonoBehaviour
     private void Start()
     {
         player = FindObjectOfType<Player>();
-        audioManager = FindObjectOfType <AudioManager>();
     }
 
     public virtual void OnSmash(Enemy enemy)
@@ -32,6 +32,11 @@ public abstract class Skill : MonoBehaviour
 
     }
     public virtual void OnWallCollision(Collision collision)
+    {
+
+    }
+
+    public virtual void OnInputRelease()
     {
 
     }

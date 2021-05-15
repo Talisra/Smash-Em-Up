@@ -9,7 +9,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     public GameObject bullet;
     public GameObject player;
 
-    protected AudioManager audioManager;
+    //protected AudioManager audioManager;
     protected Rigidbody rb;
     protected Collider[] enemyColliders;
     private ComboManager comboManager;
@@ -28,7 +28,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     public float moveSpeed = 10f;
     public int maxHealth;
     protected int curHealth; // number of times the enemy can hit the walls before exploding
-    public float flashTime = 4;
+    public float flashTime = 0.5f;
     protected float flashCounter = 0;
     protected bool isFlashing = false;
     protected bool isAlive = true;
@@ -40,6 +40,11 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     public bool isSquashed = false;
     public Vector3 squashVector;
     private Vector3 normalScale;
+
+    // Player Hit
+    public bool isHit;
+    private float hitCounter;
+    private float hitDelay = 0.5f;
 
     // Combos
     private bool inCombo = false;
@@ -68,7 +73,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
         superSpeedKernel.transform.localScale = 
             superSpeedKernel.transform.localScale + (new Vector3(1, 1, 1) - normalScale);
         gameManager = FindObjectOfType<GameManager>();
-        audioManager = FindObjectOfType<AudioManager>();
+        //audioManager = FindObjectOfType<AudioManager>();
         numOfScraps = new int[scraps.Count];
         for (int i = 0; i < scraps.Count; i++)
         {
@@ -140,7 +145,8 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
 
     public void HitByPlayer()
     {
-        audioManager.Play(hitAudio);
+        AudioManager.Instance.Play(hitAudio);
+        isHit = true;
     }
 
     public virtual void Squash()
@@ -148,36 +154,37 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
         if (!isSquashed)
         {
             StopAllCoroutines();
-            audioManager.Play("Squash");
+            AudioManager.Instance.Play("Squash");
             isSquashed = true;
-            rb.isKinematic = true;
             transform.localScale = squashVector;
-            rb.MoveRotation(Quaternion.Euler(0, 0, 0));
             AttachToWall();
+            rb.MoveRotation(Quaternion.Euler(0, 0, 0));
+            rb.isKinematic = true;
             foreach (Collider c in enemyColliders)
                 c.enabled = false;
             Damage(curHealth);
-
         }
     }
-
     private void AttachToWall()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, new Vector3(Mathf.Sign(rb.velocity.x),0,0), out hit)) 
-        { 
-
-
-        }
-        /*
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, new Vector3(Mathf.Sign(rb.velocity.x), 0, 0), out hit))
-        {
-            transform.position = transform.position + new Vector3(hit.transform.position.x * Mathf.Sign(rb.velocity.x), 0 ,0);
-        }
-        */
+        float sign = Mathf.Sign(transform.position.x);
+        transform.position = new Vector3(
+            (sign < 0 ? gameManager.GetGameArea()[0] : gameManager.GetGameArea()[2]) - sign * squashVector.x,
+            transform.position.y, 0);
     }
 
+    /*
+    private void AttachToWall()
+    {
+        float sign = Mathf.Sign(transform.position.x);
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, new Vector3(sign, 0,0), out hit)) 
+        {
+            //transform.position = hit.point - new Vector3(sign * squashVector.x, 0, 0);
+            transform.position = hit.point;
+        }
+    }
+    */
     public void Damage(int amount)
     {
         if (isAlive)
@@ -187,7 +194,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
                 ResetComboChain();
                 comboManager.AddCombo();
             }
-            audioManager.Play(hitAudio);
+            AudioManager.Instance.Play(hitAudio);
             curHealth -= amount;
             Flash();
             if (curHealth <= 0)
@@ -213,9 +220,9 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     void Explode()
     {
         CameraShake.Shake(0.5f, 0.4f);
-        audioManager.Play(explodeAudio);
-        if (afterEffectAudio != null)
-            audioManager.Play(afterEffectAudio);
+        AudioManager.Instance.Play(explodeAudio);
+        if (afterEffectAudio != "")
+            AudioManager.Instance.Play(afterEffectAudio);
         // creates small scraps
         GameObject explosion = Instantiate(explosionPrefab, transform.position, transform.rotation) as GameObject;
         ParticleSystem parts = explosion.GetComponent<ParticleSystem>();
@@ -226,7 +233,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
             for (int j = 0; j < numOfScraps[i]; j++)
             {
                 GameObject scrap = scraps[i];
-                GameObject createdScrap = ScrapsPooler.Instance.Get(
+                GameObject createdScrap = PrefabPooler.Instance.Get(
                     scraps[i].name, transform.position, Quaternion.identity) as GameObject;
                 // each scrap has random size and rotation
                 Vector3 size = scrap.GetComponent<Scraps>().GenerateSize();
@@ -261,7 +268,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
             tr.enabled = false;
         if (isFlashing)
         {
-            flashCounter++;
+            flashCounter += Time.deltaTime;
             if (flashCounter >= flashTime)
             {
                 rend.material.SetTexture("_MainTex", normalTex);
@@ -276,6 +283,15 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
             {
                 inCombo = false;
                 comboCounter = 0;
+            }
+        }
+        if (isHit)
+        {
+            hitCounter += Time.deltaTime;
+            if (hitCounter >= hitDelay)
+            {
+                isHit = false;
+                hitCounter = 0;
             }
         }
         if (isSuperSpeed)

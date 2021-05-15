@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance { get; private set; }
+
     public Profile profile;
     public Player player;
     public GameObject LeftWall;
@@ -30,6 +32,9 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        if (Instance == null)
+            Instance = this;
+
         spawner = FindObjectOfType<Spawner>();
         player = FindObjectOfType<Player>();
         player.AssignSkills(profile.skills);
@@ -78,20 +83,11 @@ public class GameManager : MonoBehaviour
         return score;
     }
 
-    public void AddScore(int addedScore)
+    public void AddScore()
     {
-        score += addedScore;
-        CheckScore();
+        player.AddPowerUp(1);
     }
 
-    public void CheckScore()
-    {
-        if (score > 5)
-        {
-            player.AddPowerUp(1);
-            score = 0;
-        }
-    }
 
     public void CompleteWave()
     {

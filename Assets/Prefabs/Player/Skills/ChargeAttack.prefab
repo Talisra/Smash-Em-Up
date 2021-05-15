@@ -43,6 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78226081922cf5341837d7a649a6a542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isCharge: 1
+  isMultiHit: 0
   cost: 1
   animationName: Charge
   invTime: 1

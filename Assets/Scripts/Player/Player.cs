@@ -10,8 +10,6 @@ public class Player : MonoBehaviour
     public GameObject animationAnchor;
     public Animator animator;
     public Rigidbody rb;
-    public AudioManager audioManager;
-    public GameManager gameManager;
 
     public GameObject smashAnimPrefab;
     // Skills
@@ -40,11 +38,9 @@ public class Player : MonoBehaviour
     public Transform WeakPointTop;
     public Transform WeakPointBot;
 
-
     // Attributes
     public float maxHP = 10;
     private float currentHP;
-
 
     // Movement
     public float MoveSpeed = 0.1f;
@@ -53,12 +49,10 @@ public class Player : MonoBehaviour
     public float deltaCap = 50f;
     private float MaxSpeed = 8.0f;
     private float velocity = 2.5f;
-    private Vector3 mousePosition;
+    private Vector2 mousePosition;
     private Vector3 position = Vector3.zero;
     private float deltaX;
     private float deltaY;
-    private float momentum = 10;
-    private float currentMomentum;
     private float accelerationX = 1f;
     private float accelerationY = 1f;
     private float rotationCoefficient;
@@ -74,13 +68,6 @@ public class Player : MonoBehaviour
     private float attackDelay = 0.4f;
     private float atkDelayCounter = 0;
 
-    // Charge
-    private bool isFullCharge = false;
-    public float deltaMin = 40;
-    private float chargeStunAmount = 0.5f;
-    private float chargeDirection = 0; // positive number for right, and negative for left. (math)
-    private float chargeRecovery = 1; // handles the rotation after charging into the wall. must be between 1 to 90.
-
     //Invulnerability
     private bool isInvul = false;
     private float invTime = 0.75f;
@@ -91,13 +78,11 @@ public class Player : MonoBehaviour
     private float stunDelay = 0.5f;
     private float stunDelayCounter = 0;
 
-    void Start()
+    void Awake()
     {
-        gameManager = FindObjectOfType<GameManager>();
-        audioManager = FindObjectOfType<AudioManager>();
+        //audioManager = FindObjectOfType<AudioManager>();
         animator = animationAnchor.GetComponent<Animator>();
         currentHP = maxHP;
-        currentMomentum = momentum;
         rotationCoefficient = normalRotationCoefficient;
         rb = GetComponent<Rigidbody>();
     }
@@ -114,16 +99,17 @@ public class Player : MonoBehaviour
         {
             // Hitting an enemy will add force to the enemy, depends on deltaX.
             // The higher deltaX, more force added.
+            
             if (collision.gameObject.tag == "Enemy")
             {
                 Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-                if (isFullCharge)
-                    enemy.isTouchingPlayer = true;
                 if (!enemy.isSquashed)
                 {
                     GainInv(0.2f);
-                    if (currentSkill != null && canAttack)
+                    if (currentSkill != null)
+                    {
                         OnSmash(enemy);
+                    }
                     else if (canAttack)
                         BasicSmash(enemy);
                 }
@@ -236,7 +222,7 @@ public class Player : MonoBehaviour
     {
         if (!isSquashed)
         {
-            audioManager.Play("Squash");
+            AudioManager.Instance.Play("Squash");
             isSquashed = true;
             TakeDamage();
             MoveSpeed = 0.9f;
@@ -253,14 +239,24 @@ public class Player : MonoBehaviour
     public void TakeControl()
     {
         inControl = false;
+        this.rb.velocity = Vector3.zero;
     }
 
     public void Stun(float delay)
     {
-        chargeRecovery = 90;
         isStunned = true;
         stunDelayCounter = 0;
         stunDelay = delay;
+    }
+
+    public void GainShield(float amount) // same like GainInv but also gives the shieldFX
+    {
+        isInvul = true;
+        invDelayCounter = 0;
+        invTime = amount;
+        GameObject shield = PrefabPooler.Instance.Get(
+            "Shield", transform.position, Quaternion.identity) as GameObject;
+        shield.GetComponent<ShieldFX>().SetShield(gameObject, amount);
     }
 
     public void GainInv(float amount)
@@ -270,9 +266,14 @@ public class Player : MonoBehaviour
         invTime = amount;
     }
 
+    public void CancelInv() //TODO: currently, cancel inv will not affect shieldFX!
+    {
+        invDelayCounter = invTime;
+    }
+
     public void TakeDamage()
     {
-        if (!isInvul && !isFullCharge)
+        if (!isInvul)
         {
             FindObjectOfType<HitFlash>().FlashDamage();
             body.ShowDamage();
@@ -280,7 +281,8 @@ public class Player : MonoBehaviour
             currentHP--;
             if (currentHP <= 0)
                 Die();
-            GainInv(0.75f);
+            else
+                GainShield(0.75f);
         }
     }
 
@@ -304,7 +306,7 @@ public class Player : MonoBehaviour
         for (int j = 0; j < numOfScraps; j++)
         {
             GameObject createdScrap = 
-                ScrapsPooler.Instance.Get(scrapPrefab1.name, transform.position, Quaternion.identity) as GameObject;
+                PrefabPooler.Instance.Get(scrapPrefab1.name, transform.position, Quaternion.identity) as GameObject;
             // each scrap has random size and rotation
             float size = Random.Range(0.1f, 0.5f);
             createdScrap.transform.localScale = new Vector3(size, size, size);
@@ -314,7 +316,7 @@ public class Player : MonoBehaviour
         for (int j = 0; j < numOfScraps; j++)
         {
             GameObject createdScrap = 
-                ScrapsPooler.Instance.Get(scrapPrefab2.name, transform.position, Quaternion.identity) as GameObject;
+                PrefabPooler.Instance.Get(scrapPrefab2.name, transform.position, Quaternion.identity) as GameObject;
             // each scrap has random size and rotation
             float size = Random.Range(0.1f, 0.5f);
             createdScrap.transform.localScale = new Vector3(size, size, size);
@@ -364,25 +366,19 @@ public class Player : MonoBehaviour
         }
     }
 
-    // basic function of smashing an enemy
-    private void SmashActions(Enemy enemy)
-    {
-        enemy.ResetComboChain();
-        enemy.HitByPlayer();
-        canAttack = false;
-    }
-   
     public void OnSmash(Enemy enemy)
     {
-        SmashActions(enemy);
+        enemy.ResetComboChain();
         currentSkill.OnSmash(enemy);
     }
 
     public void BasicSmash(Enemy enemy) 
     {
-        SmashActions(enemy);
+        enemy.ResetComboChain();
+        enemy.HitByPlayer();
+        canAttack = false;
         CameraShake.Shake(0.1f, 0.2f);
-        audioManager.Play("Smash1");
+        AudioManager.Instance.Play("Smash1");
         // calculate the distance to know if animation is from left or right
         Vector3 enemyPos = enemy.transform.position;
         Vector3 playerPos = transform.position;
@@ -407,62 +403,43 @@ public class Player : MonoBehaviour
         Destroy(particle, parts.main.duration);
     }
 
-    private void StopCharge()
-    {
-        isFullCharge = false;
-        accelerationX = 1;
-        accelerationY = 3;
-        currentMomentum = momentum;
-        Invoke("StopChargeAnimation", chargeStunAmount-0.8f);
-    }
-
-    private void StopChargeAnimation()
-    {
-        animator.SetBool("Charging", false);
-    }
-
-    private void CheckCharging()
-    {
-        if (Mathf.Abs(rb.velocity.x) >= 60 && !isFullCharge)
-        {
-            animator.SetBool("Charging", true);
-            isFullCharge = true;
-            currentMomentum += Time.fixedDeltaTime * 10;
-            accelerationX += Time.fixedDeltaTime * currentMomentum * 10;
-            accelerationY = 0.5f;
-            chargeDirection = Mathf.Sign(deltaX);
-        }
-        if(isFullCharge)
-        {
-            currentMomentum += Time.fixedDeltaTime*10;
-            accelerationX += Time.fixedDeltaTime * currentMomentum*10;
-        }
-        
-    }
-
     private void TranslateCursorCoordinates()
     {
         mousePosition = Input.mousePosition;
         mousePosition = Camera.main.ScreenToWorldPoint(
             new Vector3(mousePosition.x, mousePosition.y, -Camera.main.transform.position.z));
-        mousePosition.x = mousePosition.x < gameManager.GetGameArea()[0] - deltaCap ? gameManager.GetGameArea()[0] :
-            (mousePosition.x > gameManager.GetGameArea()[2] + deltaCap ? gameManager.GetGameArea()[2] : mousePosition.x);
-        mousePosition.y = mousePosition.y > gameManager.GetGameArea()[1] + deltaCap ? gameManager.GetGameArea()[1] :
-            (mousePosition.y < gameManager.GetGameArea()[3] - deltaCap ? gameManager.GetGameArea()[3] : mousePosition.y);
+        mousePosition.x = mousePosition.x < GameManager.Instance.GetGameArea()[0] - deltaCap ? GameManager.Instance.GetGameArea()[0] :
+            (mousePosition.x > GameManager.Instance.GetGameArea()[2] + deltaCap ? GameManager.Instance.GetGameArea()[2] : mousePosition.x);
+        mousePosition.y = mousePosition.y > GameManager.Instance.GetGameArea()[1] + deltaCap ? GameManager.Instance.GetGameArea()[1] :
+            (mousePosition.y < GameManager.Instance.GetGameArea()[3] - deltaCap ? GameManager.Instance.GetGameArea()[3] : mousePosition.y);
         position = Vector3.Lerp(transform.position, mousePosition, MoveSpeed);
     }
 
-
+    private void ManageSkillInput(int mouseButton, int skillIndex)
+    {
+        if (Input.GetMouseButtonDown(mouseButton))
+        {
+            if (canUseSkill(skills[skillIndex]))
+                PerformSkill(skills[skillIndex]);
+        }
+        if (Input.GetMouseButtonUp(mouseButton))
+        {
+            if (currentSkill)
+                if (currentSkill.isCharge)
+                {
+                    currentSkill.OnInputRelease();
+                }
+        }
+    }
 
     // Update is called once per frame
     void Update()
     {
         if (!isSquashed)
         {
-            // Special attack
-            if (Input.GetMouseButtonDown(1))
-                if (canUseSkill(skills[0]))
-                    PerformSkill(skills[0]);
+            // Special attack #1
+            ManageSkillInput(0, 0);
+            ManageSkillInput(1, 1);
                      
             //handle attack speed
             if (canAttack == false)
@@ -540,7 +517,7 @@ public class Player : MonoBehaviour
                 rb.AddForce(new Vector3(xForce, yForce, 0), ForceMode.VelocityChange);
                 Quaternion rotationTarget = Quaternion.Euler(0, 0,
                 Mathf.Clamp(
-                    isFullCharge ? accelerationX * chargeDirection * chargeRecovery : deltaX * rotationCoefficient * chargeRecovery,
+                    deltaX * rotationCoefficient,
                     -90, 90));
                 rb.MoveRotation(rotationTarget);
             }

@@ -53,7 +53,6 @@ public class SpeedContainer : ReconstructableObject
         base.Awake();
         boxCollider = GetComponent<BoxCollider>();
         rb = GetComponent<Rigidbody>();
-        audioManager = FindObjectOfType<AudioManager>();
         bodyRenderer = GetComponent<Renderer>();
         innerRenderer = inner.GetComponent<Renderer>();
         outerRenderer = outer.GetComponent<Renderer>();
@@ -103,7 +102,7 @@ public class SpeedContainer : ReconstructableObject
     }
     public void Activate(float clickPower)
     {
-        audioManager.Play("Click");
+        AudioManager.Instance.Play("Click");
         rb.isKinematic = false;
         clickAcc = transform.rotation.y == 1 ? clickPower : -clickPower;
         state = 1;
@@ -113,7 +112,7 @@ public class SpeedContainer : ReconstructableObject
     private void Open()
     {
         state = 2;
-        audioManager.Play("ContainerOpen");
+        AudioManager.Instance.Play("ContainerOpen");
         button.SetActive(false);
         Invoke("SpawnReward", 0.2f);
     }
@@ -123,7 +122,7 @@ public class SpeedContainer : ReconstructableObject
         if (state == 1)
         {
             state = 3;
-            audioManager.Play("ContainerOpen");
+            AudioManager.Instance.Play("ContainerOpen");
             GameObject effect = Instantiate(
             summonPrefab,
             inner.transform.position,
@@ -137,7 +136,7 @@ public class SpeedContainer : ReconstructableObject
     private void Shatter()
     {
         state = 4;
-        audioManager.Play("ContainerBreak");
+        AudioManager.Instance.Play("ContainerBreak");
         GameObject effect = Instantiate(
         shatterPrefab,
         inner.transform.position,
@@ -188,7 +187,7 @@ public class SpeedContainer : ReconstructableObject
 
     public void SpawnSelf()
     {
-        audioManager.Play("ContainerSummon");
+        AudioManager.Instance.Play("ContainerSummon");
         state = 5;
         FadeIn();
         _bodyPropBlock.SetFloat(cutoffId, bodyCutoff);

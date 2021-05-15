@@ -81,7 +81,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: PlayerDamage
     clip: {fileID: 8300000, guid: 92ad902eef9eb81408e449eeea1f918f, type: 3}
-    volume: 0.444
+    volume: 0.75
     pitch: 0.78
     source: {fileID: 0}
   - name: CuballCharge
@@ -90,14 +90,14 @@ MonoBehaviour:
     pitch: 1.1
     source: {fileID: 0}
   - name: CubulletFired
-    clip: {fileID: 8300000, guid: 5543cefa2f8fc9e40bb3b5af6eac40ad, type: 3}
-    volume: 0.417
-    pitch: 1.98
+    clip: {fileID: 8300000, guid: 0c50231a02c5af3498eb33099319c2de, type: 3}
+    volume: 0.468
+    pitch: 1.52
     source: {fileID: 0}
   - name: CubulletDestroy
-    clip: {fileID: 8300000, guid: 303870064f342504d9cbf0a4ae242eb1, type: 3}
-    volume: 0.548
-    pitch: 1.88
+    clip: {fileID: 8300000, guid: bf8e42890a76ec24c95d7977e68fdb90, type: 3}
+    volume: 1
+    pitch: 1.16
     source: {fileID: 0}
   - name: BrickBreak
     clip: {fileID: 8300000, guid: ae1b0c0b3e476df43ad52f97562c41c0, type: 3}
@@ -195,8 +195,8 @@ MonoBehaviour:
     pitch: 0.68
     source: {fileID: 0}
   - name: Heal
-    clip: {fileID: 8300000, guid: 82164710d5a3b2144bae86de65e8ebd3, type: 3}
-    volume: 0.85
+    clip: {fileID: 8300000, guid: 86b1de76b67f82f4ea24b0340d16771f, type: 3}
+    volume: 1
     pitch: 0.94
     source: {fileID: 0}
   - name: Click
@@ -254,3 +254,31 @@ MonoBehaviour:
     volume: 0.306
     pitch: 1
     source: {fileID: 0}
+  - name: Shield
+    clip: {fileID: 8300000, guid: 71703e3432ab9494d95ab07117d5bff7, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+  - name: Spark
+    clip: {fileID: 8300000, guid: 45f890f64f889e142bbed70345896d77, type: 3}
+    volume: 1
+    pitch: 2
+    source: {fileID: 0}
+  - name: Combo2
+    clip: {fileID: 0}
+    volume: 1
+    pitch: 0.6
+    source: {fileID: 0}
+  sessions:
+  - name: A
+    tracks:
+    - sound:
+        name: Bell
+        clip: {fileID: 8300000, guid: 8638a011960959c4297b773895845455, type: 3}
+        volume: 0
+        pitch: 0
+        source: {fileID: 0}
+      mute: 0
+      bars: 1
+      layer: 2
+      volume: 0

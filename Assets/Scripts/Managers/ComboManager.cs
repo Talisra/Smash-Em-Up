@@ -5,27 +5,26 @@ using UnityEngine;
 public class ComboManager : MonoBehaviour
 {
     public GameObject comboPrefab;
-    public GameManager gameManager;
     private int comboCounter = 0;
 
-    private int baseDelay = 1000;
+    private float baseDelay = 5;
     private float incrementalDelay = 0.95f;
 
-    private int currentDelay;
-    private int maxDelay;
+    private float delayCounter;
+    private float maxDelay;
 
     private void Start()
     {
         maxDelay = baseDelay;
-        currentDelay = maxDelay;
+        delayCounter = maxDelay;
     }
 
-    public int GetCurrentDelay()
+    public float GetCurrentDelay()
     {
-        return currentDelay;
+        return delayCounter;
     }
 
-    public int GetMaxDelay()
+    public float GetMaxDelay()
     {
         return maxDelay;
     }
@@ -38,17 +37,26 @@ public class ComboManager : MonoBehaviour
     public void AddCombo()
     {
         comboCounter++;
-        maxDelay = (int)(baseDelay*incrementalDelay);
-        currentDelay = maxDelay;
-
+        if (comboCounter == 5)
+        {
+            //audioManager.Play("Combo5");
+            GameManager.Instance.AddScore();
+        }
+        maxDelay = baseDelay*incrementalDelay;
+        delayCounter = maxDelay;
+        if (comboCounter == 10)
+        {
+            //audioManager.Play("Combo5");
+            GameManager.Instance.AddScore();
+            ResetCombo();
+        }
     }
 
     private void ResetCombo()
     {
-        gameManager.AddScore(comboCounter * (1 + comboCounter/10));
         maxDelay = baseDelay;
         comboCounter = 0;
-        currentDelay = maxDelay;
+        delayCounter = maxDelay;
     }
     
     // Update is called once per frame
@@ -56,8 +64,8 @@ public class ComboManager : MonoBehaviour
     {
         if (comboCounter > 0)
         {
-            currentDelay--;
-            if (currentDelay <= 0)
+            delayCounter-= Time.deltaTime;
+            if (delayCounter <= 0)
                 ResetCombo();
         }
 

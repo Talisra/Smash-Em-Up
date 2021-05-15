@@ -7,7 +7,6 @@ public class EnemyBox : ReconstructableObject
     public BoxCollider boxCollider;
     public Dictionary<string, int> enemies;
 
-    private GameManager gm;
     private float minYpower = 250;
     private float maxYpower = 550;
     private float minXpower = 50;
@@ -18,7 +17,6 @@ public class EnemyBox : ReconstructableObject
     {
         base.Awake();
         Dictionary<string, int> asd = new Dictionary<string, int>();
-        gm = FindObjectOfType<GameManager>();
         boxCollider = GetComponent<BoxCollider>();
     }  
 
@@ -30,10 +28,10 @@ public class EnemyBox : ReconstructableObject
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Floor" || collision.gameObject.tag == "EnemyBox")
-            audioManager.Play("BoxImpact");
+            AudioManager.Instance.Play("BoxImpact");
         if (collision.gameObject.tag == "Player")
         {
-            audioManager.Play("MetalCollision");
+            AudioManager.Instance.Play("MetalCollision");
             Player player = collision.gameObject.GetComponent<Player>();
             if (player.collidingFloor)
                 player.Squash(this.gameObject);
@@ -57,12 +55,12 @@ public class EnemyBox : ReconstructableObject
         }
         Vector3 forceVector = CalculateForceVector();
         enemy.GetComponent<Rigidbody>().AddForce(forceVector);
-        gm.AddEnemy();
+        GameManager.Instance.AddEnemy();
     }
 
     public void SpawnEnemies()
     {
-        audioManager.Play("BoxOpen");
+        AudioManager.Instance.Play("BoxOpen");
         foreach (string enemyString in enemies.Keys)
         {
             for (int i = 0; i < enemies[enemyString]; i++)
@@ -83,7 +81,7 @@ public class EnemyBox : ReconstructableObject
 
     private Vector3 CalculateForceVector()
     {
-        List<float> gameArea = gm.GetGameArea();
+        List<float> gameArea = GameManager.Instance.GetGameArea();
         float x = -(transform.position.x - (gameArea[0]+gameArea[2])/2) * Random.Range(minXpower, maxXpower);
         return new Vector3(x, Random.Range(minYpower,maxYpower), 0);
     }

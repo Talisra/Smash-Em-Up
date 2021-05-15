@@ -13,13 +13,10 @@ public abstract class ReconstructableObject : MonoBehaviour, IPoolableObject
     private List<Quaternion> ObjsStartQart;
     private List<Part> partStoarge;
 
-    protected AudioManager audioManager;
-
     // Start is called before the first frame update
     protected virtual void Awake()
     {
         SaveStartPosition();
-        audioManager = FindObjectOfType<AudioManager>();
         partStoarge = new List<Part>();
     }
 
