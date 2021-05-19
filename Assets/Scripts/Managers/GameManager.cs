@@ -110,11 +110,15 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         gameOver = true;
+        AudioManager.Instance.StopMusic();
+        AudioManager.Instance.PlayShutDown();
         StartCoroutine(EndNow());
         IEnumerator EndNow()
         {
-            yield return new WaitForSeconds(3);
+            CameraShake.EndGameEffectGlitch();
+            yield return new WaitForSeconds(3.5f);
             Cursor.visible = true;
+            CameraShake.glitchEffect.enabled = false;
             SceneManager.LoadScene(0);
         }
     }
@@ -129,6 +133,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Escape))
         {
+            AudioManager.Instance.StopMusic();
             Cursor.visible = true;
             SceneManager.LoadScene(0);
         }

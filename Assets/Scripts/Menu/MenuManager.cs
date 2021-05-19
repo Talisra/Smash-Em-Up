@@ -8,7 +8,7 @@ public class MenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        AudioManager.Instance.Reset();
     }
 
     public void PerformAction(int choice)
@@ -23,6 +23,7 @@ public class MenuManager : MonoBehaviour
         switch (choice)
         {
             case 0:
+                    AudioManager.Instance.isLevel = true;
                     SceneManager.LoadScene(1);
                     break;
             case 2:

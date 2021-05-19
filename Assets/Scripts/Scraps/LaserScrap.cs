@@ -10,7 +10,7 @@ public class LaserScrap : Scraps
     {
         if (isActiveAndEnabled)
         {
-            audioManager.Play("TinyShatter");
+            AudioManager.Instance.Play("TinyShatter");
             GameObject explosion1 = Instantiate(explosionPrefab, 
                 transform.position + new Vector3(-0.5f, 0, 0), Quaternion.identity) as GameObject;
             Destroy(explosion1, explosion1.GetComponent<ParticleSystem>().main.duration);

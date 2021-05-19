@@ -90,7 +90,6 @@ public class ChargeAtk : Skill
 
     public override void OnInputRelease()
     {
-        Debug.Log("asdf");
         buttonReleased = true;
         player.GainInv(2); //inv will break when colliding the wall
     }

@@ -19,7 +19,7 @@ public class CubeScraps : Scraps
         if (!hasCollided)
         {
             hasCollided = true;
-            audioManager.Play("ScrapMetalHit");
+            AudioManager.Instance.Play("ScrapMetalHit");
         }
     }
 

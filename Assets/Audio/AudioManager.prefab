@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3080497947549905786
+--- !u!1 &3488286936437131466
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3080497947549905784}
-  - component: {fileID: 3080497947549905787}
+  - component: {fileID: 3488286936437131464}
+  - component: {fileID: 3488286936437131467}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -17,13 +17,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3080497947549905784
+--- !u!4 &3488286936437131464
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3080497947549905786}
+  m_GameObject: {fileID: 3488286936437131466}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,13 +31,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3080497947549905787
+--- !u!114 &3488286936437131467
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3080497947549905786}
+  m_GameObject: {fileID: 3488286936437131466}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45ef2078f24897c40aaaa747687f4241, type: 3}
@@ -264,21 +264,181 @@ MonoBehaviour:
     volume: 1
     pitch: 2
     source: {fileID: 0}
-  - name: Combo2
-    clip: {fileID: 0}
+  - name: WhiteNoise
+    clip: {fileID: 8300000, guid: 272ca79126fddbe47b383740349509a8, type: 3}
+    volume: 0.3
+    pitch: 1
+    source: {fileID: 0}
+  muteSound: 0
+  shutDown:
+  - name: SD1
+    clip: {fileID: 8300000, guid: a36f0e7157ef3aa4e96bc27129c1780a, type: 3}
     volume: 1
-    pitch: 0.6
+    pitch: 1
+    source: {fileID: 0}
+  - name: SD2
+    clip: {fileID: 8300000, guid: 9360fed4d4e2abd4b9f4f4c4f4207731, type: 3}
+    volume: 0.45
+    pitch: 1
+    source: {fileID: 0}
+  - name: WhiteNoise
+    clip: {fileID: 8300000, guid: 9494fa18046536645b8e097b1832e846, type: 3}
+    volume: 1
+    pitch: 1
     source: {fileID: 0}
   sessions:
+  - name: _All
+    tracks:
+    - subtracks:
+      - clip: {fileID: 8300000, guid: 4ee56693ed5948646af4cf6e319f4dd9, type: 3}
+        source: {fileID: 0}
+        volume: 1
+        length: 2
+      masterVolume: 1
+      mute: 0
+    - subtracks:
+      - clip: {fileID: 8300000, guid: 5632922327ccc144496783b62d84c14d, type: 3}
+        source: {fileID: 0}
+        volume: 1
+        length: 2
+      masterVolume: 1
+      mute: 0
+    - subtracks:
+      - clip: {fileID: 8300000, guid: 0bc22516385bea742b2d8ffc076dbee1, type: 3}
+        source: {fileID: 0}
+        volume: 1
+        length: 2
+      masterVolume: 1
+      mute: 0
+    maxLength: 0
+    maxDuration: 0
+    trackCounter: 0
   - name: A
     tracks:
-    - sound:
-        name: Bell
-        clip: {fileID: 8300000, guid: 8638a011960959c4297b773895845455, type: 3}
-        volume: 0
-        pitch: 0
+    - subtracks:
+      - clip: {fileID: 8300000, guid: ed71d7c24dd317f4e94897c514bacbc5, type: 3}
         source: {fileID: 0}
+        volume: 0
+        length: 8
+      masterVolume: 0.8
       mute: 0
-      bars: 1
-      layer: 2
-      volume: 0
+    - subtracks:
+      - clip: {fileID: 8300000, guid: 8638a011960959c4297b773895845455, type: 3}
+        source: {fileID: 0}
+        volume: 0
+        length: 1
+      masterVolume: 0.5
+      mute: 0
+    - subtracks:
+      - clip: {fileID: 8300000, guid: 2139e730710127e4c8cd79012281c779, type: 3}
+        source: {fileID: 0}
+        volume: 0
+        length: 16
+      - clip: {fileID: 8300000, guid: 323b9b4ce55099643970edfbd5e804b2, type: 3}
+        source: {fileID: 0}
+        volume: 0
+        length: 16
+      masterVolume: 1
+      mute: 0
+    - subtracks:
+      - clip: {fileID: 8300000, guid: 360ec40e4500863458a91e8aca84b188, type: 3}
+        source: {fileID: 0}
+        volume: 0
+        length: 2
+      masterVolume: 0.5
+      mute: 0
+    - subtracks:
+      - clip: {fileID: 8300000, guid: 20785856c2a24ae4c91c941ba2a4a01d, type: 3}
+        source: {fileID: 0}
+        volume: 0
+        length: 7
+      masterVolume: 0.5
+      mute: 0
+    maxLength: 0
+    maxDuration: 0
+    trackCounter: 0
+  - name: B
+    tracks:
+    - subtracks:
+      - clip: {fileID: 8300000, guid: 0e541966b2750474bbc244545398b460, type: 3}
+        source: {fileID: 0}
+        volume: 0
+        length: 8
+      - clip: {fileID: 8300000, guid: fd70cf2e6abe4144ab7efe7872f60d50, type: 3}
+        source: {fileID: 0}
+        volume: 0
+        length: 8
+      masterVolume: 0.85
+      mute: 0
+    - subtracks:
+      - clip: {fileID: 8300000, guid: 6a5a0cc072253f941b209469ee27ad4e, type: 3}
+        source: {fileID: 0}
+        volume: 0
+        length: 16
+      masterVolume: 1
+      mute: 0
+    - subtracks:
+      - clip: {fileID: 8300000, guid: 34c80d0911df51d4988fdbb4a76a293e, type: 3}
+        source: {fileID: 0}
+        volume: 0
+        length: 8
+      masterVolume: 1
+      mute: 0
+    - subtracks:
+      - clip: {fileID: 8300000, guid: 9a4606633453c0841b2c024e07b597f2, type: 3}
+        source: {fileID: 0}
+        volume: 0
+        length: 8
+      masterVolume: 1
+      mute: 0
+    - subtracks:
+      - clip: {fileID: 8300000, guid: 6d394c3d4ef6b9f4c9457c3e8a1a505b, type: 3}
+        source: {fileID: 0}
+        volume: 0
+        length: 8
+      masterVolume: 1
+      mute: 0
+    maxLength: 0
+    maxDuration: 0
+    trackCounter: 0
+  - name: C
+    tracks:
+    - subtracks:
+      - clip: {fileID: 8300000, guid: d6bfe0b4c495399459fe41a292fc0ed5, type: 3}
+        source: {fileID: 0}
+        volume: 0
+        length: 16
+      masterVolume: 0.85
+      mute: 0
+    - subtracks:
+      - clip: {fileID: 8300000, guid: a7b66248f75ff1b409bd2eb12ad3bc91, type: 3}
+        source: {fileID: 0}
+        volume: 0
+        length: 16
+      masterVolume: 1
+      mute: 0
+    - subtracks:
+      - clip: {fileID: 8300000, guid: db9289b5c88ed1d4bb610f0b5af3da8d, type: 3}
+        source: {fileID: 0}
+        volume: 0
+        length: 8
+      masterVolume: 1
+      mute: 0
+    - subtracks:
+      - clip: {fileID: 8300000, guid: 9a4606633453c0841b2c024e07b597f2, type: 3}
+        source: {fileID: 0}
+        volume: 0
+        length: 8
+      masterVolume: 1
+      mute: 0
+    - subtracks:
+      - clip: {fileID: 8300000, guid: f37a35db003d2ef419329cf49e594c27, type: 3}
+        source: {fileID: 0}
+        volume: 0
+        length: 16
+      masterVolume: 1
+      mute: 0
+    maxLength: 0
+    maxDuration: 0
+    trackCounter: 0
+  isLevel: 0

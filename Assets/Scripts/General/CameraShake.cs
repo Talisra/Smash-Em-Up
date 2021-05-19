@@ -2,7 +2,7 @@
 using UnityEngine;
 public class CameraShake : MonoBehaviour
 {
-    public VHSPostProcessEffect glitchEffect;
+    public static VHSPostProcessEffect glitchEffect;
     public static CameraShake instance;
 
     private Vector3 _originalPos;
@@ -12,6 +12,7 @@ public class CameraShake : MonoBehaviour
 
     void Awake()
     {
+        glitchEffect = GetComponent<VHSPostProcessEffect>();
         instance = this;
     }
 
@@ -32,21 +33,25 @@ public class CameraShake : MonoBehaviour
         instance.Glitch(duration, amount);
     }
 
+    public static void EndGameEffectGlitch()
+    {
+        glitchEffect.SetScan(true);
+    }
+
     private void Glitch(float duration, float amount)
     {
-        if (amount >= 0.9f)
-        {
-            glitchEffect.SetScan(true);
-        }
         if (duration >= 0.5f)
         {
+            AudioManager.Instance.Play("WhiteNoise");
             glitchEffect.enabled = true;
-            Invoke("StopGlitch", duration*0.75f);
+            if (!glitchEffect._xScan)
+                Invoke("StopGlitch", duration*0.75f);
         }
     }
 
     private void StopGlitch()
     {
+        AudioManager.Instance.Stop("WhiteNoise");
         glitchEffect.enabled = false;
         glitchEffect.SetScan(false);
     }

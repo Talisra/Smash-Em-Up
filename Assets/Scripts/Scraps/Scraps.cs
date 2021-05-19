@@ -4,8 +4,6 @@ using UnityEngine;
 
 public abstract class Scraps : MonoBehaviour, IPoolableObject
 {
-    protected AudioManager audioManager;
-
     public int minAmount;
     public int MaxAmount;
 
@@ -21,12 +19,6 @@ public abstract class Scraps : MonoBehaviour, IPoolableObject
     {
         float size = Random.Range(minSize, maxSize);
         return new Vector3(size, size, size);
-    }
-
-    // Start is called before the first frame update
-    void Awake()
-    {
-        audioManager = FindObjectOfType<AudioManager>();
     }
 
     public virtual void BackToPool()

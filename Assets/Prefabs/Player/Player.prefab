@@ -416,7 +416,7 @@ MonoBehaviour:
   collidingBoxesID: 
   WeakPointTop: {fileID: 7235213930963446119}
   WeakPointBot: {fileID: 5217579780876939408}
-  maxHP: 10
+  maxHP: 2
   MoveSpeed: 0.1
   smoothTime: 0.1
   normalRotationCoefficient: 0.2

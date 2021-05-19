@@ -21,6 +21,11 @@ public class MenuPlayer : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    void BackToIdle()
+    {
+        //Do nothing
+    }
+
     public void AlignY(float newY)
     {
         targetY = newY - 0.25f;
@@ -30,7 +35,7 @@ public class MenuPlayer : MonoBehaviour
     {
         isBusy = true;
         animator.Play("AtkLeft");
-        FindObjectOfType<AudioManager>().Play("Smash1");
+        AudioManager.Instance.Play("Smash1");
         GameObject particle = Instantiate(
             smashAnimPrefab, 
             new Vector3(transform.position.x - 1.25f, transform.position.y, transform.position.z),

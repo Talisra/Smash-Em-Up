@@ -5083,11 +5083,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 100008}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 237dfbc867e4fa542a88fab21e481813, type: 3}
+  m_Script: {fileID: 11500000, guid: 147d65ef1877f8444bf1960df4741eb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  despawnDelay: 8
-  pickParticle: {fileID: 1459862227383078, guid: cffd6633f3d294842976fbcab9e9a0b2,
+  despawnDelay: 10
+  pickParticle: {fileID: 1459862227383078, guid: 0a9b74556be12994a853ced7b5177063,
     type: 3}
   pickSoundString: Spark
 --- !u!135 &5247070854606136768

@@ -14,7 +14,7 @@ public class CrystalScrap : Scraps
 
     void Explode()
     {
-        audioManager.Play("TinyShatter");
+        AudioManager.Instance.Play("TinyShatter");
         GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity) as GameObject;
         Destroy(explosion, explosion.GetComponent<ParticleSystem>().main.duration);
         BackToPool();

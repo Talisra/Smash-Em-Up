@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     private Skill currentSkill = null; // -1 idle, while any other skill indicates the current skill active.
 
     // Death
+    private bool isDead = false;
     public GameObject scrapPrefab1;
     public GameObject scrapPrefab2;
     public GameObject explosionPrefabBig;
@@ -288,13 +289,17 @@ public class Player : MonoBehaviour
 
     private void Die()
     {
-        Invoke("CreateBigExplosion", Random.Range(0.5f, 0.6f));
-        for (int i = 0; i < numOfExps; i++)
+        if (!isDead)
         {
-            Invoke("CreateTinyExplosion", Random.Range(0.1f, 0.9f));
+            isDead = true;
+            Invoke("CreateBigExplosion", Random.Range(0.5f, 0.6f));
+            for (int i = 0; i < numOfExps; i++)
+            {
+                Invoke("CreateTinyExplosion", Random.Range(0.1f, 0.9f));
+            }
+            FindObjectOfType<GameManager>().EndGame();
+            Destroy(gameObject, 0.91f);
         }
-        FindObjectOfType<GameManager>().EndGame();
-        Destroy(gameObject, 0.91f);
     }
     private void CreateBigExplosion()
     {

@@ -5,10 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class Track
 {
-    public Sound sound;
-    public bool mute;
-    public int bars;
-    public int layer;
-    [Range(0, 1)]
-    public float volume;
+    public Subtrack[] subtracks;
+    public float masterVolume;
+    public bool mute = true;
 }
