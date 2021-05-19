@@ -68,6 +68,7 @@ public class AudioManager : MonoBehaviour
     {
         foreach (Sound sound in shutDown)
             sound.source.Stop();
+        Stop("WhiteNoise");
         OrderTracks();
         isLevel = false;
         sessions[0].trackCounter = 0;

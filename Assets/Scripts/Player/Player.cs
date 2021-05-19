@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
 
     // Death
     private bool isDead = false;
+    private bool bigExpInvoked = false;
     public GameObject scrapPrefab1;
     public GameObject scrapPrefab2;
     public GameObject explosionPrefabBig;
@@ -303,7 +304,8 @@ public class Player : MonoBehaviour
     }
     private void CreateBigExplosion()
     {
-        CameraShake.Shake(0.7f, 1.2f);
+        bigExpInvoked = true;
+        CameraShake.Shake(2.5f, 1.3f);
         FindObjectOfType<AudioManager>().Play("PlayerExplosion");
         GameObject bigExp = Instantiate(
             explosionPrefabBig, transform.position, Quaternion.identity) as GameObject;
@@ -333,7 +335,8 @@ public class Player : MonoBehaviour
 
     private void CreateTinyExplosion()
     {
-        CameraShake.Shake(0.2f, 0.35f);
+        if (!bigExpInvoked)
+            CameraShake.Shake(0.2f, 0.35f);
         FindObjectOfType<AudioManager>().Play("SmallExplosion");
         GameObject smallExp = Instantiate(
                 explosionPrefabSmall, 
