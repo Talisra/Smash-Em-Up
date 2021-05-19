@@ -67,7 +67,7 @@ public class LaserBeam : MonoBehaviour
                     if (hit.collider.tag == "PlayerBody")
                     {
                         Player player = hit.collider.gameObject.GetComponentInParent<Player>();
-                        player.TakeDamage();
+                        player.TakeDamage(1, true);
                     }
                     laserImpact.transform.position = hit.point;
                     lr.SetPosition(1, hit.point);

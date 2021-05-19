@@ -44,10 +44,11 @@ public class Spawner : MonoBehaviour
     public IEnumerator SpawnBonuses()
     {
         lastBonusAmount = 0;
-        if (Random.Range(0,100) > 0)
+        if (Random.Range(0,100) > 75)
         {
-            lastBonusAmount++;
-            SummonSpeedContainer();
+            //lastBonusAmount++;
+            //SummonSpeedContainer();
+            SummonPowerup(Random.Range(0,2));
         }
         yield return new WaitForSeconds(0.1f);
     }
@@ -69,6 +70,33 @@ public class Spawner : MonoBehaviour
         return box;
     }
 
+    public PowerUp SummonPowerup(int type) //0: heal, 1: shield
+    {
+        List<float> area = gm.GetGameArea();
+        Vector3 spawnTarget;
+        do
+        {
+            float x = Random.Range(area[0] + 8, area[2] - 8);
+            float y = Random.Range(area[1] + 5, area[3] - 5);
+            spawnTarget = new Vector3(x, y, 0);
+        } while (!CheckIfEmpty(spawnTarget));
+        if (type == 0)
+        {
+            HealthUp healp = HealthUpPool.Instance.Get(
+            spawnTarget,
+            Quaternion.identity);
+            return healp;
+        }
+        else
+        {
+            ShieldUp shieldp = ShieldUpPool.Instance.Get(
+            spawnTarget,
+            Quaternion.identity);
+            shieldp.SetDuration(10);
+            return shieldp;
+        }
+        
+    }
     private SpeedContainer SummonSpeedContainer()
     {
         List<float> area = gm.GetGameArea();

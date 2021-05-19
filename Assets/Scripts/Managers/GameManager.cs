@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    public bool devMode;
+
     public Profile profile;
     public Player player;
     public GameObject LeftWall;
@@ -136,6 +138,25 @@ public class GameManager : MonoBehaviour
             AudioManager.Instance.StopMusic();
             Cursor.visible = true;
             SceneManager.LoadScene(0);
+        }
+        if (devMode)
+        {
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                player.TakeDamage(player.GetCurrentHp(), false);
+            }
+            if (Input.GetKeyDown(KeyCode.H))
+            {
+                spawner.SummonPowerup(0);
+            }
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                player.AddPowerUp(1);
+            }
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                spawner.SummonPowerup(1);
+            }
         }
     }
 }

@@ -1,5 +1,7 @@
 ScriptsOnlyBuild:
   usedScripts:
+    Assembly-CSharp-Editor.dll:
+    - ReadmeEditor
     Assembly-CSharp.dll:
     - AnimationAnchor
     - AudioManager
@@ -44,6 +46,7 @@ ScriptsOnlyBuild:
     - PowerupCounterText
     - PrefabPooler
     - Profile
+    - Readme
     - RedBallScrap
     - RegularBody
     - RoundAtk

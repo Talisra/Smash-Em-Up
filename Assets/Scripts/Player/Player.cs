@@ -131,12 +131,12 @@ public class Player : MonoBehaviour
                 Enemy enemy = collision.gameObject.GetComponent<Enemy>();
                 if (!enemy.isSquashed)
                 {
-                    TakeDamage();
+                    TakeDamage(1, true);
                 }
             }
             else if (collision.gameObject.tag == "Bullet")
             {
-                TakeDamage();
+                TakeDamage(1, true);
                 collision.gameObject.GetComponent<BasicBullet>().Explode();
             }
         }
@@ -215,6 +215,8 @@ public class Player : MonoBehaviour
 
     public void Heal(int amount)
     {
+        if (isDead)
+            return;
         if (currentHP + amount >= maxHP)
             currentHP = maxHP;
         else
@@ -226,7 +228,7 @@ public class Player : MonoBehaviour
         {
             AudioManager.Instance.Play("Squash");
             isSquashed = true;
-            TakeDamage();
+            TakeDamage(1, false);
             MoveSpeed = 0.9f;
             transform.localScale = squashScaleVector;
             colliderObj.GetComponent<Rigidbody>().AddForce(new Vector3(colliderObj.transform.position.x - transform.position.x,20,0), ForceMode.VelocityChange);
@@ -273,17 +275,17 @@ public class Player : MonoBehaviour
         invDelayCounter = invTime;
     }
 
-    public void TakeDamage()
+    public void TakeDamage(float amount, bool giveShield)
     {
         if (!isInvul)
         {
             FindObjectOfType<HitFlash>().FlashDamage();
             body.ShowDamage();
             bottom.ShowDamage();
-            currentHP--;
+            currentHP -= amount;
             if (currentHP <= 0)
                 Die();
-            else
+            else if (giveShield)
                 GainShield(0.75f);
         }
     }
@@ -298,7 +300,7 @@ public class Player : MonoBehaviour
             {
                 Invoke("CreateTinyExplosion", Random.Range(0.1f, 0.9f));
             }
-            FindObjectOfType<GameManager>().EndGame();
+            GameManager.Instance.EndGame();
             Destroy(gameObject, 0.91f);
         }
     }
