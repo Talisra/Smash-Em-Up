@@ -120,9 +120,12 @@ public class GameManager : MonoBehaviour
             CameraEffects.EndGameEffectGlitch();
             yield return new WaitForSeconds(2.5f);
             CameraEffects.ShutDown();
-            yield return new WaitForSeconds(1.9f);
+            yield return new WaitForSeconds(0.9f);
             Cursor.visible = true;
             CameraEffects.glitchEffect.enabled = false;
+            CameraEffects.glitch_digital.enabled = false;
+            CameraEffects.glitch_analog.enabled = false;
+            yield return new WaitForSeconds(0.9f);
             SceneManager.LoadScene(0);
         }
     }

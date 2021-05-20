@@ -42,12 +42,12 @@ public class CameraEffects : MonoBehaviour
         if (endGameEffect)
         {
             glitch_analog.scanLineJitter += Time.deltaTime/5;
-            if (glitch_digital.intensity > 0.2f)
+            if (glitch_digital.intensity > 0.5f)
             {
                 glitch_digital.intensity += Time.deltaTime;
             }
             else
-                glitch_digital.intensity += Time.deltaTime/10;
+                glitch_digital.intensity += Time.deltaTime/5;
             if (glitch_digital.intensity > 0.99f)
                 glitch_digital.intensity = 0.99f;
         }
@@ -65,6 +65,7 @@ public class CameraEffects : MonoBehaviour
     public static void ShutDown()
     {
         shutdownEffect.enabled = true;
+        endGameEffect = false;
     }
 
     public static void EndGameEffectGlitch()

@@ -301,15 +301,15 @@ public class Player : MonoBehaviour
             {
                 Invoke("CreateTinyExplosion", Random.Range(0.1f, 0.9f));
             }
-            GameManager.Instance.EndGame();
             Destroy(gameObject, 0.91f);
         }
     }
     private void CreateBigExplosion()
     {
+        GameManager.Instance.EndGame();
         bigExpInvoked = true;
         CameraEffects.Shake(2.5f, 1.3f);
-        FindObjectOfType<AudioManager>().Play("PlayerExplosion");
+        AudioManager.Instance.Play("PlayerExplosion");
         GameObject bigExp = Instantiate(
             explosionPrefabBig, transform.position, Quaternion.identity) as GameObject;
         Destroy(bigExp, bigExp.GetComponent<ParticleSystem>().main.duration);

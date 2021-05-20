@@ -105,6 +105,7 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
+    - UnityEngine.UI.Slider
     - UnityEngine.UI.Text
   sceneClasses:
     Assets/Scenes/Level.unity:
@@ -280,6 +281,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 15270}
     - Class: 114
       Script: {instanceID: 15294}
+    - Class: 114
+      Script: {instanceID: 15330}
     - Class: 114
       Script: {instanceID: 15346}
     - Class: 114
