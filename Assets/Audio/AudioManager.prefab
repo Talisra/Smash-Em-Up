@@ -269,6 +269,16 @@ MonoBehaviour:
     volume: 0.3
     pitch: 1
     source: {fileID: 0}
+  - name: ScreenShut
+    clip: {fileID: 8300000, guid: ebbf93560fea66043ae91efa18626854, type: 3}
+    volume: 0.3
+    pitch: 2
+    source: {fileID: 0}
+  - name: RoundAtkwu
+    clip: {fileID: 8300000, guid: cff60d270ba09ef4fa1cea73ed717db1, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
   muteSound: 0
   shutDown:
   - name: SD1
@@ -284,6 +294,11 @@ MonoBehaviour:
   - name: WhiteNoise
     clip: {fileID: 8300000, guid: 9494fa18046536645b8e097b1832e846, type: 3}
     volume: 1
+    pitch: 1
+    source: {fileID: 0}
+  - name: WhiteNoise2
+    clip: {fileID: 8300000, guid: 913e03284e1adba4faa4a530f717cbe4, type: 3}
+    volume: 0.5
     pitch: 1
     source: {fileID: 0}
   sessions:

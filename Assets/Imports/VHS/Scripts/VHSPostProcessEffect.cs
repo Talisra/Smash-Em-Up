@@ -15,8 +15,9 @@ public class VHSPostProcessEffect : MonoBehaviour
 	private float _yScanline;
 	private float _xScanline;
 	public bool _xScan = false;
+	public VideoPlayer _player;
 	private Material _material = null;
-	private VideoPlayer _player;
+
 
 	void Start()
 	{

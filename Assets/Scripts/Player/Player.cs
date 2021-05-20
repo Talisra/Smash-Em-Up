@@ -57,6 +57,7 @@ public class Player : MonoBehaviour
     private float deltaY;
     private float accelerationX = 1f;
     private float accelerationY = 1f;
+    private float out_of_screen_mult = 1.5f;
     private float rotationCoefficient;
     private bool inControl = true;
 
@@ -307,7 +308,7 @@ public class Player : MonoBehaviour
     private void CreateBigExplosion()
     {
         bigExpInvoked = true;
-        CameraShake.Shake(2.5f, 1.3f);
+        CameraEffects.Shake(2.5f, 1.3f);
         FindObjectOfType<AudioManager>().Play("PlayerExplosion");
         GameObject bigExp = Instantiate(
             explosionPrefabBig, transform.position, Quaternion.identity) as GameObject;
@@ -338,7 +339,7 @@ public class Player : MonoBehaviour
     private void CreateTinyExplosion()
     {
         if (!bigExpInvoked)
-            CameraShake.Shake(0.2f, 0.35f);
+            CameraEffects.Shake(0.2f, 0.35f);
         FindObjectOfType<AudioManager>().Play("SmallExplosion");
         GameObject smallExp = Instantiate(
                 explosionPrefabSmall, 
@@ -387,7 +388,7 @@ public class Player : MonoBehaviour
         enemy.ResetComboChain();
         enemy.HitByPlayer();
         canAttack = false;
-        CameraShake.Shake(0.1f, 0.2f);
+        CameraEffects.Shake(0.1f, 0.2f);
         AudioManager.Instance.Play("Smash1");
         // calculate the distance to know if animation is from left or right
         Vector3 enemyPos = enemy.transform.position;
@@ -418,10 +419,10 @@ public class Player : MonoBehaviour
         mousePosition = Input.mousePosition;
         mousePosition = Camera.main.ScreenToWorldPoint(
             new Vector3(mousePosition.x, mousePosition.y, -Camera.main.transform.position.z));
-        mousePosition.x = mousePosition.x < GameManager.Instance.GetGameArea()[0] - deltaCap ? GameManager.Instance.GetGameArea()[0] :
-            (mousePosition.x > GameManager.Instance.GetGameArea()[2] + deltaCap ? GameManager.Instance.GetGameArea()[2] : mousePosition.x);
-        mousePosition.y = mousePosition.y > GameManager.Instance.GetGameArea()[1] + deltaCap ? GameManager.Instance.GetGameArea()[1] :
-            (mousePosition.y < GameManager.Instance.GetGameArea()[3] - deltaCap ? GameManager.Instance.GetGameArea()[3] : mousePosition.y);
+        mousePosition.x =
+            (mousePosition.x < GameManager.Instance.GetGameArea()[0] ||
+            mousePosition.x > GameManager.Instance.GetGameArea()[2]) ? 
+            mousePosition.x * out_of_screen_mult : mousePosition.x;
         position = Vector3.Lerp(transform.position, mousePosition, MoveSpeed);
     }
 

@@ -9,6 +9,7 @@ public class MenuManager : MonoBehaviour
     void Start()
     {
         AudioManager.Instance.Reset();
+        AudioManager.Instance.StartPlaying();
     }
 
     public void PerformAction(int choice)

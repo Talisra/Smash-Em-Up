@@ -1,14 +1,12 @@
 ScriptsOnlyBuild:
   usedScripts:
-    Assembly-CSharp-Editor.dll:
-    - ReadmeEditor
     Assembly-CSharp.dll:
     - AnimationAnchor
     - AudioManager
     - BasicBullet
     - BasicBulletPool
     - CFX_AutoDestructShuriken
-    - CameraShake
+    - CameraEffects
     - Cannon
     - CannonPool
     - CeilingDoor
@@ -32,6 +30,8 @@ ScriptsOnlyBuild:
     - HealthUp
     - HealthUpPool
     - HitFlash
+    - Kino.AnalogGlitch
+    - Kino.DigitalGlitch
     - LaserBeam
     - LaserScrap
     - LockInitRotation
@@ -46,13 +46,13 @@ ScriptsOnlyBuild:
     - PowerupCounterText
     - PrefabPooler
     - Profile
-    - Readme
     - RedBallScrap
     - RegularBody
     - RoundAtk
     - ShieldFX
     - ShieldUp
     - ShieldUpPool
+    - ShutdownEffect
     - SpawnBoxPool
     - SpawnEffect
     - Spawner
@@ -233,8 +233,6 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13998}
     - Class: 114
-      Script: {instanceID: 14156}
-    - Class: 114
       Script: {instanceID: 14180}
     - Class: 114
       Script: {instanceID: 14216}
@@ -290,6 +288,14 @@ ScriptsOnlyBuild:
       Script: {instanceID: 15394}
     - Class: 114
       Script: {instanceID: 15402}
+    - Class: 114
+      Script: {instanceID: 25894}
+    - Class: 114
+      Script: {instanceID: 25898}
+    - Class: 114
+      Script: {instanceID: 32846}
+    - Class: 114
+      Script: {instanceID: 164784}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 120
@@ -1100,12 +1106,6 @@ ScriptsOnlyBuild:
     className: SignalReceiver
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: CameraShake
-  - hash:
-      serializedVersion: 2
       Hash: 104124e3a6211b9d95324846bb06079b
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -1208,7 +1208,7 @@ ScriptsOnlyBuild:
     className: U10PS_MouseRotation
   - hash:
       serializedVersion: 2
-      Hash: 22111d5907d74ad5b8ac005d63f5d54d
+      Hash: 482be6b21bed406815a54a74783016cf
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: VHSPostProcessEffect
@@ -1442,7 +1442,7 @@ ScriptsOnlyBuild:
     className: StandaloneInputModule
   - hash:
       serializedVersion: 2
-      Hash: 3e64ba4237bce60e863553f8e586ae30
+      Hash: 37df74977588c93beed04b0a907736f0
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManager
@@ -1500,8 +1500,32 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: b8e2ed6d779a434d1df7adfe27e22987
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Kino
+    className: DigitalGlitch
+  - hash:
+      serializedVersion: 2
+      Hash: 00de8b23268eebd4e9bca29080c0fd8f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: Kino
+    className: AnalogGlitch
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CameraEffects
+  - hash:
+      serializedVersion: 2
+      Hash: 0fc923e9ff78dd5e92379ca8f2c5c9b5
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ShutdownEffect
   platform: 5
   scenePathNames:
   - Assets/Scenes/Main Menu.unity
   - Assets/Scenes/Level.unity
-  playerPath: C:/Users/User/Desktop/New folder/Smash 'em Up!.exe
+  playerPath: C:/Users/User/Desktop/Smash 'em Up 1.2f/Smash 'em Up!.exe

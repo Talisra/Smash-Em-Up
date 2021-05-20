@@ -74,6 +74,10 @@ public class AudioManager : MonoBehaviour
         sessions[0].trackCounter = 0;
         currentSession = 1;
         currentLayerOrder = 0;
+    }
+
+    public void StartPlaying()
+    {
         StartCoroutine(PlaySessionLoop(sessions[0], 1));
     }
 
@@ -158,7 +162,7 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(PlaySession(sessions[currentSession], loop));
     }
 
-    private IEnumerator PlaySessionLoop(Session session, int loopTime)
+    public IEnumerator PlaySessionLoop(Session session, int loopTime)
     {
         AddTrackLayer(session);
         bool levelStarted = false;

@@ -219,7 +219,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     // Create an explosion prefab and scraps.
     void Explode()
     {
-        CameraShake.Shake(0.5f, 0.4f);
+        CameraEffects.Shake(0.5f, 0.4f);
         AudioManager.Instance.Play(explodeAudio);
         if (afterEffectAudio != "")
             AudioManager.Instance.Play(afterEffectAudio);

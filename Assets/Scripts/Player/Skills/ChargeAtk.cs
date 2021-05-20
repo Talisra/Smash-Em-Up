@@ -84,7 +84,7 @@ public class ChargeAtk : Skill
     {
         collision.gameObject.GetComponent<Unpassable>().SlamWall(player.head.transform.position);
         player.CancelInv();
-        CameraShake.Shake(0.75f, 0.3f);
+        CameraEffects.Shake(0.75f, 0.3f);
         Invoke("Uncharge", 0.75f);
     }
 

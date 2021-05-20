@@ -9,7 +9,7 @@ public class RoundAtk : Skill
         if (!enemy.isHit)
         {
             enemy.HitByPlayer();
-            CameraShake.Shake(0.25f, 0.3f);
+            CameraEffects.Shake(0.25f, 0.3f);
             AudioManager.Instance.Play("SuperSmash");
             // calculate the distance to know if animation is from left or right
             Vector3 enemyPos = enemy.transform.position;
@@ -27,6 +27,7 @@ public class RoundAtk : Skill
 
     public override void OnStartAction()
     {
+        AudioManager.Instance.Play("RoundAtkwu");
         if (player.GetDeltaX() < 0)
             player.animator.Play(animationName + "Right");
         else

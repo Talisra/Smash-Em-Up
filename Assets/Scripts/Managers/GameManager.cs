@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
         player.AssignSkills(profile.skills);
         GameArea = new List<float>();
         CalculateGameArea();
-        //Cursor.visible = false;
+        Cursor.visible = false;
         StartCoroutine(spawner.Spawn());
     }
 
@@ -117,10 +117,12 @@ public class GameManager : MonoBehaviour
         StartCoroutine(EndNow());
         IEnumerator EndNow()
         {
-            CameraShake.EndGameEffectGlitch();
-            yield return new WaitForSeconds(3.5f);
+            CameraEffects.EndGameEffectGlitch();
+            yield return new WaitForSeconds(2.5f);
+            CameraEffects.ShutDown();
+            yield return new WaitForSeconds(1.9f);
             Cursor.visible = true;
-            CameraShake.glitchEffect.enabled = false;
+            CameraEffects.glitchEffect.enabled = false;
             SceneManager.LoadScene(0);
         }
     }

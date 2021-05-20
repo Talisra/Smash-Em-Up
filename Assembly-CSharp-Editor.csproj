@@ -59,6 +59,8 @@
      <Compile Include="Assets\Imports\JMO Assets\Cartoon FX Easy Editor\Editor\CFXEasyEditor.cs" />
      <Compile Include="Assets\Imports\Environment\_SNAPS_PrototypingAssets\About\Scripts\Editor\ReadmeEditor.cs" />
      <Compile Include="Assets\Imports\Environment\_SNAPS_PrototypingAssets\Scripts\Editor\PackageChecker\PackageChecker.cs" />
+     <Compile Include="Assets\Imports\Kino\Glitch\Editor\DigitalGlitchEditor.cs" />
+     <Compile Include="Assets\Imports\Kino\Glitch\Editor\AnalogGlitchEditor.cs" />
      <None Include="Assets\Imports\Environment\_SNAPS_PrototypingAssets\Scripts\Editor\PackageChecker\settings\PackageImportList_ShaderGraph.txt" />
      <None Include="Assets\Imports\Environment\_SNAPS_PrototypingAssets\Scripts\Editor\PackageChecker\PackageImportList.txt" />
  <Reference Include="UnityEditor.TestRunner">

@@ -77,6 +77,7 @@
      <Compile Include="Assets\Scripts\Menu\MenuButton.cs" />
      <Compile Include="Assets\Imports\Particle Ribbon by Moonflower Carnivore\Scripts\randomParticleRotation.cs" />
      <Compile Include="Assets\Scripts\Pooling\Powerups\SpeedContainerPool.cs" />
+     <Compile Include="Assets\Scripts\General\Auxiliary.cs" />
      <Compile Include="Assets\Scripts\General\ReconstructableObject.cs" />
      <Compile Include="Assets\Imports\Pixelate\Pixelate.cs" />
      <Compile Include="Assets\Audio\Sound.cs" />
@@ -110,7 +111,6 @@
      <Compile Include="Assets\Scripts\Scraps\LaserScrap.cs" />
      <Compile Include="Assets\Imports\PowerUp\Scripts\TakeablePowerUp.cs" />
      <Compile Include="Assets\Imports\JMO Assets\Cartoon FX\Scripts\CFX_AutoRotate.cs" />
-     <Compile Include="Assets\Scripts\General\CameraShake.cs" />
      <Compile Include="Assets\Scripts\PowerUps\PowerUp.cs" />
      <Compile Include="Assets\Scripts\Environment\Unpassable.cs" />
      <Compile Include="Assets\Imports\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_New.cs" />
@@ -130,6 +130,7 @@
      <Compile Include="Assets\Scripts\Enemies\Cryser.cs" />
      <Compile Include="Assets\Scripts\General\Part.cs" />
      <Compile Include="Assets\Scripts\Enemies\CryserBody.cs" />
+     <Compile Include="Assets\Audio\Subtrack.cs" />
      <Compile Include="Assets\Scripts\Pooling\Powerups\CannonPool.cs" />
      <Compile Include="Assets\Scripts\General\ShieldFX.cs" />
      <Compile Include="Assets\Scripts\Menu\MenuPlayer.cs" />
@@ -148,8 +149,10 @@
      <Compile Include="Assets\Scripts\Scraps\CrystalScrap.cs" />
      <Compile Include="Assets\Scripts\PowerUps\ShieldUp.cs" />
      <Compile Include="Assets\Scripts\Enemies\LaserBeam.cs" />
-     <Compile Include="Assets\Audio\Subtrack.cs" />
-     <Compile Include="Assets\Scripts\General\Auxiliary.cs" />
+     <Compile Include="Assets\Imports\Kino\Glitch\DigitalGlitch.cs" />
+     <Compile Include="Assets\Imports\Kino\Glitch\AnalogGlitch.cs" />
+     <Compile Include="Assets\Scripts\General\CameraEffects.cs" />
+     <Compile Include="Assets\Scripts\General\ShutdownEffect.cs" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\Imports\Pixelate\Pixelate.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
@@ -181,6 +184,8 @@
      <None Include="Assets\Imports\Ultimate 10 Plus Shaders\Shaders\Plexus\Plexus Line.shader" />
      <None Include="Assets\Imports\VHS\Shaders\VHSPostProcessEffect.shader" />
      <None Include="Assets\Imports\Ultimate 10 Plus Shaders\Shaders\Snow.shader" />
+     <None Include="Assets\Imports\Kino\Glitch\Shader\DigitalGlitch.shader" />
+     <None Include="Assets\Imports\Kino\Glitch\Shader\AnalogGlitch.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
      <None Include="Assets\Imports\Ultimate 10 Plus Shaders\Shaders\Lava3D.shader" />
      <None Include="Assets\Imports\Ultimate 10 Plus Shaders\Shaders\Force Field.shader" />
