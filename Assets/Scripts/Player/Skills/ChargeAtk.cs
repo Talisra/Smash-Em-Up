@@ -37,6 +37,8 @@ public class ChargeAtk : Skill
         }
     }
 
+
+
     public override void OnStartAction()
     {
         isActive = true;
@@ -74,8 +76,8 @@ public class ChargeAtk : Skill
             player.rb.MoveRotation(rotation);
             if (buttonReleased)
             {
-                player.rb.AddForce(direction * 10 * acceleration, 0, 0);
-                acceleration += 10;
+                player.rb.AddForce(direction * 30 * acceleration, 0, 0);
+                acceleration += 5;
             }
         }
     }

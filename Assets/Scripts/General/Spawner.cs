@@ -116,6 +116,8 @@ public class Spawner : MonoBehaviour
     
     private Cannon SummonCannon()
     {
+        if (GameManager.Instance.CheckGameOver())
+            return null;
         List<float> area = gm.GetGameArea();
         Vector3 spawnTarget;
         do

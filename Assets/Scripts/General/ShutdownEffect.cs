@@ -37,6 +37,7 @@ public class ShutdownEffect : MonoBehaviour
 	private void PlaySound()
 	{
 		AudioManager.Instance.Play("ScreenShut");
+		AudioManager.Instance.muteSound = true;
 		AudioManager.Instance.Reset();
 	}
 	private void Reset()

@@ -34,6 +34,12 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     protected bool isAlive = true;
     protected float minVelocityForDamage = 5f;
 
+    // Thrust
+    public bool isThrusting;
+    private float thrustCounter = 0;
+    private float thrustDelay = 2f;
+    private ThrustEffect thrustEffect;
+
     // Squash
     public bool isSquashable;
     public bool isTouchingPlayer = false;
@@ -66,6 +72,9 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     public List<GameObject> scraps;
     public GameObject explosionPrefab;
 
+    // UI
+    private EnemyHPBar hpBar;
+
     private int[] numOfScraps; // visual: the number of small pieces the enemy will spawn when it dies
     void Awake()
     {
@@ -85,6 +94,13 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
         rb = GetComponent<Rigidbody>();
         tr = GetComponent<TrailRenderer>();
         enemyColliders = GetComponentsInChildren<Collider>();
+        GameObject hpgo = Instantiate(Resources.Load("EnemyHPBar", typeof(GameObject)),
+            transform.position, Quaternion.identity) as GameObject;
+        hpBar = hpgo.GetComponent<EnemyHPBar>();
+        hpBar.AttatchToEnemy(this);
+        GameObject thrustgo = Instantiate(Resources.Load("ThrustEffect", typeof(GameObject)),
+            transform.position, Quaternion.identity) as GameObject;
+        thrustEffect = thrustgo.GetComponent<ThrustEffect>();
     }
 
     private void OnEnable()
@@ -102,12 +118,23 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
             rb.isKinematic = false;
             isSuperSpeed = false;
             superSpeedKernel.SetActive(false);
+            hpBar.gameObject.SetActive(true);
             isAlive = true;
             foreach (Collider c in enemyColliders)
                 c.enabled = true;
             curHealth = maxHealth;
             StartCoroutine(Behavior());
         }
+    }
+
+    public float GetMaxHp()
+    {
+        return maxHealth;
+    }
+
+    public float GetCurrentHp()
+    {
+        return curHealth;
     }
 
     private void OnDisable()
@@ -119,6 +146,21 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     {
         //Implement at children
         yield return new WaitForSeconds(0);
+    }
+
+    protected void Thrust()
+    {
+        if (!isThrusting)
+        {
+            isThrusting = true;
+            thrustCounter = 0;
+            int x_offset = Random.Range(-5, 5);
+            int y_offset = Random.Range(-5, 5);
+            Vector3 target = new Vector3(x_offset, y_offset, 0);
+            rb.AddForce(target - transform.position,
+                ForceMode.VelocityChange);
+            thrustEffect.SetEffect(transform.position, target);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -173,18 +215,6 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
             transform.position.y, 0);
     }
 
-    /*
-    private void AttachToWall()
-    {
-        float sign = Mathf.Sign(transform.position.x);
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, new Vector3(sign, 0,0), out hit)) 
-        {
-            //transform.position = hit.point - new Vector3(sign * squashVector.x, 0, 0);
-            transform.position = hit.point;
-        }
-    }
-    */
     public void Damage(int amount)
     {
         if (isAlive)
@@ -306,10 +336,23 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
                 superSpeedKernel.SetActive(false);
             }
         }
+        if (isThrusting)
+        {
+            thrustCounter += Time.deltaTime;
+            if (thrustCounter >= thrustDelay)
+            {
+                isThrusting = false;
+                thrustCounter = 0;
+            }
+        }
     }
 
     private void FixedUpdate()
     {
+        if (rb.velocity.magnitude < 5 && rb.velocity.magnitude != 0)
+        {
+            Invoke("Thrust", 0.3f);
+        }
         if (isSuperSpeed)
         {
             if (superSpeedMagnitude == 0 && rb.velocity.magnitude > 0)
@@ -326,6 +369,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     public virtual void BackToPool()
     {
         gameManager.RemoveEnemy();
+        hpBar.gameObject.SetActive(false);
         //Implement at Inherited enemy
     }
 }

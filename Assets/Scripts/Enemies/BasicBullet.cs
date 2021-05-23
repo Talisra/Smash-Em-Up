@@ -7,7 +7,7 @@ public class BasicBullet : MonoBehaviour
     //public GameObject player;
     public GameObject fireOutAnimation;
     public GameObject destroyAnimation;
-    public float speed = 1000;
+    public float speed = 5000;
     private float radialSpeed = 100;
     private Player player;
     private Transform dest;

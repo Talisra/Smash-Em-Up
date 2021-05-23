@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour
             CameraEffects.glitchEffect.enabled = false;
             CameraEffects.glitch_digital.enabled = false;
             CameraEffects.glitch_analog.enabled = false;
-            yield return new WaitForSeconds(0.9f);
+            yield return new WaitForSeconds(2.5f);
             SceneManager.LoadScene(0);
         }
     }
