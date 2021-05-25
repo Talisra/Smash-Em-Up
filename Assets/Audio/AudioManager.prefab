@@ -46,8 +46,23 @@ MonoBehaviour:
   sounds:
   - name: Smash1
     clip: {fileID: 8300000, guid: abea15859e4281e4382cf9cf564975c7, type: 3}
-    volume: 0.466
-    pitch: 1.42
+    volume: 0.4
+    pitch: 1.4
+    source: {fileID: 0}
+  - name: Smash2
+    clip: {fileID: 8300000, guid: abea15859e4281e4382cf9cf564975c7, type: 3}
+    volume: 0.5
+    pitch: 1.2
+    source: {fileID: 0}
+  - name: Smash3
+    clip: {fileID: 8300000, guid: abea15859e4281e4382cf9cf564975c7, type: 3}
+    volume: 0.6
+    pitch: 1
+    source: {fileID: 0}
+  - name: SmashF
+    clip: {fileID: 8300000, guid: 307a1a2f6a3f2324b951adbdb137cf97, type: 3}
+    volume: 0.6
+    pitch: 1
     source: {fileID: 0}
   - name: Wall_Impact
     clip: {fileID: 8300000, guid: 79c77b1244f5d0a41b88fb6e2eb44861, type: 3}
@@ -57,7 +72,7 @@ MonoBehaviour:
   - name: Explosion1
     clip: {fileID: 8300000, guid: ae1b0c0b3e476df43ad52f97562c41c0, type: 3}
     volume: 0.84
-    pitch: 1.55
+    pitch: 1
     source: {fileID: 0}
   - name: Explosion_Evaporate
     clip: {fileID: 8300000, guid: 33cc3a56f00cd8140820d54acd2169a7, type: 3}
@@ -66,8 +81,8 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Explosion2
     clip: {fileID: 8300000, guid: 303870064f342504d9cbf0a4ae242eb1, type: 3}
-    volume: 0.9
-    pitch: 1.45
+    volume: 0.754
+    pitch: 1.2
     source: {fileID: 0}
   - name: Tap
     clip: {fileID: 8300000, guid: b79bb63c0529e60489781f74c3d02947, type: 3}
@@ -116,8 +131,8 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: SmallExplosion
     clip: {fileID: 8300000, guid: 303870064f342504d9cbf0a4ae242eb1, type: 3}
-    volume: 0.828
-    pitch: 1.36
+    volume: 0.469
+    pitch: 2.02
     source: {fileID: 0}
   - name: BigShatter
     clip: {fileID: 8300000, guid: a05a54ad25e8e2446a2a9c4146b180c9, type: 3}
@@ -156,8 +171,8 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Laser
     clip: {fileID: 8300000, guid: 135f8c24f8574b84d8a32a79fc181f05, type: 3}
-    volume: 0.606
-    pitch: 0.76
+    volume: 0.41
+    pitch: 0.84
     source: {fileID: 0}
   - name: ScrapMetalHit
     clip: {fileID: 8300000, guid: 92d23b21d53d20f41b7118b64fce910e, type: 3}
@@ -288,12 +303,12 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: SD2
     clip: {fileID: 8300000, guid: 9360fed4d4e2abd4b9f4f4c4f4207731, type: 3}
-    volume: 0.45
+    volume: 0.25
     pitch: 1
     source: {fileID: 0}
   - name: WhiteNoise
     clip: {fileID: 8300000, guid: 9494fa18046536645b8e097b1832e846, type: 3}
-    volume: 1
+    volume: 0.5
     pitch: 1
     source: {fileID: 0}
   - name: WhiteNoise2
@@ -335,14 +350,14 @@ MonoBehaviour:
         source: {fileID: 0}
         volume: 0
         length: 8
-      masterVolume: 0.8
+      masterVolume: 0.45
       mute: 0
     - subtracks:
       - clip: {fileID: 8300000, guid: 8638a011960959c4297b773895845455, type: 3}
         source: {fileID: 0}
         volume: 0
         length: 1
-      masterVolume: 0.5
+      masterVolume: 0.25
       mute: 0
     - subtracks:
       - clip: {fileID: 8300000, guid: 2139e730710127e4c8cd79012281c779, type: 3}
@@ -383,7 +398,7 @@ MonoBehaviour:
         source: {fileID: 0}
         volume: 0
         length: 8
-      masterVolume: 0.85
+      masterVolume: 0.45
       mute: 0
     - subtracks:
       - clip: {fileID: 8300000, guid: 6a5a0cc072253f941b209469ee27ad4e, type: 3}
@@ -423,7 +438,7 @@ MonoBehaviour:
         source: {fileID: 0}
         volume: 0
         length: 16
-      masterVolume: 0.85
+      masterVolume: 0.45
       mute: 0
     - subtracks:
       - clip: {fileID: 8300000, guid: a7b66248f75ff1b409bd2eb12ad3bc91, type: 3}

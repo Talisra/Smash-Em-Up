@@ -5,7 +5,6 @@ using UnityEngine;
 public class Unpassable : MonoBehaviour
 {
     public int type; // type defines the wall type: 0: Wall, 1: Ceiling, 2: floor
-    public GameObject hitParticle;
     public GameObject slamParticle;
     public string slamSound;
     public string hitSound;
@@ -26,7 +25,6 @@ public class Unpassable : MonoBehaviour
 
     void HitWall(Vector3 coordinates)
     {
-        Instantiate(hitParticle, coordinates, Quaternion.identity);
         AudioManager.Instance.Play(hitSound);
     }
 

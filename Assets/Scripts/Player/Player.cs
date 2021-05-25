@@ -46,8 +46,7 @@ public class Player : MonoBehaviour
 
     // Movement
     public float MoveSpeed = 0.1f;
-    public float smoothTime = 0.1f; // lower smoothTime means better control with the mouse.
-    public float normalRotationCoefficient = 1.2f;
+    public float normalRotationCoefficient = 1f;
     public float deltaCap = 50f;
     private float MaxSpeed = 8.0f;
     private float velocity = 2.5f;
@@ -57,7 +56,7 @@ public class Player : MonoBehaviour
     private float deltaY;
     private float accelerationX = 1f;
     private float accelerationY = 1f;
-    private float out_of_screen_mult = 1.5f;
+    private float out_of_screen_mult = 1.35f;
     private float rotationCoefficient;
     private bool inControl = true;
 
@@ -66,10 +65,14 @@ public class Player : MonoBehaviour
     public float power = 15f;
     public float basePower = 25f;
     private int currentPowerUps = 5;
-    //private float specialModifier = 7000;
     private bool canAttack = true;
     private float attackDelay = 0.4f;
     private float atkDelayCounter = 0;
+
+    private int attackSequence = 0;
+    private bool inAtkCombo = false;
+    private float atkSeqComboTime = 2f;
+    private float atkSeqComboCounter = 0;
 
     //Invulnerability
     private bool isInvul = false;
@@ -108,10 +111,10 @@ public class Player : MonoBehaviour
                 Enemy enemy = collision.gameObject.GetComponent<Enemy>();
                 if (!enemy.isSquashed)
                 {
-                    GainInv(0.2f);
+                    GainInv(0.3f);
                     if (currentSkill != null)
                     {
-                        OnSmash(enemy);
+                        SkillSmash(enemy);
                     }
                     else if (canAttack)
                         BasicSmash(enemy);
@@ -377,7 +380,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void OnSmash(Enemy enemy)
+    public void SkillSmash(Enemy enemy)
     {
         enemy.ResetComboChain();
         currentSkill.OnSmash(enemy);
@@ -385,31 +388,73 @@ public class Player : MonoBehaviour
 
     public void BasicSmash(Enemy enemy) 
     {
+        inAtkCombo = true;
+        atkSeqComboCounter = 0;
+        string animationLeft = "";
+        string animationRight = "";
+        Vector3 powerVector = Vector3.zero;
         enemy.ResetComboChain();
         enemy.HitByPlayer();
         canAttack = false;
-        CameraEffects.Shake(0.1f, 0.2f);
-        AudioManager.Instance.Play("Smash1");
-        // calculate the distance to know if animation is from left or right
-        Vector3 enemyPos = enemy.transform.position;
-        Vector3 playerPos = transform.position;
-        float enemyDirection = -playerPos.x * enemyPos.y + playerPos.y * enemyPos.x; // negative = left, positive = right
-        if (enemyDirection > 0) // play the right attack animation
-            animator.Play("AtkRight");
-        else if (enemyDirection < 0)
-            animator.Play("AtkLeft");
-        ShowSmashParticle(enemy.transform);
+        float enemyDirection = transform.position.x - enemy.transform.position.x; // negative = left, positive = right
         Rigidbody rbenemy = enemy.GetComponent<Rigidbody>();
-        Vector3 PowerVector = new Vector3(
-            Mathf.Sign(enemyDirection) * basePower + Mathf.Log((deltaX < 1 ? 1 : deltaX)) * power,
-            0, 0);
-        rbenemy.AddForce(PowerVector);
+        switch (attackSequence)
+        {
+            case 0:
+                {
+                    CameraEffects.Shake(0.1f, 0.2f);
+                    AudioManager.Instance.Play("Smash1");
+                    powerVector = new Vector3(
+                        Mathf.Sign(enemyDirection) * basePower + Mathf.Log((deltaX < 1 ? 1 : deltaX)) * power,
+                        0, 0);
+                    animationLeft = "AtkLeft";
+                    animationRight = "AtkRight";
+                    ShowSmashParticle(enemy.transform, 2f);
+                    attackSequence++;
+                    break;
+                }
+            case 1:
+                {
+                    CameraEffects.Shake(0.15f, 0.3f);
+                    AudioManager.Instance.Play("Smash2");
+                    powerVector = new Vector3(
+                        Mathf.Sign(enemyDirection) * basePower*2f + Mathf.Log((deltaX < 1 ? 1 : deltaX)) * power*1.5f,
+                        0, 0);
+                    animationLeft = "AtkLeft2";
+                    animationRight = "AtkRight2";
+                    ShowSmashParticle(enemy.transform, 2.5f);
+                    attackSequence++;
+                    break;
+                }
+            case 2: // == maxAtkSequence!
+                {
+                    enemy.Damage(1);
+                    enemy.GiveSuperSpeed(0.5f);
+                    CameraEffects.Shake(0.4f, 0.4f);
+                    AudioManager.Instance.Play("Smash3");
+                    AudioManager.Instance.Play("SmashF");
+                    powerVector = new Vector3(
+                        Mathf.Sign(enemyDirection) * basePower*5f + Mathf.Log((deltaX < 1 ? 1 : deltaX)) * power*2f,
+                        0, 0);
+                    animationLeft = "AtkLeftF";
+                    animationRight = "AtkRightF";
+                    attackSequence = 0;
+                    ShowSmashParticle(enemy.transform, 3f);
+                    break;
+                }
+        }
+        if (enemyDirection > 0) // play the right attack animation
+            animator.Play(animationLeft);
+        else if (enemyDirection < 0)
+            animator.Play(animationRight);
+        rbenemy.AddForce(powerVector, ForceMode.VelocityChange);
     }
 
-    private void ShowSmashParticle(Transform pos)
+    private void ShowSmashParticle(Transform pos, float scale)
     {
         GameObject particle = Instantiate(
             smashAnimPrefab, pos.position, Quaternion.identity) as GameObject;
+        particle.transform.localScale = new Vector3(scale, scale, scale);
         ParticleSystem parts = particle.GetComponent<ParticleSystem>();
         Destroy(particle, parts.main.duration);
     }
@@ -463,6 +508,18 @@ public class Player : MonoBehaviour
                 }
             }
         }
+
+        if (inAtkCombo)
+        {
+            atkSeqComboCounter += Time.deltaTime;
+            if (atkSeqComboCounter >= atkSeqComboTime)
+            {
+                attackSequence = 0;
+                atkSeqComboCounter = 0;
+                inAtkCombo = false;
+            }
+        }
+
 
         //handle Stun
         if (isStunned)

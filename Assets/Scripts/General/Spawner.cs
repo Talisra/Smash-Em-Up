@@ -55,7 +55,7 @@ public class Spawner : MonoBehaviour
 
     public IEnumerator SpawnWaveBonuses()
     {
-        if (Random.Range(0, 100) > 0)
+        if (Random.Range(0, 100) > 60)
         {
             SummonCannon();
         }

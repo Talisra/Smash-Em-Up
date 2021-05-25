@@ -5,9 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
+    public Animator transitionAnimator;
     // Start is called before the first frame update
     void Start()
     {
+        transitionAnimator.Play("FadeOut");
         AudioManager.Instance.Reset();
         AudioManager.Instance.muteSound = false;
         AudioManager.Instance.StartPlaying();

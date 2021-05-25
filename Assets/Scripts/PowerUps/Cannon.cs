@@ -116,7 +116,7 @@ public class Cannon : MonoBehaviour, IPoolableObject
         animator.Play("Cannon_Fire");
         storedEnemy.gameObject.SetActive(true);
         storedEnemy.GetComponent<Rigidbody>().AddForce(launchVector.normalized * launchPower, ForceMode.VelocityChange);
-        storedEnemy.GiveSuperSpeed(2.5f);
+        storedEnemy.GiveSuperSpeed(2);
         Invoke("Despawn", 0.5f);
     }
 

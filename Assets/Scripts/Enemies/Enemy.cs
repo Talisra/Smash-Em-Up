@@ -37,7 +37,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     // Thrust
     public bool isThrusting;
     private float thrustCounter = 0;
-    private float thrustDelay = 2f;
+    private float thrustDelay = 5f;
     private ThrustEffect thrustEffect;
 
     // Squash
@@ -51,6 +51,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     public bool isHit;
     private float hitCounter;
     private float hitDelay = 0.5f;
+    public GameObject hitFX;
 
     // Combos
     private bool inCombo = false;
@@ -101,6 +102,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
         GameObject thrustgo = Instantiate(Resources.Load("ThrustEffect", typeof(GameObject)),
             transform.position, Quaternion.identity) as GameObject;
         thrustEffect = thrustgo.GetComponent<ThrustEffect>();
+        thrustEffect.gameObject.SetActive(false);
     }
 
     private void OnEnable()
@@ -170,11 +172,11 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
             if (collision.gameObject.tag == "Unpassable" && isAlive && !isFlashing)
             {
                 // when colliding on the wall, damage the enemy.
-                Damage(1);
+                Damage(isSuperSpeed ? 2 : 1);
             }
             else if (collision.gameObject.tag == "Enemy" && isAlive && !isFlashing)
             {
-                Damage(1);
+                Damage(isSuperSpeed ? 2 : 1);
             }
         }
     }
@@ -225,6 +227,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
                 comboManager.AddCombo();
             }
             AudioManager.Instance.Play(hitAudio);
+            Instantiate(hitFX, transform.position, Quaternion.identity);
             curHealth -= amount;
             Flash();
             if (curHealth <= 0)
@@ -351,7 +354,8 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     {
         if (rb.velocity.magnitude < 5 && rb.velocity.magnitude != 0)
         {
-            Invoke("Thrust", 0.3f);
+            if (!isThrusting)
+                Invoke("Thrust", 0.3f);
         }
         if (isSuperSpeed)
         {

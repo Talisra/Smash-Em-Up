@@ -17,6 +17,7 @@ public class Cryser : Enemy
     // Start is called before the first frame update
     void Start()
     {
+        rb.maxAngularVelocity = 2; // Do not let Cryser rotate too much - easier to deal with as an enemy.
         StartCoroutine(Behavior());
     }
 

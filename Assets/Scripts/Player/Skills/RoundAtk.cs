@@ -9,7 +9,7 @@ public class RoundAtk : Skill
         if (!enemy.isHit)
         {
             enemy.HitByPlayer();
-            CameraEffects.Shake(0.25f, 0.3f);
+            CameraEffects.Shake(0.35f, 0.4f);
             AudioManager.Instance.Play("SuperSmash");
             // calculate the distance to know if animation is from left or right
             Vector3 enemyPos = enemy.transform.position;
@@ -18,10 +18,10 @@ public class RoundAtk : Skill
             ShowHitParticle(enemy.transform);
             Rigidbody rbenemy = enemy.GetComponent<Rigidbody>();
             Vector3 PowerVector = new Vector3(
-                Mathf.Sign(enemyDirection) * 6000,
+                Mathf.Sign(enemyDirection) * 7000,
                 0, 0);
             rbenemy.AddForce(PowerVector);
-            enemy.GetComponent<Enemy>().GiveSuperSpeed(0.5f);
+            enemy.GetComponent<Enemy>().GiveSuperSpeed(1f);
         }
     }
 

@@ -156,7 +156,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8076d6d55875d1d419825a7b6632d490, type: 2}
+  - {fileID: 2100000, guid: c86965e9c6da9f447be2d9165089b529, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -319,13 +319,15 @@ MonoBehaviour:
   normalTex: {fileID: 2800000, guid: 1364dd6c8636726409448078c0c38553, type: 3}
   flashTex: {fileID: 2800000, guid: 67473669facfb204abbe8bcd40aa5cca, type: 3}
   moveSpeed: 10
-  maxHealth: 4
+  maxHealth: 12
   flashTime: 0.35
+  isThrusting: 0
   isSquashable: 0
   isTouchingPlayer: 0
   isSquashed: 0
   squashVector: {x: 1, y: 1, z: 1}
   isHit: 0
+  hitFX: {fileID: 100000, guid: f06e78284f831ae469c74624ab5d513b, type: 3}
   afterEffectAudio: Spark1
   explodeAudio: BigShatter
   hitAudio: Hit2

@@ -419,7 +419,7 @@ MonoBehaviour:
   maxHP: 10
   MoveSpeed: 0.1
   smoothTime: 0.1
-  normalRotationCoefficient: 0.2
+  normalRotationCoefficient: 0
   deltaCap: 60
   maxPowerUps: 0
   power: 10
