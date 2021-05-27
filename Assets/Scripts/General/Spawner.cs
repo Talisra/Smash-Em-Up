@@ -114,7 +114,7 @@ public class Spawner : MonoBehaviour
         return container;
     }
     
-    private Cannon SummonCannon()
+    public Cannon SummonCannon()
     {
         if (GameManager.Instance.CheckGameOver())
             return null;

@@ -36,6 +36,11 @@ public abstract class Skill : MonoBehaviour
 
     }
 
+    public virtual void OnMapBonusCollision(MapBonus mapBonus)
+    {
+
+    }
+
     public virtual void OnInputRelease()
     {
 

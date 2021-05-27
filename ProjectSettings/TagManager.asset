@@ -18,6 +18,7 @@ TagManager:
   - SemiCollider
   - Trigger
   - Container
+  - MapBonus
   layers:
   - Default
   - TransparentFX

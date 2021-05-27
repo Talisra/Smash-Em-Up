@@ -11557,6 +11557,7 @@ MonoBehaviour:
   RightWall: {fileID: 896655654}
   Floor: {fileID: 987795281}
   Ceiling: {fileID: 397111215}
+  hitFlash: {fileID: 889153524}
   spawner: {fileID: 511142375}
   Wave: 1
 --- !u!4 &1966802335

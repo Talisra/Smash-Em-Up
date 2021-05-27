@@ -5,9 +5,11 @@ using UnityEngine;
 public class ChargeAtk : Skill
 {
     private GameManager gameManager;
+    private List<Enemy> enemiesDragged = new List<Enemy>();
     private Quaternion rotation = Quaternion.identity;
     private float currentZRot = 0;
     private float acceleration = 0;
+    private float yDragVelocity = 5;
     private int direction; // 1 = right, -1 = left.
     private bool isActive = false;
     private bool buttonReleased = false;
@@ -18,23 +20,9 @@ public class ChargeAtk : Skill
     }
     public override void OnSmash(Enemy enemy)
     {
-        if (enemy.transform.position.x < (gameManager.GetGameArea()[0] + enemy.GetComponent<Collider>().bounds.size.x*1.5f)
-            ||
-            enemy.transform.position.x > (gameManager.GetGameArea()[2] - enemy.GetComponent<Collider>().bounds.size.x*1.5f))
-        {
-            enemy.Squash();
-        }
-        else
-        {
-            if (!enemy.isHit)
-            {
-                enemy.Damage(1);
-                enemy.HitByPlayer();
-                enemy.GetComponent<Rigidbody>().AddForce(new Vector3(direction * 6000, 0, 0));
-                ShowHitParticle(enemy.transform);
-                AudioManager.Instance.Play("ChargeHit");
-            }
-        }
+        enemy.StopMovement();
+        enemy.transform.SetParent(player.transform);
+        enemiesDragged.Add(enemy);
     }
 
 
@@ -52,6 +40,7 @@ public class ChargeAtk : Skill
         acceleration = 0;
         rotation = Quaternion.identity;
         buttonReleased = false;
+
         player.GiveControl();
     }
 
@@ -70,6 +59,8 @@ public class ChargeAtk : Skill
             if (!buttonReleased)
             {
                 direction = CheckDirection();
+                float yForce = yDragVelocity * -player.GetDeltaY() - player.rb.velocity.y;
+                player.rb.AddForce(new Vector3(0, yForce, 0), ForceMode.VelocityChange);
             }
             currentZRot = Mathf.Clamp(currentZRot + 7.5f * -direction, -90, 90);
             rotation = Quaternion.Euler(0, 0, currentZRot);
@@ -84,15 +75,30 @@ public class ChargeAtk : Skill
 
     public override void OnWallCollision(Collision collision)
     {
-        collision.gameObject.GetComponent<Unpassable>().SlamWall(player.head.transform.position);
-        player.CancelInv();
-        CameraEffects.Shake(0.75f, 0.3f);
-        Invoke("Uncharge", 0.75f);
+        if (buttonReleased)
+        {
+            foreach (Enemy enemy in enemiesDragged)
+            {
+                enemy.transform.SetParent(null);
+                enemy.Squash();
+            }
+            enemiesDragged.Clear();
+            collision.gameObject.GetComponent<Unpassable>().SlamWall(player.head.transform.position);
+            player.CancelInv();
+            CameraEffects.Shake(0.75f, 0.3f);
+            Invoke("Uncharge", 0.75f);
+        }
+    }
+
+    public override void OnMapBonusCollision(MapBonus mapBonus)
+    {
+        mapBonus.Despawn();
     }
 
     public override void OnInputRelease()
     {
         buttonReleased = true;
+        player.rb.velocity = Vector3.zero;
         player.GainInv(2); //inv will break when colliding the wall
     }
 

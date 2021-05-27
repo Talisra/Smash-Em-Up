@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     public GameObject Floor;
     public GameObject Ceiling;
 
+    public HitFlash hitFlash;
+
     public Spawner spawner;
 
     public int Wave = 1;
@@ -36,13 +38,12 @@ public class GameManager : MonoBehaviour
     {
         if (Instance == null)
             Instance = this;
-
         spawner = FindObjectOfType<Spawner>();
         player = FindObjectOfType<Player>();
         player.AssignSkills(profile.skills);
         GameArea = new List<float>();
         CalculateGameArea();
-        Cursor.visible = false;
+        Cursor.visible = true;
         StartCoroutine(spawner.Spawn());
     }
 
@@ -90,7 +91,6 @@ public class GameManager : MonoBehaviour
         player.AddPowerUp(1);
     }
 
-
     public void CompleteWave()
     {
         Wave++;
@@ -109,6 +109,10 @@ public class GameManager : MonoBehaviour
         StartCoroutine(spawner.SpawnWaveBonuses());
     }
 
+    public void FlashRedScreen()
+    {
+        hitFlash.FlashDamage();
+    }
     public void EndGame()
     {
         gameOver = true;
@@ -161,6 +165,10 @@ public class GameManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.S))
             {
                 spawner.SummonPowerup(1);
+            }
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                spawner.SummonCannon();
             }
         }
     }

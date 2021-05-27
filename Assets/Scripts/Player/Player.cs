@@ -47,15 +47,13 @@ public class Player : MonoBehaviour
     // Movement
     public float MoveSpeed = 0.1f;
     public float normalRotationCoefficient = 1f;
-    public float deltaCap = 50f;
-    private float MaxSpeed = 8.0f;
-    private float velocity = 2.5f;
+    public float deltaCap = 10f;
+    private float MaxSpeed = 11.0f;
+    private float velocity = 3.0f;
     private Vector2 mousePosition;
     private Vector3 position = Vector3.zero;
     private float deltaX;
     private float deltaY;
-    private float accelerationX = 1f;
-    private float accelerationY = 1f;
     private float out_of_screen_mult = 1.35f;
     private float rotationCoefficient;
     private bool inControl = true;
@@ -74,10 +72,14 @@ public class Player : MonoBehaviour
     private float atkSeqComboTime = 2f;
     private float atkSeqComboCounter = 0;
 
-    //Invulnerability
+    //Invulnerability & Shield
     private bool isInvul = false;
     private float invTime = 0.75f;
     private float invDelayCounter = 0;
+
+    private bool isShielded = false;
+    private float shieldTime = 0;
+    private float shieldDelayCounter = 0;
 
     // Stun
     private bool isStunned = false;
@@ -152,6 +154,15 @@ public class Player : MonoBehaviour
                 currentSkill.OnWallCollision(collision);
             }
         }
+        if(collision.gameObject.tag == "MapBonus")
+        {
+            if (currentSkill != null)
+            {
+                MapBonus mb = collision.gameObject.GetComponentInParent<MapBonus>();
+                if (mb != null)
+                    currentSkill.OnMapBonusCollision(mb);
+            }
+        }
         if (collision.gameObject.tag == "Floor")
         {
             collidingFloor = true;
@@ -217,6 +228,11 @@ public class Player : MonoBehaviour
         return deltaX;
     }
 
+    public float GetDeltaY()
+    {
+        return deltaY;
+    }
+
     public void Heal(int amount)
     {
         if (isDead)
@@ -259,9 +275,9 @@ public class Player : MonoBehaviour
 
     public void GainShield(float amount) // same like GainInv but also gives the shieldFX
     {
-        isInvul = true;
-        invDelayCounter = 0;
-        invTime = amount;
+        isShielded = true;
+        shieldDelayCounter = 0;
+        shieldTime = amount;
         GameObject shield = PrefabPooler.Instance.Get(
             "Shield", transform.position, Quaternion.identity) as GameObject;
         shield.GetComponent<ShieldFX>().SetShield(gameObject, amount);
@@ -281,9 +297,9 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(float amount, bool giveShield)
     {
-        if (!isInvul)
+        if (!isInvul && !isShielded)
         {
-            FindObjectOfType<HitFlash>().FlashDamage();
+            GameManager.Instance.FlashRedScreen();
             body.ShowDamage();
             bottom.ShowDamage();
             currentHP -= amount;
@@ -541,8 +557,19 @@ public class Player : MonoBehaviour
                 isInvul = false;
                 invDelayCounter = 0;
             }
-
         }
+
+        //handle Shield
+        if (isShielded)
+        {
+            shieldDelayCounter += Time.deltaTime;
+            if (shieldDelayCounter >= shieldTime)
+            {
+                isShielded = false;
+                shieldDelayCounter = 0;
+            }
+        }
+
         //handle Squash
         if (isSquashed)
         {
@@ -569,26 +596,23 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (inControl)
-        {
-            // Movement 
-            TranslateCursorCoordinates();
-            deltaX = Mathf.Clamp(position.x - mousePosition.x, -deltaCap, deltaCap);
-            deltaY = (position.y - mousePosition.y) * (isSquashed ? squashCounter / squashTime : 1f);
+        // Movement 
+        TranslateCursorCoordinates();
+        deltaX = Mathf.Clamp(position.x - mousePosition.x, -deltaCap, deltaCap);
+        deltaY = (position.y - mousePosition.y) * (isSquashed ? squashCounter / squashTime : 1f);
 
-            // lets the player "follow" the mouse
-            if (!isStunned)
-            {
-                float xForce = velocity * -deltaX * accelerationX - rb.velocity.x;
-                xForce = Mathf.Clamp(xForce, -MaxSpeed, MaxSpeed);
-                float yForce = -deltaY * velocity * accelerationY - rb.velocity.y;
-                rb.AddForce(new Vector3(xForce, yForce, 0), ForceMode.VelocityChange);
-                Quaternion rotationTarget = Quaternion.Euler(0, 0,
-                Mathf.Clamp(
-                    deltaX * rotationCoefficient,
-                    -90, 90));
-                rb.MoveRotation(rotationTarget);
-            }
+        // lets the player "follow" the mouse
+        if (!isStunned && inControl)
+        {
+            float xForce = velocity * -deltaX - rb.velocity.x;
+            xForce = Mathf.Clamp(xForce, -MaxSpeed, MaxSpeed);
+            float yForce = velocity * -deltaY - rb.velocity.y;
+            rb.AddForce(new Vector3(xForce, yForce, 0), ForceMode.VelocityChange);
+            Quaternion rotationTarget = Quaternion.Euler(0, 0,
+            Mathf.Clamp(
+                deltaX * rotationCoefficient,
+                -90, 90));
+            rb.MoveRotation(rotationTarget);
         }
     }
 }

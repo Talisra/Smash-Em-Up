@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cannon : MonoBehaviour, IPoolableObject
+public class Cannon : MapBonus, IPoolableObject
 {
     public GameObject cannonAnchor;
 
@@ -15,7 +15,6 @@ public class Cannon : MonoBehaviour, IPoolableObject
     private int eulerDirection; // actual convert for easy use
 
     private Collider[] colliders;
-    private SphereCollider triggerCollider;
     private Animator animator;
     private AudioManager audioManager;
     private float launchDelay = 1f;
@@ -31,13 +30,11 @@ public class Cannon : MonoBehaviour, IPoolableObject
     {
         eulerDirection = direction * 90 - 90;
         launchVector = SetLaunchVector();
-        triggerCollider = GetComponent<SphereCollider>();
         animator = cannonAnchor.GetComponent<Animator>();
         audioManager = FindObjectOfType<AudioManager>();
         colliders = cannonAnchor.GetComponents<Collider>();
         transform.rotation = Quaternion.Euler(0,0, eulerDirection);
     }
-
 
     public void SetCannonProperties(int direction, int size)
     {
@@ -46,12 +43,15 @@ public class Cannon : MonoBehaviour, IPoolableObject
     }
     public void Spawn()
     {
-        ApplyCannon();
+        ResetCannon();
         animator.Play("Spawn");
     }
 
-    private void ApplyCannon()
+    private void ResetCannon() // reset the cannon with new size/direction values and prepare it to work
     {
+        isBusy = false;
+        foreach (Collider c in colliders)
+            c.enabled = true;
         eulerDirection = direction * 90 - 90;
         launchVector = SetLaunchVector();
         transform.rotation = Quaternion.Euler(0, 0, eulerDirection);
@@ -117,12 +117,19 @@ public class Cannon : MonoBehaviour, IPoolableObject
         storedEnemy.gameObject.SetActive(true);
         storedEnemy.GetComponent<Rigidbody>().AddForce(launchVector.normalized * launchPower, ForceMode.VelocityChange);
         storedEnemy.GiveSuperSpeed(2);
+        storedEnemy = null;
         Invoke("Despawn", 0.5f);
     }
 
-    private void Despawn()
+    public override void Despawn()
     {
-        gameObject.SetActive(false);
+        CancelInvoke();
+        if (storedEnemy != null)
+        {
+            storedEnemy.gameObject.SetActive(true);
+        }
+        animator.Play("Despawn");
+        BackToPool();
     }
 
     private void Update()

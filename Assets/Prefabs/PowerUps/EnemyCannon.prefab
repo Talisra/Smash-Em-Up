@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 690144133624502797}
   m_Layer: 0
   m_Name: Anchor
-  m_TagString: Untagged
+  m_TagString: MapBonus
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -256,7 +256,7 @@ GameObject:
   - component: {fileID: 2196434822912599085}
   m_Layer: 0
   m_Name: EnemyCannon
-  m_TagString: Untagged
+  m_TagString: MapBonus
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
