@@ -14,6 +14,7 @@ public class HPBar : MonoBehaviour
     void Start()
     {
         HPimg = GetComponent<Image>();
+        player = FindObjectOfType<Player>();
     }
 
     // Update is called once per frame

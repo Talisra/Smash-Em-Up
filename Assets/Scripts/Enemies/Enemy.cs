@@ -9,12 +9,13 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     public GameObject bullet;
     public GameObject player;
 
-    //protected AudioManager audioManager;
     protected Rigidbody rb;
     protected Collider[] enemyColliders;
     private ComboManager comboManager;
     private GameManager gameManager;
     public bool tempDisable = false;
+
+    public bool inGame = false;
 
     // Graphics
     public GameObject body;
@@ -79,6 +80,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     private int[] numOfScraps; // visual: the number of small pieces the enemy will spawn when it dies
     void Awake()
     {
+        ChangeLayerRecursive(14);
         normalScale = transform.localScale;
         superSpeedKernel.transform.localScale = 
             superSpeedKernel.transform.localScale + (new Vector3(1, 1, 1) - normalScale);
@@ -105,7 +107,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
         thrustEffect.gameObject.SetActive(false);
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         if (tempDisable)
         {
@@ -114,7 +116,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
         }
         else
         {
-            // fix all the things with delay and counter: ESPECIALLY SUPER SPEED!
+            ChangeLayerRecursive(14);
             transform.localScale = normalScale;
             isSquashed = false;
             rb.isKinematic = false;
@@ -127,6 +129,19 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
             curHealth = maxHealth;
             StartCoroutine(Behavior());
         }
+    }
+
+    public void SetInGame()
+    {
+        inGame = true;
+        ChangeLayerRecursive(12);
+    }
+
+    private void ChangeLayerRecursive(int layer)
+    {
+        gameObject.layer = layer;
+        foreach (Transform child in transform)
+            child.gameObject.layer = layer;
     }
 
     public float GetMaxHp()
@@ -187,7 +202,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
         inCombo = true;
     }
 
-    public void HitByPlayer()
+    public virtual void HitByPlayer()
     {
         AudioManager.Instance.Play(hitAudio);
         isHit = true;
@@ -217,9 +232,9 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
             transform.position.y, 0);
     }
 
-    public void Damage(int amount)
+    public virtual void Damage(int amount)
     {
-        if (isAlive)
+        if (isAlive && inGame)
         {
             if (inCombo)
             {
@@ -373,6 +388,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     public virtual void BackToPool()
     {
         gameManager.RemoveEnemy();
+        inGame = false;
         hpBar.gameObject.SetActive(false);
         //Implement at Inherited enemy
     }

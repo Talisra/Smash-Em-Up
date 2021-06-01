@@ -111,14 +111,15 @@ public class AudioManager : MonoBehaviour
     private void ManageTrackLayers(Session session)
     {
         if (currentLayerOrder >= activeLayers.Count)
+        {
             return;
+        }
         activeLayers[layerOrder[currentLayerOrder++]] = true;
         for(int i=0; i<activeLayers.Count; i++)
         {
             if (activeLayers[i])
             {
                 session.tracks[i].mute = false;
-                //Debug.Log("track " + i);
             }
         }
     }
@@ -130,7 +131,7 @@ public class AudioManager : MonoBehaviour
         session.tracks[session.trackCounter++].mute = false;
     }
 
-    private void NextSession(Session current)
+    private void PrepareNextSession(Session current)
     {
         foreach(Track track in current.tracks)
         {
@@ -145,12 +146,17 @@ public class AudioManager : MonoBehaviour
     {
         int i = 0;
         ManageTrackLayers(session);
+        //LogSessionState(session);
         while (i < loop)
         {
             foreach (Track track in session.tracks)
             {
                 if (!track.mute)
+                {
+                    //Debug.Log("playing " +track.subtracks[0].clip.name);
                     StartCoroutine(PlayTrack(track, session));
+                }
+
             }
             yield return new WaitForSeconds(maxDuration);
             i++;
@@ -158,7 +164,7 @@ public class AudioManager : MonoBehaviour
         currentSession++;
         if (currentSession >= sessions.Length)
             currentSession = 1;
-        NextSession(session);
+        PrepareNextSession(session);
         StartCoroutine(PlaySession(sessions[currentSession], loop));
     }
 
@@ -248,12 +254,6 @@ public class AudioManager : MonoBehaviour
             layerOrder.Add(i);
         }
         Auxiliary.Shuffle<int>(layerOrder);
-        /*
-        Debug.Log("after shuffle");
-        foreach (int num in layerOrder)
-        {
-            Debug.Log(num);
-        }*/
     }
 
     public void Play(string name) // plays a sound with the given name
@@ -284,5 +284,16 @@ public class AudioManager : MonoBehaviour
             return;
         }
         s.source.Stop();
+    }
+
+    public void LogSessionState(Session session)
+    {
+        Debug.Log("=======================");
+        for (int j = 0; j < activeLayers.Count; j++)
+        {
+            string log = session.tracks[j].subtracks[0].source.clip.name + ": " + (activeLayers[j] == true ? " V Active" : " X Mute") + "|| isPlaying: " + session.tracks[j].subtracks[0].source.isPlaying;
+            Debug.Log(log);
+        }
+        Debug.Log("=======================");
     }
 }

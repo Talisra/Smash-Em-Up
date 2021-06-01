@@ -11,14 +11,16 @@ public class GameManager : MonoBehaviour
 
     public Profile profile;
     public Player player;
-    public GameObject LeftWall;
-    public GameObject RightWall;
+    public SideWall LeftWall;
+    public SideWall RightWall;
     public GameObject Floor;
     public GameObject Ceiling;
 
     public HitFlash hitFlash;
 
-    public Spawner spawner;
+    public CeilingSpawner spawner;
+
+    public Tunnel[] tunnels;
 
     public int Wave = 1;
 
@@ -34,17 +36,49 @@ public class GameManager : MonoBehaviour
 
     private List<float> GameArea;
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         if (Instance == null)
             Instance = this;
-        spawner = FindObjectOfType<Spawner>();
+        spawner = FindObjectOfType<CeilingSpawner>();
+        tunnels = FindObjectsOfType<Tunnel>();
         player = FindObjectOfType<Player>();
         player.AssignSkills(profile.skills);
         GameArea = new List<float>();
         CalculateGameArea();
         Cursor.visible = true;
-        StartCoroutine(spawner.Spawn());
+        //StartCoroutine(SpawnWave());
+    }
+
+    public IEnumerator SpawnWave()
+    {
+        List<Dictionary<string, int>> wave = GetWave(Wave);
+        foreach (Dictionary<string, int> subWave in wave)
+        {
+            foreach (string enemy in subWave.Keys)
+            {
+                for (int i=0; i<subWave[enemy]; i++)
+                {
+                    enemiesCounter++;
+                }
+            }
+        }
+        foreach (Dictionary<string, int> subWave in wave)
+        {
+            foreach (string enemy in subWave.Keys)
+            {
+                for (int i = 0; i < subWave[enemy]; i++)
+                {
+                    StartCoroutine(SelectRandomTunnel().Spawn(enemy));
+                    yield return new WaitForSeconds(Random.Range(1, 5));
+                }
+            }
+        }
+    }
+
+    private Tunnel SelectRandomTunnel()
+    {
+        return tunnels[Random.Range(0, tunnels.Length-1)];
     }
 
     public void AddEnemy()
@@ -66,9 +100,9 @@ public class GameManager : MonoBehaviour
 
     void CalculateGameArea()
     {
-        float mapX = LeftWall.transform.position.x + LeftWall.GetComponent<Collider>().bounds.size.x/2;
+        float mapX = LeftWall.transform.position.x + LeftWall.GetWidth() / 2;
         float mapY = Floor.transform.position.y + Floor.GetComponent<Collider>().bounds.size.y/2;
-        float mapW = RightWall.transform.position.x - RightWall.GetComponent<Collider>().bounds.size.x/2;
+        float mapW = RightWall.transform.position.x - RightWall.GetWidth() / 2;
         float mapH = Ceiling.transform.position.y - Ceiling.GetComponent<Collider>().bounds.size.y/2;
         GameArea.Add(mapX);
         GameArea.Add(mapY);
@@ -94,7 +128,7 @@ public class GameManager : MonoBehaviour
     public void CompleteWave()
     {
         Wave++;
-        StartCoroutine(StartWave());
+        StartCoroutine(SpawnWave());
     }
 
     public IEnumerator StartWave()
@@ -152,7 +186,7 @@ public class GameManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.D))
             {
-                player.TakeDamage(player.GetCurrentHp(), false);
+                player.TakeDamage(player.GetCurrentHp(), false, false, Vector3.zero);
             }
             if (Input.GetKeyDown(KeyCode.H))
             {

@@ -100,9 +100,9 @@ MonoBehaviour:
     pitch: 0.78
     source: {fileID: 0}
   - name: CuballCharge
-    clip: {fileID: 8300000, guid: 2866a8ff25d0a434aaa946bb57dfae53, type: 3}
-    volume: 0.255
-    pitch: 1.1
+    clip: {fileID: 8300000, guid: 486138d7471174b41a4501aaca44ff44, type: 3}
+    volume: 0.2
+    pitch: 1.5
     source: {fileID: 0}
   - name: CubulletFired
     clip: {fileID: 8300000, guid: 0c50231a02c5af3498eb33099319c2de, type: 3}
@@ -294,6 +294,16 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     source: {fileID: 0}
+  - name: SmallShatter
+    clip: {fileID: 8300000, guid: 97a96f41269e73e4984446ae6afc4655, type: 3}
+    volume: 0.3
+    pitch: 1
+    source: {fileID: 0}
+  - name: SmallBum
+    clip: {fileID: 8300000, guid: 258a1c79536af394cbb65e627f7e3335, type: 3}
+    volume: 1
+    pitch: 0.8
+    source: {fileID: 0}
   muteSound: 0
   shutDown:
   - name: SD1
@@ -350,7 +360,7 @@ MonoBehaviour:
         source: {fileID: 0}
         volume: 0
         length: 8
-      masterVolume: 0.45
+      masterVolume: 0.55
       mute: 0
     - subtracks:
       - clip: {fileID: 8300000, guid: 8638a011960959c4297b773895845455, type: 3}
@@ -378,11 +388,18 @@ MonoBehaviour:
       masterVolume: 0.5
       mute: 0
     - subtracks:
-      - clip: {fileID: 8300000, guid: 20785856c2a24ae4c91c941ba2a4a01d, type: 3}
+      - clip: {fileID: 8300000, guid: 7dd5d9c86957d0745b4c23f72bc35c89, type: 3}
         source: {fileID: 0}
         volume: 0
-        length: 7
+        length: 4
       masterVolume: 0.5
+      mute: 0
+    - subtracks:
+      - clip: {fileID: 8300000, guid: d81622ca983529d489a192995274a0f5, type: 3}
+        source: {fileID: 0}
+        volume: 0
+        length: 8
+      masterVolume: 0.3
       mute: 0
     maxLength: 0
     maxDuration: 0
@@ -398,7 +415,7 @@ MonoBehaviour:
         source: {fileID: 0}
         volume: 0
         length: 8
-      masterVolume: 0.45
+      masterVolume: 0.55
       mute: 0
     - subtracks:
       - clip: {fileID: 8300000, guid: 6a5a0cc072253f941b209469ee27ad4e, type: 3}
@@ -425,8 +442,15 @@ MonoBehaviour:
       - clip: {fileID: 8300000, guid: 6d394c3d4ef6b9f4c9457c3e8a1a505b, type: 3}
         source: {fileID: 0}
         volume: 0
-        length: 8
-      masterVolume: 1
+        length: 16
+      masterVolume: 0.8
+      mute: 0
+    - subtracks:
+      - clip: {fileID: 8300000, guid: 8bf5861ec999e0945a3cea7b16414973, type: 3}
+        source: {fileID: 0}
+        volume: 0
+        length: 4
+      masterVolume: 0.3
       mute: 0
     maxLength: 0
     maxDuration: 0
@@ -438,14 +462,14 @@ MonoBehaviour:
         source: {fileID: 0}
         volume: 0
         length: 16
-      masterVolume: 0.45
+      masterVolume: 0.6
       mute: 0
     - subtracks:
       - clip: {fileID: 8300000, guid: a7b66248f75ff1b409bd2eb12ad3bc91, type: 3}
         source: {fileID: 0}
         volume: 0
         length: 16
-      masterVolume: 1
+      masterVolume: 0.3
       mute: 0
     - subtracks:
       - clip: {fileID: 8300000, guid: db9289b5c88ed1d4bb610f0b5af3da8d, type: 3}
@@ -466,7 +490,14 @@ MonoBehaviour:
         source: {fileID: 0}
         volume: 0
         length: 16
-      masterVolume: 1
+      masterVolume: 0.8
+      mute: 0
+    - subtracks:
+      - clip: {fileID: 8300000, guid: 28fe8f2ac9409184da1cbbce6d0c3040, type: 3}
+        source: {fileID: 0}
+        volume: 0
+        length: 4
+      masterVolume: 0.3
       mute: 0
     maxLength: 0
     maxDuration: 0

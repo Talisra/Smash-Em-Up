@@ -39,7 +39,7 @@ public class Cuball : Enemy
 
     private void ChargeAttack()
     {
-        //FindObjectOfType<AudioManager>().Play("CuballCharge");
+        //AudioManager.Instance.Play("CuballCharge");
         attackWindup = Instantiate(
             windupAnimationPrefab, transform.position, Quaternion.identity) as GameObject;
         attackWindup.transform.SetParent(this.transform);

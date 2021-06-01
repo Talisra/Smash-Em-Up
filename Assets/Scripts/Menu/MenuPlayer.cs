@@ -34,8 +34,8 @@ public class MenuPlayer : MonoBehaviour
     public void SmashMenuObject()
     {
         isBusy = true;
-        animator.Play("AtkLeft");
-        AudioManager.Instance.Play("Smash1");
+        animator.Play("AtkLeftF");
+        AudioManager.Instance.Play("Smash2");
         GameObject particle = Instantiate(
             smashAnimPrefab, 
             new Vector3(transform.position.x - 1.25f, transform.position.y, transform.position.z),

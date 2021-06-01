@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Unpassable : MonoBehaviour
 {
-    public int type; // type defines the wall type: 0: Wall, 1: Ceiling, 2: floor
     public GameObject slamParticle;
     public string slamSound;
     public string hitSound;

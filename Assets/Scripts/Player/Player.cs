@@ -137,12 +137,12 @@ public class Player : MonoBehaviour
                 Enemy enemy = collision.gameObject.GetComponent<Enemy>();
                 if (!enemy.isSquashed)
                 {
-                    TakeDamage(1, true);
+                    TakeDamage(1, true, true, collision.transform.position);
                 }
             }
             else if (collision.gameObject.tag == "Bullet")
             {
-                TakeDamage(1, true);
+                TakeDamage(1, true, true, collision.transform.position);
                 collision.gameObject.GetComponent<BasicBullet>().Explode();
             }
         }
@@ -248,7 +248,7 @@ public class Player : MonoBehaviour
         {
             AudioManager.Instance.Play("Squash");
             isSquashed = true;
-            TakeDamage(1, false);
+            TakeDamage(1, false, false, Vector3.zero);
             MoveSpeed = 0.9f;
             transform.localScale = squashScaleVector;
             colliderObj.GetComponent<Rigidbody>().AddForce(new Vector3(colliderObj.transform.position.x - transform.position.x,20,0), ForceMode.VelocityChange);
@@ -295,7 +295,7 @@ public class Player : MonoBehaviour
         invDelayCounter = invTime;
     }
 
-    public void TakeDamage(float amount, bool giveShield)
+    public void TakeDamage(float amount, bool giveShield, bool showHit,Vector3 hitCoordinates)
     {
         if (!isInvul && !isShielded)
         {
@@ -304,9 +304,14 @@ public class Player : MonoBehaviour
             bottom.ShowDamage();
             currentHP -= amount;
             if (currentHP <= 0)
+            {
                 Die();
-            else if (giveShield)
+                return;
+            }
+            if (giveShield)
                 GainShield(0.75f);
+            if (showHit)
+                BleedExplosion(hitCoordinates);
         }
     }
 
@@ -315,10 +320,10 @@ public class Player : MonoBehaviour
         if (!isDead)
         {
             isDead = true;
-            Invoke("CreateBigExplosion", Random.Range(0.5f, 0.6f));
+            Invoke("CreateBigExplosion", Random.Range(0.6f, 0.7f));
             for (int i = 0; i < numOfExps; i++)
             {
-                Invoke("CreateTinyExplosion", Random.Range(0.1f, 0.9f));
+                Invoke("CreateTinyExplosion", Random.Range(0.1f, 0.7f));
             }
             Destroy(gameObject, 0.91f);
         }
@@ -359,7 +364,7 @@ public class Player : MonoBehaviour
     {
         if (!bigExpInvoked)
             CameraEffects.Shake(0.2f, 0.35f);
-        FindObjectOfType<AudioManager>().Play("SmallExplosion");
+        AudioManager.Instance.Play("SmallExplosion");
         GameObject smallExp = Instantiate(
                 explosionPrefabSmall, 
                 new Vector3(
@@ -367,6 +372,14 @@ public class Player : MonoBehaviour
                     transform.position.y + Random.Range(-1,1),
                     transform.position.z + Random.Range(-1,1)),
                 Quaternion.identity) as GameObject;
+        Destroy(smallExp, smallExp.GetComponent<ParticleSystem>().main.duration);
+    }
+
+    private void BleedExplosion(Vector3 position)
+    {
+        AudioManager.Instance.Play("SmallExplosion");
+        GameObject smallExp = Instantiate(
+                explosionPrefabSmall, position, Quaternion.identity) as GameObject;
         Destroy(smallExp, smallExp.GetComponent<ParticleSystem>().main.duration);
     }
 
