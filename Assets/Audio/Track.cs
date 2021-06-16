@@ -5,7 +5,10 @@ using UnityEngine;
 [System.Serializable]
 public class Track
 {
-    public Subtrack[] subtracks;
+    [SerializeField]
+    public List<TrackLayer> trackLayers;
     public float masterVolume;
-    public bool mute = true;
+    public bool isLast = false;
+    [HideInInspector]
+    public bool mute;
 }

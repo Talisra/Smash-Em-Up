@@ -316,7 +316,7 @@ MonoBehaviour:
   hitAudio: Hit1
   scraps:
   - {fileID: 3419019182320377802, guid: f73e55aa1fde7a841bb109d118e25ef8, type: 3}
-  explosionPrefab: {fileID: 1855340746554395461, guid: 49011e57640af4346b984abcfb1cf581,
+  explosionPrefab: {fileID: 1855340746554395461, guid: afb48956212a8d246accf0253440079f,
     type: 3}
 --- !u!54 &-9152866633017559464
 Rigidbody:

@@ -401,6 +401,13 @@ MonoBehaviour:
         length: 8
       masterVolume: 0.3
       mute: 0
+    - subtracks:
+      - clip: {fileID: 8300000, guid: 710afb41e99b7e14f847f6b05bad19bd, type: 3}
+        source: {fileID: 0}
+        volume: 0
+        length: 16
+      masterVolume: 0.5
+      mute: 0
     maxLength: 0
     maxDuration: 0
     trackCounter: 0
@@ -452,6 +459,13 @@ MonoBehaviour:
         length: 4
       masterVolume: 0.3
       mute: 0
+    - subtracks:
+      - clip: {fileID: 8300000, guid: d29f8481863fd2d4885cb315aa14614f, type: 3}
+        source: {fileID: 0}
+        volume: 0
+        length: 8
+      masterVolume: 0.25
+      mute: 0
     maxLength: 0
     maxDuration: 0
     trackCounter: 0
@@ -465,11 +479,11 @@ MonoBehaviour:
       masterVolume: 0.6
       mute: 0
     - subtracks:
-      - clip: {fileID: 8300000, guid: a7b66248f75ff1b409bd2eb12ad3bc91, type: 3}
+      - clip: {fileID: 8300000, guid: db1592739dc051242a8a970f725f8ef1, type: 3}
         source: {fileID: 0}
         volume: 0
-        length: 16
-      masterVolume: 0.3
+        length: 8
+      masterVolume: 0.5
       mute: 0
     - subtracks:
       - clip: {fileID: 8300000, guid: db9289b5c88ed1d4bb610f0b5af3da8d, type: 3}
@@ -498,6 +512,13 @@ MonoBehaviour:
         volume: 0
         length: 4
       masterVolume: 0.3
+      mute: 0
+    - subtracks:
+      - clip: {fileID: 8300000, guid: db1592739dc051242a8a970f725f8ef1, type: 3}
+        source: {fileID: 0}
+        volume: 0
+        length: 4
+      masterVolume: 0.5
       mute: 0
     maxLength: 0
     maxDuration: 0

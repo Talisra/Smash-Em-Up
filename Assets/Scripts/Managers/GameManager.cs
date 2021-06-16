@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
 
     public CeilingSpawner spawner;
 
-    public Tunnel[] tunnels;
+
 
     public int Wave = 1;
 
@@ -41,7 +41,6 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
             Instance = this;
         spawner = FindObjectOfType<CeilingSpawner>();
-        tunnels = FindObjectsOfType<Tunnel>();
         player = FindObjectOfType<Player>();
         player.AssignSkills(profile.skills);
         GameArea = new List<float>();
@@ -49,7 +48,7 @@ public class GameManager : MonoBehaviour
         Cursor.visible = true;
         //StartCoroutine(SpawnWave());
     }
-
+    /*
     public IEnumerator SpawnWave()
     {
         List<Dictionary<string, int>> wave = GetWave(Wave);
@@ -69,17 +68,12 @@ public class GameManager : MonoBehaviour
             {
                 for (int i = 0; i < subWave[enemy]; i++)
                 {
-                    StartCoroutine(SelectRandomTunnel().Spawn(enemy));
+                    StartCoroutine(SelectRandomUnbusyTunnel().Spawn(enemy));
                     yield return new WaitForSeconds(Random.Range(1, 5));
                 }
             }
         }
-    }
-
-    private Tunnel SelectRandomTunnel()
-    {
-        return tunnels[Random.Range(0, tunnels.Length-1)];
-    }
+    }*/
 
     public void AddEnemy()
     {
@@ -128,7 +122,7 @@ public class GameManager : MonoBehaviour
     public void CompleteWave()
     {
         Wave++;
-        StartCoroutine(SpawnWave());
+        //StartCoroutine(SpawnWave());
     }
 
     public IEnumerator StartWave()
@@ -150,7 +144,7 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         gameOver = true;
-        AudioManager.Instance.StopMusic();
+        SoundtrackManager.Instance.StopMusic();
         AudioManager.Instance.PlayShutDown();
         StartCoroutine(EndNow());
         IEnumerator EndNow()
@@ -163,7 +157,7 @@ public class GameManager : MonoBehaviour
             CameraEffects.glitchEffect.enabled = false;
             CameraEffects.glitch_digital.enabled = false;
             CameraEffects.glitch_analog.enabled = false;
-            yield return new WaitForSeconds(2.5f);
+            yield return new WaitForSeconds(1.5f);
             SceneManager.LoadScene(0);
         }
     }
@@ -178,7 +172,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Escape))
         {
-            AudioManager.Instance.StopMusic();
+            SoundtrackManager.Instance.StopMusic();
             Cursor.visible = true;
             SceneManager.LoadScene(0);
         }

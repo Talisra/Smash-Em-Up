@@ -11,7 +11,7 @@ public class SideWall : MonoBehaviour
 
     private void Awake()
     {
-        width = wideWall.GetComponent<BoxCollider>().bounds.size.x;
+        width = wideWall.GetComponent<MeshRenderer>().bounds.size.x;
     }
 
     public float GetWidth()

@@ -9,10 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6137402243131255360}
-  - component: {fileID: 7615600835239108589}
   - component: {fileID: 3155755819663279228}
-  - component: {fileID: 32917183032832206}
-  m_Layer: 0
+  - component: {fileID: 484484600442948474}
+  m_Layer: 15
   m_Name: Tunnel
   m_TagString: Unpassable
   m_Icon: {fileID: 0}
@@ -37,22 +36,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &7615600835239108589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5112786244409184609}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76d2a33a86a263641b07a6b5a1dd76ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slamParticle: {fileID: 1025285306637258, guid: 08b4b1902c9bc884f8f8e70d79e58027,
-    type: 3}
-  slamSound: Slam_metal
-  hitSound: Floor_Hit
 --- !u!114 &3155755819663279228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,8 +51,9 @@ MonoBehaviour:
   doors:
   - {fileID: 2898968642469835395}
   - {fileID: 3924946000566919973}
-  boxCollider: {fileID: 0}
---- !u!65 &32917183032832206
+  trigger: {fileID: 484484600442948474}
+  isBusy: 0
+--- !u!65 &484484600442948474
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -80,8 +64,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5.051741, y: 5.039233, z: 10.036946}
-  m_Center: {x: -0.007703662, y: 2.4931245, z: -0.012079239}
+  m_Size: {x: 5.0017533, y: 5.068576, z: 10.001163}
+  m_Center: {x: 0.029909134, y: 2.5089555, z: -0.0024163723}
 --- !u!1001 &2272775512504050357
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -92,6 +76,10 @@ PrefabInstance:
     - target: {fileID: 1235418422785226, guid: e6d477ca1de12814f8ec7712dbc984ae, type: 3}
       propertyPath: m_Name
       value: toptunnel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1235418422785226, guid: e6d477ca1de12814f8ec7712dbc984ae, type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 4222475833715170, guid: e6d477ca1de12814f8ec7712dbc984ae, type: 3}
       propertyPath: m_RootOrder
@@ -162,7 +150,7 @@ PrefabInstance:
     - target: {fileID: 64651316132976426, guid: e6d477ca1de12814f8ec7712dbc984ae,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6d477ca1de12814f8ec7712dbc984ae, type: 3}
@@ -179,10 +167,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6137402243131255360}
     m_Modifications:
+    - target: {fileID: 476728087691552377, guid: 93f2508209e40e84988c43ecc7abad3c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 1140520241139730015, guid: 93f2508209e40e84988c43ecc7abad3c,
         type: 3}
       propertyPath: m_Name
       value: TunnelDoor
+      objectReference: {fileID: 0}
+    - target: {fileID: 1140520241139730015, guid: 93f2508209e40e84988c43ecc7abad3c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1696761056162770734, guid: 93f2508209e40e84988c43ecc7abad3c,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3328949439258533732, guid: 93f2508209e40e84988c43ecc7abad3c,
         type: 3}
@@ -249,7 +252,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8984836428293626178, guid: 93f2508209e40e84988c43ecc7abad3c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1696761056162770734, guid: 93f2508209e40e84988c43ecc7abad3c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 93f2508209e40e84988c43ecc7abad3c, type: 3}
 --- !u!4 &5232640516496790348 stripped
 Transform:
@@ -279,6 +288,10 @@ PrefabInstance:
     - target: {fileID: 1235418422785226, guid: e6d477ca1de12814f8ec7712dbc984ae, type: 3}
       propertyPath: m_Name
       value: bottomtunnel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1235418422785226, guid: e6d477ca1de12814f8ec7712dbc984ae, type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 4222475833715170, guid: e6d477ca1de12814f8ec7712dbc984ae, type: 3}
       propertyPath: m_RootOrder
@@ -341,6 +354,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: d36c1b6a2334d9146829364171b0474a, type: 2}
+    - target: {fileID: 64651316132976426, guid: e6d477ca1de12814f8ec7712dbc984ae,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6d477ca1de12814f8ec7712dbc984ae, type: 3}
 --- !u!4 &8498230742889464261 stripped
@@ -356,10 +374,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6137402243131255360}
     m_Modifications:
+    - target: {fileID: 476728087691552377, guid: 93f2508209e40e84988c43ecc7abad3c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 1140520241139730015, guid: 93f2508209e40e84988c43ecc7abad3c,
         type: 3}
       propertyPath: m_Name
       value: TunnelDoor (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1140520241139730015, guid: 93f2508209e40e84988c43ecc7abad3c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 3328949439258533732, guid: 93f2508209e40e84988c43ecc7abad3c,
         type: 3}
@@ -426,7 +454,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8984836428293626178, guid: 93f2508209e40e84988c43ecc7abad3c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1696761056162770734, guid: 93f2508209e40e84988c43ecc7abad3c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 93f2508209e40e84988c43ecc7abad3c, type: 3}
 --- !u!4 &6259180884609663722 stripped
 Transform:

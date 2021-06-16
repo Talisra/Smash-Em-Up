@@ -12,7 +12,6 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     protected Rigidbody rb;
     protected Collider[] enemyColliders;
     private ComboManager comboManager;
-    private GameManager gameManager;
     public bool tempDisable = false;
 
     public bool inGame = false;
@@ -33,7 +32,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     protected float flashCounter = 0;
     protected bool isFlashing = false;
     protected bool isAlive = true;
-    protected float minVelocityForDamage = 5f;
+    protected float minVelocityForDamage = 10f;
 
     // Thrust
     public bool isThrusting;
@@ -84,8 +83,6 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
         normalScale = transform.localScale;
         superSpeedKernel.transform.localScale = 
             superSpeedKernel.transform.localScale + (new Vector3(1, 1, 1) - normalScale);
-        gameManager = FindObjectOfType<GameManager>();
-        //audioManager = FindObjectOfType<AudioManager>();
         numOfScraps = new int[scraps.Count];
         for (int i = 0; i < scraps.Count; i++)
         {
@@ -152,6 +149,11 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     public float GetCurrentHp()
     {
         return curHealth;
+    }
+
+    public Rigidbody GetRigidbody()
+    {
+        return rb;
     }
 
     private void OnDisable()
@@ -228,7 +230,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     {
         float sign = Mathf.Sign(transform.position.x);
         transform.position = new Vector3(
-            (sign < 0 ? gameManager.GetGameArea()[0] : gameManager.GetGameArea()[2]) - sign * squashVector.x,
+            (sign < 0 ? GameManager.Instance.GetGameArea()[0] : GameManager.Instance.GetGameArea()[2]) - sign * squashVector.x,
             transform.position.y, 0);
     }
 
@@ -309,9 +311,13 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     // Update is called once per frame
     protected virtual void Update()
     {
-        if (rb.velocity.magnitude > 20f)
+        if (rb.velocity.magnitude > minVelocityForDamage)
+        {
             if (!isSuperSpeed)
                 tr.enabled = true;
+            else
+                tr.enabled = false;
+        }
         else
             tr.enabled = false;
         if (isFlashing)
@@ -387,7 +393,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
 
     public virtual void BackToPool()
     {
-        gameManager.RemoveEnemy();
+        WaveManager.Instance.RemoveEnemy();
         inGame = false;
         hpBar.gameObject.SetActive(false);
         //Implement at Inherited enemy

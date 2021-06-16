@@ -1,0 +1,248 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &9045158619546395404
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1861821371094199993}
+  - component: {fileID: -253450846838634883}
+  m_Layer: 0
+  m_Name: SoundtrackManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1861821371094199993
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9045158619546395404}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.3436136, y: 3.568991, z: -2.686575}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-253450846838634883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9045158619546395404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f480ac78dca9d8469cf13f5e2f88910, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseSession:
+    name: Base
+    tracks:
+    - trackLayers:
+      - subtracks:
+        - clip: {fileID: 8300000, guid: 4ee56693ed5948646af4cf6e319f4dd9, type: 3}
+          localVolume: 1
+          source: {fileID: 0}
+      masterVolume: 1
+      isLast: 0
+      mute: 0
+    - trackLayers:
+      - subtracks:
+        - clip: {fileID: 8300000, guid: 5632922327ccc144496783b62d84c14d, type: 3}
+          localVolume: 1
+          source: {fileID: 0}
+      masterVolume: 1
+      isLast: 0
+      mute: 0
+    - trackLayers:
+      - subtracks:
+        - clip: {fileID: 8300000, guid: 0bc22516385bea742b2d8ffc076dbee1, type: 3}
+          localVolume: 1
+          source: {fileID: 0}
+      masterVolume: 1
+      isLast: 0
+      mute: 0
+    tracksToPlay: 
+    maxDuration: 0
+  sessions:
+  - name: A
+    tracks:
+    - trackLayers:
+      - subtracks:
+        - clip: {fileID: 8300000, guid: d81622ca983529d489a192995274a0f5, type: 3}
+          localVolume: 1
+          source: {fileID: 0}
+      masterVolume: 0.3
+      isLast: 0
+      mute: 0
+    - trackLayers:
+      - subtracks:
+        - clip: {fileID: 8300000, guid: ed71d7c24dd317f4e94897c514bacbc5, type: 3}
+          localVolume: 1
+          source: {fileID: 0}
+      masterVolume: 0.6
+      isLast: 0
+      mute: 0
+    - trackLayers:
+      - subtracks:
+        - clip: {fileID: 8300000, guid: 2139e730710127e4c8cd79012281c779, type: 3}
+          localVolume: 1
+          source: {fileID: 0}
+      masterVolume: 1
+      isLast: 0
+      mute: 0
+    - trackLayers:
+      - subtracks:
+        - clip: {fileID: 8300000, guid: 50e27c83be2cc2d4ca186b46503a898a, type: 3}
+          localVolume: 1
+          source: {fileID: 0}
+      - subtracks:
+        - clip: {fileID: 8300000, guid: 710afb41e99b7e14f847f6b05bad19bd, type: 3}
+          localVolume: 1
+          source: {fileID: 0}
+      masterVolume: 0.6
+      isLast: 1
+      mute: 0
+    - trackLayers:
+      - subtracks:
+        - clip: {fileID: 8300000, guid: 323b9b4ce55099643970edfbd5e804b2, type: 3}
+          localVolume: 1
+          source: {fileID: 0}
+      masterVolume: 1
+      isLast: 0
+      mute: 0
+    - trackLayers:
+      - subtracks:
+        - clip: {fileID: 8300000, guid: 8638a011960959c4297b773895845455, type: 3}
+          localVolume: 1
+          source: {fileID: 0}
+      masterVolume: 0.3
+      isLast: 0
+      mute: 0
+    tracksToPlay: 
+    maxDuration: 0
+  - name: B
+    tracks:
+    - trackLayers:
+      - subtracks:
+        - clip: {fileID: 8300000, guid: 8bf5861ec999e0945a3cea7b16414973, type: 3}
+          localVolume: 1
+          source: {fileID: 0}
+      masterVolume: 0.3
+      isLast: 0
+      mute: 0
+    - trackLayers:
+      - subtracks:
+        - clip: {fileID: 8300000, guid: 0e541966b2750474bbc244545398b460, type: 3}
+          localVolume: 1
+          source: {fileID: 0}
+        - clip: {fileID: 8300000, guid: fd70cf2e6abe4144ab7efe7872f60d50, type: 3}
+          localVolume: 1
+          source: {fileID: 0}
+      masterVolume: 0.6
+      isLast: 0
+      mute: 0
+    - trackLayers:
+      - subtracks:
+        - clip: {fileID: 8300000, guid: 34c80d0911df51d4988fdbb4a76a293e, type: 3}
+          localVolume: 1
+          source: {fileID: 0}
+      masterVolume: 1
+      isLast: 0
+      mute: 0
+    - trackLayers:
+      - subtracks:
+        - clip: {fileID: 8300000, guid: f2812b6fb9b5d554085cbaf4ea04b7a4, type: 3}
+          localVolume: 1
+          source: {fileID: 0}
+      - subtracks:
+        - clip: {fileID: 8300000, guid: d29f8481863fd2d4885cb315aa14614f, type: 3}
+          localVolume: 1
+          source: {fileID: 0}
+      masterVolume: 0.6
+      isLast: 1
+      mute: 0
+    - trackLayers:
+      - subtracks:
+        - clip: {fileID: 8300000, guid: 6d394c3d4ef6b9f4c9457c3e8a1a505b, type: 3}
+          localVolume: 1
+          source: {fileID: 0}
+      masterVolume: 1
+      isLast: 0
+      mute: 0
+    - trackLayers:
+      - subtracks:
+        - clip: {fileID: 8300000, guid: 6a5a0cc072253f941b209469ee27ad4e, type: 3}
+          localVolume: 1
+          source: {fileID: 0}
+      masterVolume: 0.75
+      isLast: 0
+      mute: 0
+    tracksToPlay: 
+    maxDuration: 0
+  - name: C
+    tracks:
+    - trackLayers:
+      - subtracks:
+        - clip: {fileID: 8300000, guid: 28fe8f2ac9409184da1cbbce6d0c3040, type: 3}
+          localVolume: 1
+          source: {fileID: 0}
+      masterVolume: 0.3
+      isLast: 0
+      mute: 0
+    - trackLayers:
+      - subtracks:
+        - clip: {fileID: 8300000, guid: d6bfe0b4c495399459fe41a292fc0ed5, type: 3}
+          localVolume: 1
+          source: {fileID: 0}
+      masterVolume: 0.7
+      isLast: 0
+      mute: 0
+    - trackLayers:
+      - subtracks:
+        - clip: {fileID: 8300000, guid: db9289b5c88ed1d4bb610f0b5af3da8d, type: 3}
+          localVolume: 1
+          source: {fileID: 0}
+      masterVolume: 1
+      isLast: 0
+      mute: 0
+    - trackLayers:
+      - subtracks:
+        - clip: {fileID: 8300000, guid: cee0ff3dfefd29a4dae1c2b854cabbe7, type: 3}
+          localVolume: 1
+          source: {fileID: 0}
+      - subtracks:
+        - clip: {fileID: 8300000, guid: db1592739dc051242a8a970f725f8ef1, type: 3}
+          localVolume: 1
+          source: {fileID: 0}
+      masterVolume: 0.6
+      isLast: 1
+      mute: 0
+    - trackLayers:
+      - subtracks:
+        - clip: {fileID: 8300000, guid: f37a35db003d2ef419329cf49e594c27, type: 3}
+          localVolume: 1
+          source: {fileID: 0}
+      masterVolume: 1
+      isLast: 0
+      mute: 0
+    - trackLayers:
+      - subtracks:
+        - clip: {fileID: 8300000, guid: a7b66248f75ff1b409bd2eb12ad3bc91, type: 3}
+          localVolume: 1
+          source: {fileID: 0}
+      masterVolume: 0.75
+      isLast: 0
+      mute: 0
+    tracksToPlay: 
+    maxDuration: 0
+  trackOrder: 
+  isLevel: 0

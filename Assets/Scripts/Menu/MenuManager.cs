@@ -10,9 +10,11 @@ public class MenuManager : MonoBehaviour
     void Start()
     {
         transitionAnimator.Play("FadeOut");
+        SoundtrackManager.Instance.Reset();
+        SoundtrackManager.Instance.StartPlaying();
         AudioManager.Instance.Reset();
         AudioManager.Instance.muteSound = false;
-        AudioManager.Instance.StartPlaying();
+        //AudioManager.Instance.StartPlaying();
     }
 
     public void PerformAction(int choice)
@@ -27,7 +29,7 @@ public class MenuManager : MonoBehaviour
         switch (choice)
         {
             case 0:
-                    AudioManager.Instance.isLevel = true;
+                    SoundtrackManager.Instance.isLevel = true;
                     SceneManager.LoadScene(1);
                     break;
             case 2:

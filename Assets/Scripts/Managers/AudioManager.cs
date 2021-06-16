@@ -12,12 +12,9 @@ public class AudioManager : MonoBehaviour
     public bool muteSound;
     public Sound[] shutDown;
     public Session[] sessions;
-    private float maxDuration = 0;
-    private int currentSession = 1;
 
     private List<bool> activeLayers;
     private List<int> layerOrder;
-    private int currentLayerOrder = 0;
 
     public bool isLevel = false;
 
@@ -48,20 +45,6 @@ public class AudioManager : MonoBehaviour
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
         }
-        foreach (Session session in sessions)
-        {
-            foreach(Track track in session.tracks)
-            {
-                track.mute = true;
-                foreach(Subtrack sub in track.subtracks)
-                {
-                    sub.source = gameObject.AddComponent<AudioSource>();
-                    sub.source.clip = sub.clip;
-                    sub.source.volume = track.masterVolume;
-                    sub.source.loop = true;
-                }
-            }
-        }
     }
 
     public void Reset()
@@ -69,191 +52,11 @@ public class AudioManager : MonoBehaviour
         foreach (Sound sound in shutDown)
             sound.source.Stop();
         Stop("WhiteNoise");
-        OrderTracks();
-        isLevel = false;
-        sessions[0].trackCounter = 0;
-        currentSession = 1;
-        currentLayerOrder = 0;
     }
-
-    public void StartPlaying()
-    {
-        StartCoroutine(PlaySessionLoop(sessions[0], 1));
-    }
-
-    public void StopMusic()
-    {
-        StopAllCoroutines();
-        foreach(Session session in sessions)
-        {
-            foreach(Track track in session.tracks)
-            {
-                track.mute = true;
-                foreach(Subtrack sub in track.subtracks)
-                {
-                    sub.source.Stop();
-                }
-            }
-        }
-    }
-
     public void PlayShutDown()
     {
         foreach (Sound sound in shutDown)
             sound.source.Play();
-    }
-
-    public void PlayLevelMusic()
-    {
-        StartCoroutine(PlaySession(sessions[currentSession], 1));
-    }
-
-    private void ManageTrackLayers(Session session)
-    {
-        if (currentLayerOrder >= activeLayers.Count)
-        {
-            return;
-        }
-        activeLayers[layerOrder[currentLayerOrder++]] = true;
-        for(int i=0; i<activeLayers.Count; i++)
-        {
-            if (activeLayers[i])
-            {
-                session.tracks[i].mute = false;
-            }
-        }
-    }
-
-    private void AddTrackLayer(Session session)
-    {
-        if (session.trackCounter >= session.tracks.Length)
-            return;
-        session.tracks[session.trackCounter++].mute = false;
-    }
-
-    private void PrepareNextSession(Session current)
-    {
-        foreach(Track track in current.tracks)
-        {
-            foreach(Subtrack sub in track.subtracks)
-            {
-                sub.source.Stop();
-            }
-        }
-    }
-
-    private IEnumerator PlaySession(Session session, int loop)
-    {
-        int i = 0;
-        ManageTrackLayers(session);
-        //LogSessionState(session);
-        while (i < loop)
-        {
-            foreach (Track track in session.tracks)
-            {
-                if (!track.mute)
-                {
-                    //Debug.Log("playing " +track.subtracks[0].clip.name);
-                    StartCoroutine(PlayTrack(track, session));
-                }
-
-            }
-            yield return new WaitForSeconds(maxDuration);
-            i++;
-        }
-        currentSession++;
-        if (currentSession >= sessions.Length)
-            currentSession = 1;
-        PrepareNextSession(session);
-        StartCoroutine(PlaySession(sessions[currentSession], loop));
-    }
-
-    public IEnumerator PlaySessionLoop(Session session, int loopTime)
-    {
-        AddTrackLayer(session);
-        bool levelStarted = false;
-        bool audioStarted = false;
-        while (true)
-        {
-            if (isLevel) // Level Music starts playing
-            {
-                if (levelStarted)
-                    AddTrackLayer(session);
-                if (!audioStarted)
-                {
-                    PlayLevelMusic();
-                    foreach (Track track in session.tracks)
-                    {
-                        foreach(Subtrack sub in track.subtracks)
-                        {
-                            sub.source.Stop();
-                        }
-                    }
-                    audioStarted = true;
-                }
-                levelStarted = true;
-            }
-            foreach (Track track in session.tracks)
-            {
-                if (!track.mute)
-                    StartCoroutine(PlayTrack(track, session));
-            }
-            if (isLevel)
-                yield return new WaitForSeconds(maxDuration * loopTime);
-            else
-                yield return new WaitForSeconds(session.tracks[0].subtracks[0].clip.length);
-        }
-    }
-
-    private IEnumerator PlayTrack(Track track, Session parentSession)
-    {
-        foreach(Subtrack sub in track.subtracks)
-        {
-            StartCoroutine(PlaySubTrack(sub, parentSession));
-        }
-        yield return new WaitForSeconds(parentSession.maxDuration);
-    }
-
-    private IEnumerator PlaySubTrack(Subtrack subtrack, Session parentSession)
-    {
-        for (int i = 0 ; i< parentSession.maxLength/subtrack.length; i++)
-        {
-            subtrack.source.Play();
-            yield return new WaitForSeconds(subtrack.source.clip.length);
-        }
-    }
-
-    /*
-    public IEnumerator PlaySubTrack(Subtrack subtrack, Session parentSession)
-    {
-        subtrack.source.Play();
-        yield return new WaitForSeconds(parentSession.maxDuration);
-    }
-    */
-
-    private void OrderTracks()
-    {
-        int maxLayers = 0;
-        foreach (Session session in sessions)
-        {
-            session.OrderTracks();
-            if (session.maxDuration > maxDuration)
-            {
-                maxDuration = session.maxDuration;
-            }
-            if (session.tracks.Length > maxLayers)
-            {
-                maxLayers = session.tracks.Length;
-            }
-        }
-        activeLayers = new List<bool>();
-        layerOrder = new List<int>();
-        for (int i = 0; i < maxLayers; i++)
-        {
-            activeLayers.Add(false);
-            layerOrder.Add(i);
-        }
-        Auxiliary.Shuffle<int>(layerOrder);
     }
 
     public void Play(string name) // plays a sound with the given name
@@ -284,16 +87,5 @@ public class AudioManager : MonoBehaviour
             return;
         }
         s.source.Stop();
-    }
-
-    public void LogSessionState(Session session)
-    {
-        Debug.Log("=======================");
-        for (int j = 0; j < activeLayers.Count; j++)
-        {
-            string log = session.tracks[j].subtracks[0].source.clip.name + ": " + (activeLayers[j] == true ? " V Active" : " X Mute") + "|| isPlaying: " + session.tracks[j].subtracks[0].source.isPlaying;
-            Debug.Log(log);
-        }
-        Debug.Log("=======================");
     }
 }

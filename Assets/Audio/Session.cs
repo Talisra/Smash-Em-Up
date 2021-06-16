@@ -8,29 +8,28 @@ public class Session
     public string name;
     public Track[] tracks;
     [HideInInspector]
-    public float maxLength = 0;
+    public List<int> tracksToPlay;
     [HideInInspector]
-    public float maxDuration;
-    [HideInInspector]
-    public int trackCounter = 1;
+    public float maxDuration = 0;
 
-
-    public void OrderTracks()
+    public void CalculateDurations()
     {
-        foreach(Track track in tracks)
+        foreach (Track track in tracks)
         {
-            foreach(Subtrack sub in track.subtracks)
-            {
-                if (sub.length > maxLength)
+            foreach (TrackLayer layer in track.trackLayers)
+                foreach (Subtrack sub in layer.subtracks)
                 {
-                    maxLength = sub.length;
+                    if (sub.source.clip.length > maxDuration)
+                    {
+                        maxDuration = sub.source.clip.length;
+                    }
                 }
-                if (sub.source.clip.length > maxDuration)
-                {
-                    maxDuration = sub.source.clip.length;
-                }
-            }
         }
+    }
+
+    public void SetTracksToPlay(List<int> newOrder)
+    {
+        tracksToPlay = newOrder;
     }
 
 }

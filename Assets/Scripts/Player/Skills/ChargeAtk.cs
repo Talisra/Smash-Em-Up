@@ -80,6 +80,7 @@ public class ChargeAtk : Skill
             foreach (Enemy enemy in enemiesDragged)
             {
                 enemy.transform.SetParent(null);
+                enemy.HitByPlayer();
                 enemy.Squash();
             }
             enemiesDragged.Clear();

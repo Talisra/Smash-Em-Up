@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7878075394597488914}
   - component: {fileID: 4371000799950885744}
   - component: {fileID: 6111135676502872372}
-  m_Layer: 11
+  m_Layer: 15
   m_Name: door2
   m_TagString: Unpassable
   m_Icon: {fileID: 0}
@@ -92,8 +92,7 @@ GameObject:
   - component: {fileID: 3328949439258533732}
   - component: {fileID: 5663254185245621931}
   - component: {fileID: 3796248423859379612}
-  - component: {fileID: 1696761056162770734}
-  m_Layer: 11
+  m_Layer: 15
   m_Name: TunnelDoor
   m_TagString: Unpassable
   m_Icon: {fileID: 0}
@@ -147,19 +146,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!65 &1696761056162770734
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1140520241139730015}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 5.052304, y: 5.0523067, z: 0.13497353}
-  m_Center: {x: 0.00000023841858, y: -0.00000023841858, z: -4.906726}
 --- !u!1 &8984836428293626178
 GameObject:
   m_ObjectHideFlags: 0
@@ -171,7 +157,7 @@ GameObject:
   - component: {fileID: 6222512651625491423}
   - component: {fileID: 2101737814736981221}
   - component: {fileID: 380165133134806123}
-  m_Layer: 11
+  m_Layer: 15
   m_Name: door1
   m_TagString: Unpassable
   m_Icon: {fileID: 0}

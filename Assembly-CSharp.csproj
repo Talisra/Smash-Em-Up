@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\Profile\Profile.cs" />
     <Compile Include="Assets\Imports\PowerUp\Scripts\CustomizablePowerUp.cs" />
     <Compile Include="Assets\Imports\PowerUp\Scripts\ScaleParticles.cs" />
+    <Compile Include="Assets\Scripts\General\Waves &amp; Spawners\Subwave.cs" />
     <Compile Include="Assets\Scripts\Pooling\Powerups\HealthUpPool.cs" />
     <Compile Include="Assets\Imports\LightningBolt\LightningBoltScript.cs" />
     <Compile Include="Assets\Imports\Ultimate 10 Plus Shaders\Shaders\Plexus\Plexus.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Assets\Imports\PowerUp\Scripts\Utility\Singleton.cs" />
     <Compile Include="Assets\Scripts\Environment\FanFloor.cs" />
     <Compile Include="Assets\Imports\Kino\Glitch\DigitalGlitch.cs" />
+    <Compile Include="Assets\Scripts\Pooling\Enemies\BoulePool.cs" />
     <Compile Include="Assets\Scripts\Menu\MenuButton.cs" />
     <Compile Include="Assets\Imports\Particle Ribbon by Moonflower Carnivore\Scripts\randomParticleRotation.cs" />
     <Compile Include="Assets\Scripts\Pooling\Powerups\SpeedContainerPool.cs" />
@@ -102,6 +104,7 @@
     <Compile Include="Assets\Imports\JMO Assets\Cartoon FX\Scripts\CFX_AutoDestructShuriken.cs" />
     <Compile Include="Assets\Imports\Particle Ribbon by Moonflower Carnivore\Scripts\rotation.cs" />
     <Compile Include="Assets\Imports\Ultimate 10 Plus Shaders\Scripts\U10PS_DissolveOverTime.cs" />
+    <Compile Include="Assets\Scripts\Managers\SoundtrackManager.cs" />
     <Compile Include="Assets\Scripts\Pooling\Enemies\SpawnBoxPool.cs" />
     <Compile Include="Assets\Scripts\Enemies\BasicBullet.cs" />
     <Compile Include="Assets\Scripts\Enemies\LockInitRotation.cs" />
@@ -127,8 +130,10 @@
     <Compile Include="Assets\Scripts\General\Waves &amp; Spawners\Tunnel.cs" />
     <Compile Include="Assets\Scripts\Pooling\Enemies\BasicBulletPool.cs" />
     <Compile Include="Assets\Scripts\PowerUps\Cannon.cs" />
+    <Compile Include="Assets\Scripts\General\Waves &amp; Spawners\Wave.cs" />
     <Compile Include="Assets\Imports\EffectExamples\Misc Effects\Scripts\SpawnEffect.cs" />
     <Compile Include="Assets\Scripts\UI\HPBar.cs" />
+    <Compile Include="Assets\Audio\TrackLayer.cs" />
     <Compile Include="Assets\Imports\Ultimate 10 Plus Shaders\Scripts\U10PS_MouseRotation.cs" />
     <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
     <Compile Include="Assets\Imports\VHS\Scripts\VHSPostProcessEffect.cs" />
@@ -136,6 +141,7 @@
     <Compile Include="Assets\Scripts\IPoolableObject.cs" />
     <Compile Include="Assets\Audio\Session.cs" />
     <Compile Include="Assets\Scripts\Player\Head.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Boule.cs" />
     <Compile Include="Assets\Scripts\Enemies\Cryser.cs" />
     <Compile Include="Assets\Scripts\General\Part.cs" />
     <Compile Include="Assets\Scripts\Enemies\CryserBody.cs" />
@@ -146,6 +152,7 @@
     <Compile Include="Assets\Scripts\Menu\MenuPlayer.cs" />
     <Compile Include="Assets\Imports\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_RandomDirectionTranslate.cs" />
     <Compile Include="Assets\Scripts\PowerUps\MapBonus.cs" />
+    <Compile Include="Assets\Scripts\Managers\WaveManager.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerBottom.cs" />
     <Compile Include="Assets\Scripts\Pooling\Enemies\CryserPool.cs" />
     <Compile Include="Assets\Scripts\UI\ComboCounterText.cs" />
@@ -160,8 +167,10 @@
     <Compile Include="Assets\Scripts\Scraps\CrystalScrap.cs" />
     <Compile Include="Assets\Scripts\PowerUps\ShieldUp.cs" />
     <Compile Include="Assets\Scripts\Enemies\LaserBeam.cs" />
-    <Compile Include="Assets\Scripts\Enemies\Boule.cs" />
-    <Compile Include="Assets\Scripts\Pooling\Enemies\BoulePool.cs" />
+    <Compile Include="Assets\Imports\Sci-fi Tower\Scripts\RotationData.cs" />
+    <Compile Include="Assets\Imports\Sci-fi Tower\Scripts\ChangeTurretMaterial.cs" />
+    <Compile Include="Assets\Imports\Sci-fi Tower\Scripts\SimpleMovement.cs" />
+    <Compile Include="Assets\Imports\Sci-fi Tower\Scripts\TurretRotation.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />

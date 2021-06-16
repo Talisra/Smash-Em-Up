@@ -418,8 +418,7 @@ MonoBehaviour:
   WeakPointBot: {fileID: 5217579780876939408}
   maxHP: 10
   MoveSpeed: 0.1
-  smoothTime: 0.1
-  normalRotationCoefficient: 0
+  normalRotationCoefficient: 0.3
   deltaCap: 60
   maxPowerUps: 0
   power: 10

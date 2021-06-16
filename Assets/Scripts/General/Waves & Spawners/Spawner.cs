@@ -5,22 +5,24 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
 
-    public Enemy GetEnemyFromPool(string enemyName, Vector3 spawnPoint)
+    public Enemy GetEnemyFromPool(int enemyIdx, Vector3 spawnPoint)
     {
         Enemy enemy;
-        switch (enemyName)
+        switch (enemyIdx)
         {
-            case "Cuball":
+            case 0: // Boule
+                enemy = BoulePool.Instance.Get(spawnPoint, Quaternion.identity);
+                break;
+            case 1: // Cuball
                 enemy = CuballPool.Instance.Get(spawnPoint, Quaternion.identity);
                 break;
-            case "Cryser":
+            case 2: // Cryser
                 enemy = CryserPool.Instance.Get(spawnPoint, Quaternion.identity);
-                break;
-            case "Boule":
-                enemy = BoulePool.Instance.Get(spawnPoint, Quaternion.identity);
                 break;
             default: return null;
         }
         return enemy;
     }
+
+
 }

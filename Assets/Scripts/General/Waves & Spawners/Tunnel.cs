@@ -6,27 +6,26 @@ public class Tunnel : Spawner
 {
     private GameManager gm;
     public TunnelDoor[] doors;
-    public BoxCollider boxCollider;
+    public BoxCollider trigger;
 
     private List<Enemy> enemiesInTunnel = new List<Enemy>();
 
     private Vector3 spawnPoint;
 
+    [HideInInspector]
+    public bool isBusy = false;
     private int sign; // -1 if left, 1 if right. helps handle the enemy spawn point
-    private bool doorOpen = false;
-
-    private float pulseDelay = 0.5f;
-    private float pulseCounter;
 
     private void Awake()
     {
-        boxCollider = GetComponent<BoxCollider>();
+        trigger = GetComponent<BoxCollider>();
         gm = FindObjectOfType<GameManager>();
         sign = transform.position.x - 0 > 0 ? 1 : -1;
         spawnPoint = new Vector3(
-                transform.position.x - (boxCollider.bounds.size.x / 4 * sign),
-                transform.position.y + (boxCollider.bounds.size.y / 2), 0);
+                transform.position.x - (trigger.bounds.size.x / 4 * sign),
+                transform.position.y + (trigger.bounds.size.y / 2), 0);
     }
+
 
     private void OnTriggerExit(Collider other)
     {
@@ -38,17 +37,26 @@ public class Tunnel : Spawner
         }
     }
 
-    public IEnumerator Spawn(string enemyString)
+    public IEnumerator Spawn(int enemyIdx)
     {
-        doorOpen = true;
+        isBusy = true;
         yield return new WaitForSeconds(0.1f);
         Open();
-        Enemy enemy = GetEnemyFromPool(enemyString, spawnPoint);
+        Enemy enemy = GetEnemyFromPool(enemyIdx, spawnPoint);
         enemiesInTunnel.Add(enemy);
+        enemy.GetRigidbody().AddForce(new Vector3(-sign * Random.Range(20,50),Random.Range(-10,10),0), ForceMode.VelocityChange);
         yield return new WaitForSeconds(0.5f);
+        while (enemiesInTunnel.Count > 0)
+        {
+            yield return new WaitForSeconds(0.1f);
+            foreach(Enemy enemyInTunnel in enemiesInTunnel)
+            {
+                enemyInTunnel.GetRigidbody().AddForce(new Vector3(-sign * Random.Range(20, 50), Random.Range(-10, 10), 0), ForceMode.VelocityChange);
+            }
+        }
         Close();
-        doorOpen = false;
         yield return new WaitForSeconds(0.3f);
+        isBusy = false;
     }
 
     public void Open()
@@ -57,7 +65,6 @@ public class Tunnel : Spawner
         {
             door.OpenDoors();
         }
-        boxCollider.enabled = false;
     }
 
     public void Close()
@@ -66,20 +73,5 @@ public class Tunnel : Spawner
         {
             door.CloseDoors();
         }
-        boxCollider.enabled = true;
-    }
-
-    private void FixedUpdate()
-    {
-        pulseCounter += Time.fixedDeltaTime;
-        if (pulseCounter >= pulseDelay)
-        {
-            foreach (Enemy enemy in enemiesInTunnel)
-            {
-                enemy.GetComponent<Rigidbody>().AddForce(new Vector3(-sign, 0, 0), ForceMode.VelocityChange);
-            }
-            pulseCounter = 0;
-        }
-
     }
 }

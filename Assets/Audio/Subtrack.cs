@@ -6,8 +6,7 @@ using UnityEngine;
 public class Subtrack
 {
     public AudioClip clip;
+    public float localVolume = 1; //leave at 1 normally
     [HideInInspector]
     public AudioSource source;
-    public float volume;
-    public int length;
 }
