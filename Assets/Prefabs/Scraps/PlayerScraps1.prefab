@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3592737277342176009}
   - component: {fileID: 5226799000958789080}
   - component: {fileID: 1605444583352013630}
+  - component: {fileID: 4722812513914105375}
   m_Layer: 0
   m_Name: PlayerScraps1
   m_TagString: Scrap
@@ -112,3 +113,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4722812513914105375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1065284531111118047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8988e35002b519244b1ee8d93fa500eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minAmount: 150
+  MaxAmount: 300
+  minSize: 0.1
+  maxSize: 0.5
+  FadeRate: 1000

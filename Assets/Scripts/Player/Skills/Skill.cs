@@ -11,13 +11,14 @@ public abstract class Skill : MonoBehaviour
     public float invTime;
     public bool takeControl;
     public GameObject hitPrefab;
+    public int minibossDmg;
 
     protected Player player;
 
-    protected void ShowHitParticle(Transform pos)
+    protected void ShowHitParticle(Vector3 pos)
     {
         GameObject particle = Instantiate(
-            hitPrefab, pos.position, Quaternion.identity) as GameObject;
+            hitPrefab, pos, Quaternion.identity) as GameObject;
         ParticleSystem parts = particle.GetComponent<ParticleSystem>();
         Destroy(particle, parts.main.duration);
     }
@@ -31,6 +32,12 @@ public abstract class Skill : MonoBehaviour
     {
 
     }
+
+    public virtual void OnSmashVoid(Vector3 position)
+    {
+
+    }
+
     public virtual void OnWallCollision(Collision collision)
     {
 

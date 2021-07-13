@@ -6,17 +6,29 @@ public class WaveManager : MonoBehaviour
 {
     public static WaveManager Instance { get; private set; }
 
+    private FanFloor fanFloor;
+
     public Tunnel[] tunnels;
     private Player player;
     private float waveDelay = 0.1f;
     private float delayBetweenSubwaves = 3f;
-    private int Wave = 0;
+    public int Wave = 0;
+    private bool isBossWave = false;
 
     private List<int> availableEnemies = new List<int>();
     private List<int> availablePowerups = new List<int>();
     private List<int> availableMapBonuses = new List<int>();
 
-    private int activeEnemies = 0;
+    private List<Enemy> activeEnemies = new List<Enemy>();
+    private int totalEnemiesAtWave;
+
+    // obstavles wave
+    private int minObstacles = 1;
+    private int maxObstacles = 1;
+    private int obstacleChains = 1;
+    private int obstacleWaveCounter = 0;
+    private int obstacleWaveDuration = 1;
+    private bool isObstacleWave = false;
 
     void Start()
     {
@@ -24,7 +36,9 @@ public class WaveManager : MonoBehaviour
             Instance = this;
         tunnels = FindObjectsOfType<Tunnel>();
         player = FindObjectOfType<Player>();
-        CompleteWave();
+        fanFloor = FindObjectOfType<FanFloor>();
+        //fanFloor.ChangePlatforms();
+        Invoke("CompleteWave", 0.5f);
     }
 
     private void UpdateAvailableEnemies()
@@ -50,6 +64,30 @@ public class WaveManager : MonoBehaviour
                 availableMapBonuses.Add(0);
                 break;
         }
+    }
+
+    private void DeveloperModeAddEnemies()
+    {
+        switch (Wave)
+        {
+            case 1:
+                availableEnemies.Add(3);
+                break;
+        }
+    }
+
+    private Wave CustomWave1()
+    {
+        Wave newWave = new Wave();
+        Subwave subwave = new Subwave
+        {
+            minDelay = 1f,
+            maxDelay = 2f,
+            enemiesPerSpawn = 2
+        };
+        subwave.enemiesIndex.Add(3);
+        newWave.subwaves.Add(subwave);
+        return newWave;
     }
 
     private Wave GenerateWave()
@@ -126,12 +164,11 @@ public class WaveManager : MonoBehaviour
         return subwave;
     }
 
-    private void CompleteWave()
+    public void CompleteMiniboss()
     {
-        Debug.Log("Completed Wave #"+Wave);
-        Wave++;
-        UpdateAvailableEnemies();
-        StartCoroutine(SpawnWave(GenerateWave()));
+        fanFloor.ChangePlatforms();
+        isBossWave = false;
+        Invoke("CompleteWave", 3f);
     }
 
     public IEnumerator SpawnSubwave(Subwave subwave)
@@ -173,7 +210,7 @@ public class WaveManager : MonoBehaviour
     public IEnumerator SpawnWave(Wave wave)
     {
         yield return new WaitForSeconds(waveDelay);
-        AddEnemies(wave.CountEnemies());
+        totalEnemiesAtWave = wave.CountEnemies();
         StartCoroutine(SpawnPowerups(wave));
         StartCoroutine(SpawnMapBonuses(wave));
         foreach (Subwave subwave in wave.subwaves)
@@ -186,9 +223,9 @@ public class WaveManager : MonoBehaviour
 
     private Tunnel SelectRandomUnbusyTunnel()
     {
-        Tunnel tunnelChosen = tunnels[Random.Range(0, tunnels.Length - 1)];
-        while (tunnelChosen.isBusy)
-            tunnelChosen = tunnels[Random.Range(0, tunnels.Length - 1)];
+        Tunnel tunnelChosen = tunnels[Random.Range(0, tunnels.Length)];
+        while (tunnelChosen.isBusy || tunnelChosen.isBlocked)
+            tunnelChosen = tunnels[Random.Range(0, tunnels.Length)];
         return tunnelChosen;
     }
 
@@ -260,16 +297,83 @@ public class WaveManager : MonoBehaviour
         return false;
     }
 
-    public void AddEnemies(int amount)
+    public void AddEnemy(Enemy enemy)
     {
-        activeEnemies += amount;
+        activeEnemies.Add(enemy);
     }
 
-    public void RemoveEnemy()
+    public void RemoveEnemy(Enemy enemy)
     {
-        activeEnemies--;
-        //Debug.Log("Enemies left: " + activeEnemies);
-        if (activeEnemies == 0)
+        activeEnemies.Remove(enemy);
+        totalEnemiesAtWave--;
+        //Debug.Log("Enemies left: " + activeEnemies.Count);
+        if (totalEnemiesAtWave == 0)
             CompleteWave();
+    }
+
+    public void SkipWave()
+    {
+        if (!isBossWave)
+        {
+            //StopAllCoroutines();
+            totalEnemiesAtWave = 0;
+            //Debug.Log("total enemies " + activeEnemies.Count);
+            for (int i=activeEnemies.Count-1; i>=0 ; i--)
+            {
+                //Debug.Log("Destroying " + activeEnemies[i].name + "...");
+                activeEnemies[i].InstantKill();
+            }
+            activeEnemies.Clear();
+            CompleteWave();
+        }
+    }
+    public void MiniBossWave()
+    {
+        isBossWave = true;
+        fanFloor.ChangePlatforms();
+    }
+
+    public void ManageObstacleWave()
+    {
+        Debug.Log(obstacleWaveCounter);
+        obstacleWaveCounter++;
+        if (obstacleWaveCounter > obstacleWaveDuration)
+        {
+            isObstacleWave = true;
+            obstacleWaveCounter = 0;
+            StartCoroutine(NewObstacleWave());
+        }
+    }
+
+    public IEnumerator NewObstacleWave()
+    {
+        AIObstacleManager.Instance.ClearAll();
+        yield return new WaitForSeconds(1); // wait for the obstacles to disappear
+        AIObstacleManager.Instance.ObstacleWave(obstacleChains, minObstacles, maxObstacles);
+    }
+    public void CompleteObstacleWave()
+    {
+        isObstacleWave = false;
+        CompleteWave();
+    }
+
+    private void CompleteWave()
+    {
+        if (Wave > 1) // obstacle wave
+        {
+            ManageObstacleWave();
+            if (isObstacleWave)
+                return;
+        }
+
+        Wave++;
+        UpdateAvailableEnemies();
+        if (Wave % 10 != 0)
+            StartCoroutine(SpawnWave(GenerateWave()));
+        else
+            MiniBossWave();
+
+        //DeveloperModeAddEnemies();
+        //StartCoroutine(SpawnWave(CustomWave1()));
     }
 }

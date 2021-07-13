@@ -198,6 +198,10 @@ public class GameManager : MonoBehaviour
             {
                 spawner.SummonCannon();
             }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                WaveManager.Instance.SkipWave();
+            }
         }
     }
 }

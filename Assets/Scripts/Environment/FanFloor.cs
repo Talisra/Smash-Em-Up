@@ -4,8 +4,55 @@ using UnityEngine;
 
 public class FanFloor : MonoBehaviour
 {
+    public Animator animator;
+
+    private bool isFanFloor = true;
     public List<GameObject> AffectedObjects;
     public Vector3 ForceVector;
+
+    private int rematchTimes = 0;
+    private WaveManager waveManager;
+    public Miniboss miniboss;
+    public GameObject miniboss_dead;
+    public Gyroscope_dead gyroscope_dead;
+
+    private void Start()
+    {
+        waveManager = FindObjectOfType<WaveManager>();
+        miniboss.gameObject.SetActive(false);
+        miniboss_dead.SetActive(false);
+        gyroscope_dead.gameObject.SetActive(false);
+    }
+
+    public void KillMiniboss()
+    {
+        miniboss.gameObject.SetActive(false);
+        miniboss_dead.SetActive(true);
+        gyroscope_dead.gameObject.SetActive(true);
+        gyroscope_dead.gameObject.transform.position = new Vector3(0, 0, 0);
+        gyroscope_dead.Break();
+        waveManager.Invoke("CompleteMiniboss", 2.5f);
+        rematchTimes++;
+    }
+
+    public void ChangePlatforms()
+    {
+        if (isFanFloor)
+        {
+            animator.Play("FanDown");
+            miniboss.gameObject.SetActive(true);
+            miniboss.SetDifficulty(rematchTimes);
+            miniboss_dead.SetActive(false);
+            gyroscope_dead.gameObject.SetActive(false);
+        }
+        else
+        {
+            animator.Play("FanUp");
+            gyroscope_dead.Reset();
+        }
+
+        isFanFloor = !isFanFloor;
+    }
 
     void OnTriggerEnter(Collider collidee)
     {

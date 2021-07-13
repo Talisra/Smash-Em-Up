@@ -11,7 +11,6 @@ public class AudioManager : MonoBehaviour
     public Sound[] sounds;
     public bool muteSound;
     public Sound[] shutDown;
-    public Session[] sessions;
 
     private List<bool> activeLayers;
     private List<int> layerOrder;
@@ -87,5 +86,17 @@ public class AudioManager : MonoBehaviour
             return;
         }
         s.source.Stop();
+    }
+
+    public float GetPitch(string name)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        return s.source.pitch;
+    }
+
+    public float GetLength(string name)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        return s.source.clip.length;
     }
 }

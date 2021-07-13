@@ -14,6 +14,8 @@ public class Tunnel : Spawner
 
     [HideInInspector]
     public bool isBusy = false;
+    [HideInInspector]
+    public bool isBlocked = false;
     private int sign; // -1 if left, 1 if right. helps handle the enemy spawn point
 
     private void Awake()

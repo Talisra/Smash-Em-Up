@@ -153,7 +153,7 @@ public class SpeedContainer : ReconstructableObject
         reward.SetActive(false);
     }
 
-    protected override void Break()
+    public override void Break()
     {
         base.Break();
         boxCollider.enabled = false;
@@ -162,7 +162,7 @@ public class SpeedContainer : ReconstructableObject
         Invoke("Reset", 5f);
     }
 
-    protected override void Reset()
+    public override void Reset()
     {
         base.Reset();
         rb.isKinematic = true;

@@ -20,11 +20,22 @@ public class ChargeAtk : Skill
     }
     public override void OnSmash(Enemy enemy)
     {
-        enemy.StopMovement();
-        enemy.transform.SetParent(player.transform);
-        enemiesDragged.Add(enemy);
+        if (!enemiesDragged.Contains(enemy))
+        {
+            enemy.StopMovement();
+            enemy.transform.SetParent(player.transform);
+            enemiesDragged.Add(enemy);
+        }
     }
 
+    public override void OnSmashVoid(Vector3 position)
+    {
+        player.CancelInv();
+        CameraEffects.Shake(0.75f, 0.3f);
+        Invoke("Uncharge", 0.75f);
+        ShowHitParticle(position);
+        OnEndAction();
+    }
 
 
     public override void OnStartAction()
@@ -40,7 +51,6 @@ public class ChargeAtk : Skill
         acceleration = 0;
         rotation = Quaternion.identity;
         buttonReleased = false;
-
         player.GiveControl();
     }
 
@@ -67,8 +77,8 @@ public class ChargeAtk : Skill
             player.rb.MoveRotation(rotation);
             if (buttonReleased)
             {
-                player.rb.AddForce(direction * 30 * acceleration, 0, 0);
-                acceleration += 5;
+                player.rb.AddForce(direction * 50 * acceleration, 0, 0);
+                acceleration += 10;
             }
         }
     }
@@ -86,7 +96,7 @@ public class ChargeAtk : Skill
             enemiesDragged.Clear();
             collision.gameObject.GetComponent<Unpassable>().SlamWall(player.head.transform.position);
             player.CancelInv();
-            CameraEffects.Shake(0.75f, 0.3f);
+            CameraEffects.Shake(0.6f, 0.3f);
             Invoke("Uncharge", 0.75f);
         }
     }

@@ -125,9 +125,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ace969210c934984780a1bea3ed0d041, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minAmount: 4
-  MaxAmount: 8
-  minSize: 0.5
-  maxSize: 0.8
+  minAmount: 8
+  MaxAmount: 16
+  minSize: 0.4
+  maxSize: 0.7
   explosionPrefab: {fileID: 1337198075554910, guid: 25c7aa9ad705fe143a4d71c1c8deb7d4,
     type: 3}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8624053314915337696}
   - component: {fileID: 7763746746647217167}
   m_Layer: 0
-  m_Name: RoundAttack 1
+  m_Name: RoundAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,8 +43,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 077d10d80c8add34caac3b3b3dec3c8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isCharge: 0
+  isMultiHit: 0
   cost: 1
   animationName: Round
   invTime: 0.5
   takeControl: 0
   hitPrefab: {fileID: 100004, guid: 0c9385306dae9b04ca34b9f67fe0b536, type: 3}
+  minibossDmg: 1

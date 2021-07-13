@@ -19,6 +19,7 @@ TagManager:
   - Trigger
   - Container
   - MapBonus
+  - Miniboss
   layers:
   - Default
   - TransparentFX

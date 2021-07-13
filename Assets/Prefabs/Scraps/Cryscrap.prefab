@@ -96,10 +96,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51cf56bf6a45e454a9ba89c75a56b8d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minAmount: 16
-  MaxAmount: 22
-  minSize: 0.3
-  maxSize: 0.5
+  minAmount: 40
+  MaxAmount: 50
+  minSize: 0.2
+  maxSize: 0.3
   explosionPrefab: {fileID: 1750940742320366, guid: d13c3e2485679d949b08e27937104e7b,
     type: 3}
 --- !u!54 &-8919648856403351580

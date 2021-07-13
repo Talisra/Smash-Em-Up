@@ -19,8 +19,12 @@ public class Spawner : MonoBehaviour
             case 2: // Cryser
                 enemy = CryserPool.Instance.Get(spawnPoint, Quaternion.identity);
                 break;
+            case 3: // Denymatt
+                enemy = DenymattPool.Instance.Get(spawnPoint, Quaternion.identity);
+                break;
             default: return null;
         }
+        WaveManager.Instance.AddEnemy(enemy);
         return enemy;
     }
 

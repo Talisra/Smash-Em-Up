@@ -7,28 +7,31 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
 {
     // References
     public GameObject bullet;
-    public GameObject player;
+    public Player player;
 
-    protected Rigidbody rb;
+    [HideInInspector]
+    public Rigidbody rb;
     protected Collider[] enemyColliders;
     private ComboManager comboManager;
+    [HideInInspector]
     public bool tempDisable = false;
-
+    [HideInInspector]
     public bool inGame = false;
 
     // Graphics
-    public GameObject body;
+    public List<GameObject> body;
+    private int collidingObjects = 0;
     public GameObject superSpeedKernel;
     public Texture normalTex;
     public Texture flashTex;
-    protected Renderer rend;
+    protected List<Renderer> rends = new List<Renderer>();
     protected TrailRenderer tr;
 
     // Stats
     public float moveSpeed = 10f;
     public int maxHealth;
     protected int curHealth; // number of times the enemy can hit the walls before exploding
-    public float flashTime = 0.5f;
+    private float flashTime = 0.3f;
     protected float flashCounter = 0;
     protected bool isFlashing = false;
     protected bool isAlive = true;
@@ -36,8 +39,12 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
 
     // Thrust
     public bool isThrusting;
-    private float thrustCounter = 0;
+    public float thrustSpeed;
+    protected float thrustCounter = 0;
     private float thrustDelay = 5f;
+    private float thrustInvokeDelay = 0.3f;
+    private float thrustInvokeCounter = 0f;
+    private bool thrustInvokeActive = false;
     private ThrustEffect thrustEffect;
 
     // Squash
@@ -47,7 +54,12 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     public Vector3 squashVector;
     private Vector3 normalScale;
 
-    // Player Hit
+    // Damaged
+    private float damagedDelay = 0.15f;
+    private float damagedCounter = 0;
+    private bool takingDamage = false;
+
+    // Hit By Player
     public bool isHit;
     private float hitCounter;
     private float hitDelay = 0.5f;
@@ -62,7 +74,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     private bool isSuperSpeed = false;
     private float superSpeedCounter = 0;
     private float superSpeedDelay;
-    private float superSpeedMagnitude = 0;
+    public float superSpeedVelocity = 75;
 
     // Audio
     public string afterEffectAudio;
@@ -90,7 +102,11 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
             numOfScraps[i] = temp.GenerateAmount();
         }
         comboManager = FindObjectOfType<ComboManager>();
-        rend = body.GetComponent<Renderer>();
+        player = FindObjectOfType<Player>();
+        foreach(GameObject go in body)
+        {
+            rends.Add(go.GetComponent<Renderer>());
+        }
         rb = GetComponent<Rigidbody>();
         tr = GetComponent<TrailRenderer>();
         enemyColliders = GetComponentsInChildren<Collider>();
@@ -141,12 +157,12 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
             child.gameObject.layer = layer;
     }
 
-    public float GetMaxHp()
+    public int GetMaxHp()
     {
         return maxHealth;
     }
 
-    public float GetCurrentHp()
+    public int GetCurrentHp()
     {
         return curHealth;
     }
@@ -167,35 +183,58 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
         yield return new WaitForSeconds(0);
     }
 
-    protected void Thrust()
+    protected void Thrust(Vector3 target)
     {
         if (!isThrusting)
         {
             isThrusting = true;
             thrustCounter = 0;
-            int x_offset = Random.Range(-5, 5);
-            int y_offset = Random.Range(-5, 5);
-            Vector3 target = new Vector3(x_offset, y_offset, 0);
-            rb.AddForce(target - transform.position,
+            rb.AddForce((target - transform.position).normalized * thrustSpeed,
                 ForceMode.VelocityChange);
             thrustEffect.SetEffect(transform.position, target);
         }
     }
 
+    protected Vector3 ThrustLocation()
+    {
+        int x_offset = Random.Range(-5, 5);
+        int y_offset = Random.Range(-5, 5);
+        Vector3 target = new Vector3(x_offset, y_offset, 0);
+        return target;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
+        //collidingObjects++;
         if (rb.velocity.magnitude > minVelocityForDamage) // damage is only possible when the enemy has some acceleration
         {
-            if (collision.gameObject.tag == "Unpassable" && isAlive && !isFlashing)
+            if (isAlive && !takingDamage && rb.velocity.magnitude > minVelocityForDamage)
             {
-                // when colliding on the wall, damage the enemy.
-                Damage(isSuperSpeed ? 2 : 1);
-            }
-            else if (collision.gameObject.tag == "Enemy" && isAlive && !isFlashing)
-            {
-                Damage(isSuperSpeed ? 2 : 1);
+                if (collision.gameObject.tag == "Unpassable" || collision.gameObject.tag == "Enemy")
+                {
+                    Damage(isSuperSpeed ? 2 : 1);
+                }
             }
         }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        /*
+        collidingObjects--;
+        if (collidingObjects == 0)
+        {
+            if (rb.velocity.magnitude > minVelocityForDamage) // damage is only possible when the enemy has some acceleration
+            {
+                if (isAlive && !takingDamage && rb.velocity.magnitude > minVelocityForDamage)
+                {
+                    if (collision.gameObject.tag == "Unpassable" || collision.gameObject.tag == "Enemy")
+                    {
+                        Damage(isSuperSpeed ? 2 : 1);
+                    }
+                }
+            }
+        }*/
     }
 
     public void ResetComboChain()
@@ -234,6 +273,16 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
             transform.position.y, 0);
     }
 
+    public void InstantKill()
+    {
+        if (isAlive)
+        {
+            isAlive = false;
+            curHealth = 0;
+            Explode();
+        }
+    }
+
     public virtual void Damage(int amount)
     {
         if (isAlive && inGame)
@@ -262,13 +311,22 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     void Flash()
     {
         isFlashing = true;
-        rend.material.SetTexture("_MainTex", flashTex);
+        foreach(Renderer rend in rends)
+        {
+            rend.material.SetTexture("_MainTex", flashTex);
+        }
+    }
+
+    protected virtual void BeforeExplode()
+    {
+
     }
 
     // Handle Destruction when enemy is 0 HP:
     // Create an explosion prefab and scraps.
-    void Explode()
+    public void Explode()
     {
+        BeforeExplode();
         CameraEffects.Shake(0.5f, 0.4f);
         AudioManager.Instance.Play(explodeAudio);
         if (afterEffectAudio != "")
@@ -293,7 +351,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
             }
         }
         StopMovement();
-        BackToPool();
+        Invoke("BackToPool", 0.1f);
     }
 
     public void GiveSuperSpeed(float duration)
@@ -325,7 +383,10 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
             flashCounter += Time.deltaTime;
             if (flashCounter >= flashTime)
             {
-                rend.material.SetTexture("_MainTex", normalTex);
+                foreach(Renderer rend in rends)
+                {
+                    rend.material.SetTexture("_MainTex", normalTex);
+                }
                 isFlashing = false;
                 flashCounter = 0;
             }
@@ -337,6 +398,14 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
             {
                 inCombo = false;
                 comboCounter = 0;
+            }
+        }
+        if (takingDamage)
+        {
+            damagedCounter += Time.deltaTime;
+            if (damagedCounter >= damagedDelay)
+            {
+                takingDamage = false;
             }
         }
         if (isHit)
@@ -356,9 +425,17 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
             {
                 isSuperSpeed = false;
                 superSpeedCounter = 0;
-                superSpeedMagnitude = 0;
                 superSpeedKernel.SetActive(false);
             }
+        }
+        if (thrustInvokeActive)
+        {
+            thrustCounter += Time.deltaTime;
+        }
+        if (thrustInvokeCounter >= thrustInvokeDelay)
+        {
+            Thrust(new Vector3(Random.Range(-5, 5), Random.Range(-5, 5), 0));
+            thrustInvokeActive = false;
         }
         if (isThrusting)
         {
@@ -373,13 +450,18 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
 
     private void FixedUpdate()
     {
+        
         if (rb.velocity.magnitude < 5 && rb.velocity.magnitude != 0)
         {
             if (!isThrusting)
-                Invoke("Thrust", 0.3f);
+            {
+                thrustInvokeActive = true;
+            }
         }
         if (isSuperSpeed)
         {
+            rb.velocity = rb.velocity.normalized * superSpeedVelocity;
+            /*
             if (superSpeedMagnitude == 0 && rb.velocity.magnitude > 0)
             {
                 superSpeedMagnitude = rb.velocity.magnitude;
@@ -387,13 +469,13 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
             if (rb.velocity.magnitude < superSpeedMagnitude)
             {
                 rb.velocity = rb.velocity.normalized * superSpeedMagnitude;
-            }
+            }*/
         }
     }
 
     public virtual void BackToPool()
     {
-        WaveManager.Instance.RemoveEnemy();
+        WaveManager.Instance.RemoveEnemy(this);
         inGame = false;
         hpBar.gameObject.SetActive(false);
         //Implement at Inherited enemy

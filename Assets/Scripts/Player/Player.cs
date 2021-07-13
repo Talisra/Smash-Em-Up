@@ -103,7 +103,7 @@ public class Player : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // Head Collision
-        if (collision.contacts[0].thisCollider.gameObject.tag == "PlayerHead")
+        if (collision.GetContact(0).thisCollider.gameObject.tag == "PlayerHead")
         {
             // Hitting an enemy will add force to the enemy, depends on deltaX.
             // The higher deltaX, more force added.
@@ -125,7 +125,26 @@ public class Player : MonoBehaviour
             // Bullet that hitting the Head will do no damage
             else if(collision.gameObject.tag == "Bullet")
             {
-                collision.gameObject.GetComponent<BasicBullet>().Explode();
+                //collision.gameObject.GetComponent<BasicBullet>().Explode();
+            }
+            else if(collision.gameObject.tag == "Miniboss")
+            {
+                if (Mathf.Abs(rb.velocity.x) > 0 && canAttack && currentSkill==null)
+                {
+                    Miniboss miniboss = collision.gameObject.GetComponentInParent<Miniboss>();
+                    miniboss.TakeDamage(1, collision.GetContact(0).point);
+                    BasicSmash(collision.GetContact(0).point);
+                }
+                else if (currentSkill != null)
+                {
+                    Miniboss miniboss = collision.gameObject.GetComponentInParent<Miniboss>();
+                    if (miniboss.canTakeDmg)
+                    {
+                        currentSkill.OnSmashVoid(collision.GetContact(0).point);
+                        miniboss.TakeDamage(currentSkill.minibossDmg, collision.GetContact(0).point);
+                    }
+
+                }
             }
         }
         // Body Collision
@@ -143,7 +162,7 @@ public class Player : MonoBehaviour
             else if (collision.gameObject.tag == "Bullet")
             {
                 TakeDamage(1, true, true, collision.transform.position);
-                collision.gameObject.GetComponent<BasicBullet>().Explode();
+                //collision.gameObject.GetComponent<BasicBullet>().Explode();
             }
         }
         // General Collisions
@@ -315,6 +334,26 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void TakeTrueDamage(float amount, bool giveShield, bool showHit, Vector3 hitCoordinates) // use when the player should take damage regardless invulnerability
+    {
+        if (!isShielded)
+        {
+            GameManager.Instance.FlashRedScreen();
+            body.ShowDamage();
+            bottom.ShowDamage();
+            currentHP -= amount;
+            if (currentHP <= 0)
+            {
+                Die();
+                return;
+            }
+            if (giveShield)
+                GainShield(0.75f);
+            if (showHit)
+                BleedExplosion(hitCoordinates);
+        }
+    }
+
     private void Die()
     {
         if (!isDead)
@@ -438,7 +477,7 @@ public class Player : MonoBehaviour
                         0, 0);
                     animationLeft = "AtkLeft";
                     animationRight = "AtkRight";
-                    ShowSmashParticle(enemy.transform, 2f);
+                    ShowSmashParticle(enemy.transform.position, 2f);
                     attackSequence++;
                     break;
                 }
@@ -451,7 +490,7 @@ public class Player : MonoBehaviour
                         0, 0);
                     animationLeft = "AtkLeft2";
                     animationRight = "AtkRight2";
-                    ShowSmashParticle(enemy.transform, 2.5f);
+                    ShowSmashParticle(enemy.transform.position, 2.5f);
                     attackSequence++;
                     break;
                 }
@@ -468,7 +507,7 @@ public class Player : MonoBehaviour
                     animationLeft = "AtkLeftF";
                     animationRight = "AtkRightF";
                     attackSequence = 0;
-                    ShowSmashParticle(enemy.transform, 3f);
+                    ShowSmashParticle(enemy.transform.position, 3f);
                     break;
                 }
         }
@@ -479,10 +518,59 @@ public class Player : MonoBehaviour
         rbenemy.AddForce(powerVector, ForceMode.VelocityChange);
     }
 
-    private void ShowSmashParticle(Transform pos, float scale)
+    // calling BasicSmash with a transform will only apply the animation
+    private void BasicSmash(Vector3 target)
+    {
+        inAtkCombo = true;
+        atkSeqComboCounter = 0;
+        string animationLeft = "";
+        string animationRight = "";
+        Vector3 powerVector = Vector3.zero;
+        canAttack = false;
+        switch (attackSequence)
+        {
+            case 0:
+                {
+                    CameraEffects.Shake(0.1f, 0.2f);
+                    AudioManager.Instance.Play("Smash1");
+                    animationLeft = "AtkLeft";
+                    animationRight = "AtkRight";
+                    ShowSmashParticle(target, 2f);
+                    attackSequence++;
+                    break;
+                }
+            case 1:
+                {
+                    CameraEffects.Shake(0.15f, 0.3f);
+                    AudioManager.Instance.Play("Smash2");
+                    animationLeft = "AtkLeft2";
+                    animationRight = "AtkRight2";
+                    ShowSmashParticle(target, 2.5f);
+                    attackSequence++;
+                    break;
+                }
+            case 2: // == maxAtkSequence!
+                {
+                    CameraEffects.Shake(0.4f, 0.4f);
+                    AudioManager.Instance.Play("Smash3");
+                    AudioManager.Instance.Play("SmashF");
+                    animationLeft = "AtkLeftF";
+                    animationRight = "AtkRightF";
+                    attackSequence = 0;
+                    ShowSmashParticle(target, 3f);
+                    break;
+                }
+        }
+        if (target.x > 0) // play the right attack animation
+            animator.Play(animationLeft);
+        else if (target.x < 0)
+            animator.Play(animationRight);
+    }
+
+    private void ShowSmashParticle(Vector3 pos, float scale)
     {
         GameObject particle = Instantiate(
-            smashAnimPrefab, pos.position, Quaternion.identity) as GameObject;
+            smashAnimPrefab, pos, Quaternion.identity) as GameObject;
         particle.transform.localScale = new Vector3(scale, scale, scale);
         ParticleSystem parts = particle.GetComponent<ParticleSystem>();
         Destroy(particle, parts.main.duration);

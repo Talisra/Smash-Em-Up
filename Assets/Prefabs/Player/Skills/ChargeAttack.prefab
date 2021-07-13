@@ -50,3 +50,4 @@ MonoBehaviour:
   invTime: 1
   takeControl: 1
   hitPrefab: {fileID: 100002, guid: 063f92c362912904781de3d323f5962d, type: 3}
+  minibossDmg: 3

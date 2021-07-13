@@ -73,7 +73,7 @@ public class EnemyBox : ReconstructableObject
         Invoke("Reset", 5);
     }
 
-    protected override void Reset()
+    public override void Reset()
     {
         base.Reset();
         boxCollider.enabled = true;

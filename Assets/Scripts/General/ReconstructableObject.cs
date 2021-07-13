@@ -33,7 +33,7 @@ public abstract class ReconstructableObject : MonoBehaviour, IPoolableObject
         }
     }
 
-    protected virtual void Break()
+    public virtual void Break()
     {
         RemoveChildren();
         kernel.SetActive(true);
@@ -87,7 +87,7 @@ public abstract class ReconstructableObject : MonoBehaviour, IPoolableObject
         }
         partStoarge.Clear();
     }
-    protected virtual void Reset()
+    public virtual void Reset()
     {
         transform.position = startPos;
         transform.rotation = startQart;

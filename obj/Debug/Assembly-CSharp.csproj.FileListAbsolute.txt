@@ -1,0 +1,2 @@
+C:\Users\User\Documents\GitHub\Smash 'em Up\Smash-Em-Up\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
+C:\Users\User\Documents\GitHub\Smash 'em Up\Smash-Em-Up\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache

@@ -60,6 +60,7 @@
     <Compile Include="Assets\Imports\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_Translate.cs" />
     <Compile Include="Assets\Scripts\Scraps\CubeScraps.cs" />
     <Compile Include="Assets\Scripts\General\ShutdownEffect.cs" />
+    <Compile Include="Assets\Scripts\Scraps\MinibossScraps.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Enemies\Cuball.cs" />
     <Compile Include="Assets\Imports\Particle Ribbon by Moonflower Carnivore\Scripts\ReverseNormals.cs" />
@@ -67,14 +68,20 @@
     <Compile Include="Assets\Scripts\General\HitFlash.cs" />
     <Compile Include="Assets\Scripts\Player\Skills\ChargeAtk.cs" />
     <Compile Include="Assets\Scripts\PowerUps\HealthUp.cs" />
+    <Compile Include="Assets\Imports\Sci-fi Tower\Scripts\RotationData.cs" />
+    <Compile Include="Assets\Imports\Sci-fi Tower\Scripts\ChangeTurretMaterial.cs" />
     <Compile Include="Assets\Scripts\Environment\SideWall.cs" />
     <Compile Include="Assets\Scripts\Profile\Profile.cs" />
     <Compile Include="Assets\Imports\PowerUp\Scripts\CustomizablePowerUp.cs" />
     <Compile Include="Assets\Imports\PowerUp\Scripts\ScaleParticles.cs" />
     <Compile Include="Assets\Scripts\General\Waves &amp; Spawners\Subwave.cs" />
     <Compile Include="Assets\Scripts\Pooling\Powerups\HealthUpPool.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Miniboss\MinibossBullet.cs" />
+    <Compile Include="Assets\Scripts\Pooling\Enemies\MinibossBullet_Pool.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Denymatt.cs" />
     <Compile Include="Assets\Imports\LightningBolt\LightningBoltScript.cs" />
     <Compile Include="Assets\Imports\Ultimate 10 Plus Shaders\Shaders\Plexus\Plexus.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Miniboss\Miniboss.cs" />
     <Compile Include="Assets\Imports\JMO Assets\Cartoon FX\Demo\Assets\CFX_AutoStopLoopedEffect.cs" />
     <Compile Include="Assets\Imports\PowerUp\Scripts\Utility\Singleton.cs" />
     <Compile Include="Assets\Scripts\Environment\FanFloor.cs" />
@@ -87,7 +94,9 @@
     <Compile Include="Assets\Scripts\General\ReconstructableObject.cs" />
     <Compile Include="Assets\Scripts\General\CameraEffects.cs" />
     <Compile Include="Assets\Imports\Pixelate\Pixelate.cs" />
+    <Compile Include="Assets\Imports\Sci-fi Tower\Scripts\SimpleMovement.cs" />
     <Compile Include="Assets\Scripts\General\Waves &amp; Spawners\Spawner.cs" />
+    <Compile Include="Assets\Scripts\Environment\WaveCounter.cs" />
     <Compile Include="Assets\Audio\Sound.cs" />
     <Compile Include="Assets\Scripts\Player\AnimationAnchor.cs" />
     <Compile Include="Assets\Imports\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_RandomDir.cs" />
@@ -95,6 +104,7 @@
     <Compile Include="Assets\Scripts\Managers\GenericPoolObject.cs" />
     <Compile Include="Assets\Scripts\Menu\MenuManager.cs" />
     <Compile Include="Assets\Imports\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_RotateCamera.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Miniboss\Miniboss_dead.cs" />
     <Compile Include="Assets\Scripts\Pooling\Enemies\CuballPool.cs" />
     <Compile Include="Assets\Scripts\Environment\Fan.cs" />
     <Compile Include="Assets\Scripts\Player\Skills\Skill.cs" />
@@ -105,6 +115,8 @@
     <Compile Include="Assets\Imports\Particle Ribbon by Moonflower Carnivore\Scripts\rotation.cs" />
     <Compile Include="Assets\Imports\Ultimate 10 Plus Shaders\Scripts\U10PS_DissolveOverTime.cs" />
     <Compile Include="Assets\Scripts\Managers\SoundtrackManager.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Miniboss\Gyroscope_dead.cs" />
+    <Compile Include="Assets\Imports\Sci-fi Tower\Scripts\TurretRotation.cs" />
     <Compile Include="Assets\Scripts\Pooling\Enemies\SpawnBoxPool.cs" />
     <Compile Include="Assets\Scripts\Enemies\BasicBullet.cs" />
     <Compile Include="Assets\Scripts\Enemies\LockInitRotation.cs" />
@@ -118,6 +130,7 @@
     <Compile Include="Assets\Scripts\Environment\TunnelDoor.cs" />
     <Compile Include="Assets\Scripts\UI\PowerupCounterText.cs" />
     <Compile Include="Assets\Scripts\Scraps\Scraps.cs" />
+    <Compile Include="Assets\Scripts\UI\SevenSegment.cs" />
     <Compile Include="Assets\Audio\Track.cs" />
     <Compile Include="Assets\Scripts\Scraps\LaserScrap.cs" />
     <Compile Include="Assets\Imports\PowerUp\Scripts\TakeablePowerUp.cs" />
@@ -133,6 +146,7 @@
     <Compile Include="Assets\Scripts\General\Waves &amp; Spawners\Wave.cs" />
     <Compile Include="Assets\Imports\EffectExamples\Misc Effects\Scripts\SpawnEffect.cs" />
     <Compile Include="Assets\Scripts\UI\HPBar.cs" />
+    <Compile Include="Assets\Scripts\UI\MinibossUI.cs" />
     <Compile Include="Assets\Audio\TrackLayer.cs" />
     <Compile Include="Assets\Imports\Ultimate 10 Plus Shaders\Scripts\U10PS_MouseRotation.cs" />
     <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
@@ -153,6 +167,7 @@
     <Compile Include="Assets\Imports\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_RandomDirectionTranslate.cs" />
     <Compile Include="Assets\Scripts\PowerUps\MapBonus.cs" />
     <Compile Include="Assets\Scripts\Managers\WaveManager.cs" />
+    <Compile Include="Assets\Scripts\Pooling\Enemies\DenymattPool.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerBottom.cs" />
     <Compile Include="Assets\Scripts\Pooling\Enemies\CryserPool.cs" />
     <Compile Include="Assets\Scripts\UI\ComboCounterText.cs" />
@@ -167,10 +182,9 @@
     <Compile Include="Assets\Scripts\Scraps\CrystalScrap.cs" />
     <Compile Include="Assets\Scripts\PowerUps\ShieldUp.cs" />
     <Compile Include="Assets\Scripts\Enemies\LaserBeam.cs" />
-    <Compile Include="Assets\Imports\Sci-fi Tower\Scripts\RotationData.cs" />
-    <Compile Include="Assets\Imports\Sci-fi Tower\Scripts\ChangeTurretMaterial.cs" />
-    <Compile Include="Assets\Imports\Sci-fi Tower\Scripts\SimpleMovement.cs" />
-    <Compile Include="Assets\Imports\Sci-fi Tower\Scripts\TurretRotation.cs" />
+    <Compile Include="Assets\Scripts\Environment\AIobstacle.cs" />
+    <Compile Include="Assets\Scripts\Environment\AttachPoint.cs" />
+    <Compile Include="Assets\Scripts\Managers\AIObstacleManager.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />

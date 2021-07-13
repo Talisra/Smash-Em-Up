@@ -35,10 +35,4 @@ public class Unpassable : MonoBehaviour
         float totalDuration = parts.main.duration;
         Destroy(dust, totalDuration);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

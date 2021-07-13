@@ -14,6 +14,7 @@ public class EnemyHPBar : MonoBehaviour
         this.enemy = enemy;
     }
 
+
     // Update is called once per frame
     void Update()
     {

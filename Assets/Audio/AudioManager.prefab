@@ -186,8 +186,8 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: BoxImpact
     clip: {fileID: 8300000, guid: a845e29f59a72574e83b83a1dc171aff, type: 3}
-    volume: 0.211
-    pitch: 0.46
+    volume: 0.587
+    pitch: 0.9
     source: {fileID: 0}
   - name: BoxOpen
     clip: {fileID: 8300000, guid: cf542ffa44858844f8bf2195202cf86a, type: 3}
@@ -304,6 +304,76 @@ MonoBehaviour:
     volume: 1
     pitch: 0.8
     source: {fileID: 0}
+  - name: MiniBossFire
+    clip: {fileID: 8300000, guid: ac4c2568d2a0041aca9d47120e725bfc, type: 3}
+    volume: 0.621
+    pitch: 1.22
+    source: {fileID: 0}
+  - name: MiniBossBulletDestroy
+    clip: {fileID: 8300000, guid: 0b896a5d8de0b154aa185aacfe9e9b4b, type: 3}
+    volume: 0.528
+    pitch: 1.72
+    source: {fileID: 0}
+  - name: MinibossCharge
+    clip: {fileID: 8300000, guid: 486138d7471174b41a4501aaca44ff44, type: 3}
+    volume: 0.528
+    pitch: 1.33
+    source: {fileID: 0}
+  - name: MinibossChargeSpark
+    clip: {fileID: 8300000, guid: 8ee04d32aee5b0e4da82aaaaaf904df0, type: 3}
+    volume: 0.734
+    pitch: 1
+    source: {fileID: 0}
+  - name: MinibossRelease1
+    clip: {fileID: 8300000, guid: 4fa2d6f6c988cfd4b89db9617c549b62, type: 3}
+    volume: 1
+    pitch: 0.5
+    source: {fileID: 0}
+  - name: MinibossRelease2
+    clip: {fileID: 8300000, guid: f9bfa0791a5960342bb79542cc883b56, type: 3}
+    volume: 0.6
+    pitch: 1
+    source: {fileID: 0}
+  - name: MinibossDMG
+    clip: {fileID: 8300000, guid: 94df3e728a4f9d54c9e2aa699b494859, type: 3}
+    volume: 0.6
+    pitch: 1.42
+    source: {fileID: 0}
+  - name: MinibossDie1
+    clip: {fileID: 8300000, guid: f9db8598f7bb5c7448ef99b299c7fbe3, type: 3}
+    volume: 1
+    pitch: 0.5
+    source: {fileID: 0}
+  - name: MinibossDie2
+    clip: {fileID: 8300000, guid: 03e043640b214034a840ff0c68ec5af9, type: 3}
+    volume: 0.654
+    pitch: 1.15
+    source: {fileID: 0}
+  - name: DenymattExp
+    clip: {fileID: 8300000, guid: ad6dc6420ade60242854bc8fb588fa31, type: 3}
+    volume: 0.491
+    pitch: 1
+    source: {fileID: 0}
+  - name: DenymattHit
+    clip: {fileID: 8300000, guid: ee27929f6d2a40744b6c98062d02a646, type: 3}
+    volume: 0.491
+    pitch: 1
+    source: {fileID: 0}
+  - name: CountDown
+    clip: {fileID: 8300000, guid: 5eb51d146bb7f574f88f6ad708ab46e9, type: 3}
+    volume: 0.075
+    pitch: 1
+    source: {fileID: 0}
+  - name: Fuse
+    clip: {fileID: 8300000, guid: fe41a72f1682df54ca76d0155acee192, type: 3}
+    volume: 0.402
+    pitch: 0.67
+    source: {fileID: 0}
+  - name: AIOspawn
+    clip: {fileID: 8300000, guid: cd4b323d117710b498c797b63f42cedf, type: 3}
+    volume: 0.77
+    pitch: 1.26
+    source: {fileID: 0}
   muteSound: 0
   shutDown:
   - name: SD1
@@ -326,201 +396,4 @@ MonoBehaviour:
     volume: 0.5
     pitch: 1
     source: {fileID: 0}
-  sessions:
-  - name: _All
-    tracks:
-    - subtracks:
-      - clip: {fileID: 8300000, guid: 4ee56693ed5948646af4cf6e319f4dd9, type: 3}
-        source: {fileID: 0}
-        volume: 1
-        length: 2
-      masterVolume: 1
-      mute: 0
-    - subtracks:
-      - clip: {fileID: 8300000, guid: 5632922327ccc144496783b62d84c14d, type: 3}
-        source: {fileID: 0}
-        volume: 1
-        length: 2
-      masterVolume: 1
-      mute: 0
-    - subtracks:
-      - clip: {fileID: 8300000, guid: 0bc22516385bea742b2d8ffc076dbee1, type: 3}
-        source: {fileID: 0}
-        volume: 1
-        length: 2
-      masterVolume: 1
-      mute: 0
-    maxLength: 0
-    maxDuration: 0
-    trackCounter: 0
-  - name: A
-    tracks:
-    - subtracks:
-      - clip: {fileID: 8300000, guid: ed71d7c24dd317f4e94897c514bacbc5, type: 3}
-        source: {fileID: 0}
-        volume: 0
-        length: 8
-      masterVolume: 0.55
-      mute: 0
-    - subtracks:
-      - clip: {fileID: 8300000, guid: 8638a011960959c4297b773895845455, type: 3}
-        source: {fileID: 0}
-        volume: 0
-        length: 1
-      masterVolume: 0.25
-      mute: 0
-    - subtracks:
-      - clip: {fileID: 8300000, guid: 2139e730710127e4c8cd79012281c779, type: 3}
-        source: {fileID: 0}
-        volume: 0
-        length: 16
-      - clip: {fileID: 8300000, guid: 323b9b4ce55099643970edfbd5e804b2, type: 3}
-        source: {fileID: 0}
-        volume: 0
-        length: 16
-      masterVolume: 1
-      mute: 0
-    - subtracks:
-      - clip: {fileID: 8300000, guid: 360ec40e4500863458a91e8aca84b188, type: 3}
-        source: {fileID: 0}
-        volume: 0
-        length: 2
-      masterVolume: 0.5
-      mute: 0
-    - subtracks:
-      - clip: {fileID: 8300000, guid: 7dd5d9c86957d0745b4c23f72bc35c89, type: 3}
-        source: {fileID: 0}
-        volume: 0
-        length: 4
-      masterVolume: 0.5
-      mute: 0
-    - subtracks:
-      - clip: {fileID: 8300000, guid: d81622ca983529d489a192995274a0f5, type: 3}
-        source: {fileID: 0}
-        volume: 0
-        length: 8
-      masterVolume: 0.3
-      mute: 0
-    - subtracks:
-      - clip: {fileID: 8300000, guid: 710afb41e99b7e14f847f6b05bad19bd, type: 3}
-        source: {fileID: 0}
-        volume: 0
-        length: 16
-      masterVolume: 0.5
-      mute: 0
-    maxLength: 0
-    maxDuration: 0
-    trackCounter: 0
-  - name: B
-    tracks:
-    - subtracks:
-      - clip: {fileID: 8300000, guid: 0e541966b2750474bbc244545398b460, type: 3}
-        source: {fileID: 0}
-        volume: 0
-        length: 8
-      - clip: {fileID: 8300000, guid: fd70cf2e6abe4144ab7efe7872f60d50, type: 3}
-        source: {fileID: 0}
-        volume: 0
-        length: 8
-      masterVolume: 0.55
-      mute: 0
-    - subtracks:
-      - clip: {fileID: 8300000, guid: 6a5a0cc072253f941b209469ee27ad4e, type: 3}
-        source: {fileID: 0}
-        volume: 0
-        length: 16
-      masterVolume: 1
-      mute: 0
-    - subtracks:
-      - clip: {fileID: 8300000, guid: 34c80d0911df51d4988fdbb4a76a293e, type: 3}
-        source: {fileID: 0}
-        volume: 0
-        length: 8
-      masterVolume: 1
-      mute: 0
-    - subtracks:
-      - clip: {fileID: 8300000, guid: 9a4606633453c0841b2c024e07b597f2, type: 3}
-        source: {fileID: 0}
-        volume: 0
-        length: 8
-      masterVolume: 1
-      mute: 0
-    - subtracks:
-      - clip: {fileID: 8300000, guid: 6d394c3d4ef6b9f4c9457c3e8a1a505b, type: 3}
-        source: {fileID: 0}
-        volume: 0
-        length: 16
-      masterVolume: 0.8
-      mute: 0
-    - subtracks:
-      - clip: {fileID: 8300000, guid: 8bf5861ec999e0945a3cea7b16414973, type: 3}
-        source: {fileID: 0}
-        volume: 0
-        length: 4
-      masterVolume: 0.3
-      mute: 0
-    - subtracks:
-      - clip: {fileID: 8300000, guid: d29f8481863fd2d4885cb315aa14614f, type: 3}
-        source: {fileID: 0}
-        volume: 0
-        length: 8
-      masterVolume: 0.25
-      mute: 0
-    maxLength: 0
-    maxDuration: 0
-    trackCounter: 0
-  - name: C
-    tracks:
-    - subtracks:
-      - clip: {fileID: 8300000, guid: d6bfe0b4c495399459fe41a292fc0ed5, type: 3}
-        source: {fileID: 0}
-        volume: 0
-        length: 16
-      masterVolume: 0.6
-      mute: 0
-    - subtracks:
-      - clip: {fileID: 8300000, guid: db1592739dc051242a8a970f725f8ef1, type: 3}
-        source: {fileID: 0}
-        volume: 0
-        length: 8
-      masterVolume: 0.5
-      mute: 0
-    - subtracks:
-      - clip: {fileID: 8300000, guid: db9289b5c88ed1d4bb610f0b5af3da8d, type: 3}
-        source: {fileID: 0}
-        volume: 0
-        length: 8
-      masterVolume: 1
-      mute: 0
-    - subtracks:
-      - clip: {fileID: 8300000, guid: 9a4606633453c0841b2c024e07b597f2, type: 3}
-        source: {fileID: 0}
-        volume: 0
-        length: 8
-      masterVolume: 1
-      mute: 0
-    - subtracks:
-      - clip: {fileID: 8300000, guid: f37a35db003d2ef419329cf49e594c27, type: 3}
-        source: {fileID: 0}
-        volume: 0
-        length: 16
-      masterVolume: 0.8
-      mute: 0
-    - subtracks:
-      - clip: {fileID: 8300000, guid: 28fe8f2ac9409184da1cbbce6d0c3040, type: 3}
-        source: {fileID: 0}
-        volume: 0
-        length: 4
-      masterVolume: 0.3
-      mute: 0
-    - subtracks:
-      - clip: {fileID: 8300000, guid: db1592739dc051242a8a970f725f8ef1, type: 3}
-        source: {fileID: 0}
-        volume: 0
-        length: 4
-      masterVolume: 0.5
-      mute: 0
-    maxLength: 0
-    maxDuration: 0
-    trackCounter: 0
   isLevel: 0
