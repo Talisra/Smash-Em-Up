@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class Scraps : MonoBehaviour, IPoolableObject
 {
+    public Rigidbody rb;
     public int minAmount;
     public int MaxAmount;
 

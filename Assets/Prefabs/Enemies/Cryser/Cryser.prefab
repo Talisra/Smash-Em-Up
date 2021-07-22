@@ -323,15 +323,15 @@ MonoBehaviour:
   flashTex: {fileID: 2800000, guid: 67473669facfb204abbe8bcd40aa5cca, type: 3}
   moveSpeed: 10
   maxHealth: 12
-  flashTime: 0.25
   isThrusting: 0
-  thrustSpeed: 0
+  thrustSpeed: 12
   isSquashable: 0
   isTouchingPlayer: 0
   isSquashed: 0
   squashVector: {x: 1, y: 1, z: 1}
   isHit: 0
   hitFX: {fileID: 100000, guid: f06e78284f831ae469c74624ab5d513b, type: 3}
+  superSpeedVelocity: 75
   afterEffectAudio: Spark1
   explodeAudio: BigShatter
   hitAudio: Hit2

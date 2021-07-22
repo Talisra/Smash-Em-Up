@@ -39,6 +39,28 @@ public class Tunnel : Spawner
         }
     }
 
+    public IEnumerator RespawnEnemy(Enemy enemy)
+    {
+        isBusy = true;
+        yield return new WaitForSeconds(0.1f);
+        Open();
+        enemy.transform.position = spawnPoint;
+        enemiesInTunnel.Add(enemy);
+        enemy.GetRigidbody().AddForce(new Vector3(-sign * Random.Range(20, 50), Random.Range(-10, 10), 0), ForceMode.VelocityChange);
+        yield return new WaitForSeconds(0.5f);
+        while (enemiesInTunnel.Count > 0)
+        {
+            yield return new WaitForSeconds(0.1f);
+            foreach (Enemy enemyInTunnel in enemiesInTunnel)
+            {
+                enemyInTunnel.GetRigidbody().AddForce(new Vector3(-sign * Random.Range(20, 50), Random.Range(-10, 10), 0), ForceMode.VelocityChange);
+            }
+        }
+        Close();
+        yield return new WaitForSeconds(0.3f);
+        isBusy = false;
+    }
+
     public IEnumerator Spawn(int enemyIdx)
     {
         isBusy = true;

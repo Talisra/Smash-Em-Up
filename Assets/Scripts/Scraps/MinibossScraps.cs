@@ -12,7 +12,7 @@ public class MinibossScraps : Scraps
     private void OnEnable()
     {
         float exploDelay = Random.Range(1.5f, 2.5f);
-        GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-5,5), Random.Range(0,10), Random.Range(-1,1)), ForceMode.VelocityChange);
+        GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-5,5), Random.Range(0,10), Random.Range(-5,5)), ForceMode.VelocityChange);
         Invoke("Explode", exploDelay);
     }
 

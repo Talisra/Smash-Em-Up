@@ -147,6 +147,7 @@ public class Player : MonoBehaviour
                 }
             }
         }
+        
         // Body Collision
         else if (collision.contacts[0].thisCollider.gameObject.tag == "PlayerBody")
         {
@@ -608,7 +609,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isSquashed)
+        if (!isSquashed && inControl)
         {
             // Special attack #1
             ManageSkillInput(0, 0);

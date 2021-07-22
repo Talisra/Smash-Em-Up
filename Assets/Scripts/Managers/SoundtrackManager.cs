@@ -7,9 +7,11 @@ public class SoundtrackManager : MonoBehaviour
 {
     public static SoundtrackManager Instance { get; private set; }
 
-    private int loops = 1; 
+    private int loops = 1;
     // The number of "loops" depends on the longest track. The number of loops can be changed
     // when adding more tracks.
+
+    public bool isMute;
 
     public Session baseSession;
     public Session[] sessions;
@@ -24,8 +26,6 @@ public class SoundtrackManager : MonoBehaviour
 
     public bool isLevel = false;
 
-
-    // Start is called before the first frame update
     void Awake()
     {
         if (Instance == null)
@@ -80,6 +80,124 @@ public class SoundtrackManager : MonoBehaviour
             }
         }
         GenerateTrackOrder();
+    }
+
+    public void PauseSoundtrack()
+    {
+        foreach (Session session in sessions)
+        {
+            foreach (Track track in session.tracks)
+            {
+                foreach (TrackLayer layer in track.trackLayers)
+                {
+                    foreach (Subtrack sub in layer.subtracks)
+                    {
+                        if (!track.mute)
+                            sub.source.Pause();
+                    }
+                }
+            }
+        }
+        foreach (Track track in baseSession.tracks)
+        {
+            foreach (TrackLayer layer in track.trackLayers)
+            {
+                foreach (Subtrack sub in layer.subtracks)
+                {
+                    if (!track.mute)
+                        sub.source.Pause();
+                }
+            }
+        }
+    }
+
+    public void ResumeSoundtrack()
+    {
+        foreach (Session session in sessions)
+        {
+            foreach (Track track in session.tracks)
+            {
+                foreach (TrackLayer layer in track.trackLayers)
+                {
+                    foreach (Subtrack sub in layer.subtracks)
+                    {
+                        if (!track.mute)
+                            sub.source.Play();
+                    }
+                }
+            }
+        }
+        foreach (Track track in baseSession.tracks)
+        {
+            foreach (TrackLayer layer in track.trackLayers)
+            {
+                foreach (Subtrack sub in layer.subtracks)
+                {
+                    if (!track.mute)
+                        sub.source.Play();
+                }
+            }
+        }
+    }
+
+    public void Mute()
+    {
+        isMute = true;
+        foreach (Session session in sessions)
+        {
+            foreach (Track track in session.tracks)
+            {
+                foreach (TrackLayer layer in track.trackLayers)
+                {
+                    foreach (Subtrack sub in layer.subtracks)
+                    {
+                        if (!track.mute)
+                            sub.source.volume = 0;
+                    }
+                }
+            }
+        }
+        foreach (Track track in baseSession.tracks)
+        {
+            foreach (TrackLayer layer in track.trackLayers)
+            {
+                foreach (Subtrack sub in layer.subtracks)
+                {
+                    if (!track.mute)
+                        sub.source.volume = 0;
+                }
+            }
+        }
+    }
+
+    public void Unmute()
+    {
+        isMute = false;
+        foreach (Session session in sessions)
+        {
+            foreach (Track track in session.tracks)
+            {
+                foreach (TrackLayer layer in track.trackLayers)
+                {
+                    foreach (Subtrack sub in layer.subtracks)
+                    {
+                        if (!track.mute)
+                            sub.source.volume = track.masterVolume * sub.localVolume;
+                    }
+                }
+            }
+        }
+        foreach (Track track in baseSession.tracks)
+        {
+            foreach (TrackLayer layer in track.trackLayers)
+            {
+                foreach (Subtrack sub in layer.subtracks)
+                {
+                    if (!track.mute)
+                        sub.source.volume = track.masterVolume * sub.localVolume;
+                }
+            }
+        }
     }
 
     public void Reset()

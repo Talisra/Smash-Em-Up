@@ -55,7 +55,7 @@ public class EnemyBox : ReconstructableObject
         }
         Vector3 forceVector = CalculateForceVector();
         enemy.GetComponent<Rigidbody>().AddForce(forceVector);
-        GameManager.Instance.AddEnemy();
+        //GameManager.Instance.AddEnemy();
     }
 
     public void SpawnEnemies()

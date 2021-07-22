@@ -83,8 +83,10 @@
     <Compile Include="Assets\Imports\Ultimate 10 Plus Shaders\Shaders\Plexus\Plexus.cs" />
     <Compile Include="Assets\Scripts\Enemies\Miniboss\Miniboss.cs" />
     <Compile Include="Assets\Imports\JMO Assets\Cartoon FX\Demo\Assets\CFX_AutoStopLoopedEffect.cs" />
+    <Compile Include="Assets\Scripts\Managers\AIObstacleManager.cs" />
     <Compile Include="Assets\Imports\PowerUp\Scripts\Utility\Singleton.cs" />
     <Compile Include="Assets\Scripts\Environment\FanFloor.cs" />
+    <Compile Include="Assets\Scripts\Environment\AIobstacle.cs" />
     <Compile Include="Assets\Imports\Kino\Glitch\DigitalGlitch.cs" />
     <Compile Include="Assets\Scripts\Pooling\Enemies\BoulePool.cs" />
     <Compile Include="Assets\Scripts\Menu\MenuButton.cs" />
@@ -108,6 +110,7 @@
     <Compile Include="Assets\Scripts\Pooling\Enemies\CuballPool.cs" />
     <Compile Include="Assets\Scripts\Environment\Fan.cs" />
     <Compile Include="Assets\Scripts\Player\Skills\Skill.cs" />
+    <Compile Include="Assets\InGameMenu.cs" />
     <Compile Include="Assets\Scripts\Enemies\EnemyBox\EnemyBox.cs" />
     <Compile Include="Assets\Scripts\General\Waves &amp; Spawners\WaveDictionary.cs" />
     <Compile Include="Assets\Scripts\General\Waves &amp; Spawners\CeilingSpawner.cs" />
@@ -154,6 +157,7 @@
     <Compile Include="Assets\Imports\Environment\_SNAPS_PrototypingAssets\About\Scripts\Readme.cs" />
     <Compile Include="Assets\Scripts\IPoolableObject.cs" />
     <Compile Include="Assets\Audio\Session.cs" />
+    <Compile Include="Assets\Scripts\Environment\AttachPoint.cs" />
     <Compile Include="Assets\Scripts\Player\Head.cs" />
     <Compile Include="Assets\Scripts\Enemies\Boule.cs" />
     <Compile Include="Assets\Scripts\Enemies\Cryser.cs" />
@@ -182,9 +186,8 @@
     <Compile Include="Assets\Scripts\Scraps\CrystalScrap.cs" />
     <Compile Include="Assets\Scripts\PowerUps\ShieldUp.cs" />
     <Compile Include="Assets\Scripts\Enemies\LaserBeam.cs" />
-    <Compile Include="Assets\Scripts\Environment\AIobstacle.cs" />
-    <Compile Include="Assets\Scripts\Environment\AttachPoint.cs" />
-    <Compile Include="Assets\Scripts\Managers\AIObstacleManager.cs" />
+    <Compile Include="Assets\Scripts\Menu\InGameMenuButton.cs" />
+    <Compile Include="Assets\Scripts\Menu\MenuButtonOnOff.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />

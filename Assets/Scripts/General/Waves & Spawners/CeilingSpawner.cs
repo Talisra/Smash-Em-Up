@@ -24,6 +24,7 @@ public class CeilingSpawner : Spawner
     public IEnumerator Spawn()
     {
         yield return new WaitForSeconds(0.1f);
+        /*
         OpenDoors();
         AudioManager.Instance.Play("Screech");
         List<Dictionary<string, int>> wave = GetWaveDict(gm.Wave);
@@ -39,6 +40,7 @@ public class CeilingSpawner : Spawner
         yield return new WaitForSeconds(0.3f);
         foreach (EnemyBox box in boxes)
             box.SpawnEnemies();
+        */
     }
 
     public IEnumerator SpawnBonuses()

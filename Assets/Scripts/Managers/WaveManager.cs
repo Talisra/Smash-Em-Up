@@ -14,6 +14,7 @@ public class WaveManager : MonoBehaviour
     private float delayBetweenSubwaves = 3f;
     public int Wave = 0;
     private bool isBossWave = false;
+    private int bossWaveNumber = 10;
 
     private List<int> availableEnemies = new List<int>();
     private List<int> availablePowerups = new List<int>();
@@ -24,7 +25,7 @@ public class WaveManager : MonoBehaviour
 
     // obstavles wave
     private int minObstacles = 1;
-    private int maxObstacles = 1;
+    private int maxObstacles = 2;
     private int obstacleChains = 1;
     private int obstacleWaveCounter = 0;
     private int obstacleWaveDuration = 1;
@@ -171,6 +172,12 @@ public class WaveManager : MonoBehaviour
         Invoke("CompleteWave", 3f);
     }
 
+    public void RespawnEnemy(Enemy enemy)
+    {
+        Tunnel tunnel = SelectRandomUnbusyTunnel();
+        StartCoroutine(tunnel.RespawnEnemy(enemy));
+    }
+
     public IEnumerator SpawnSubwave(Subwave subwave)
     {
         int arrayPointer = 0;
@@ -228,7 +235,6 @@ public class WaveManager : MonoBehaviour
             tunnelChosen = tunnels[Random.Range(0, tunnels.Length)];
         return tunnelChosen;
     }
-
     public void SpawnBonuses()
     {
         if (Random.Range(0, 100) > 66)
@@ -292,6 +298,10 @@ public class WaveManager : MonoBehaviour
 
     private bool CheckIfEmpty(Vector3 target)
     {
+        if (!player)
+        {
+            return true;
+        }
         if (Vector3.Distance(player.transform.position, target) > 3)
             return true;
         return false;
@@ -330,12 +340,24 @@ public class WaveManager : MonoBehaviour
     public void MiniBossWave()
     {
         isBossWave = true;
+        AIObstacleManager.Instance.ClearAll(); // clear all AIO that are in the level so there are no aio in boss wave
         fanFloor.ChangePlatforms();
     }
 
     public void ManageObstacleWave()
     {
-        Debug.Log(obstacleWaveCounter);
+        if (Wave == 16 || Wave == 32)
+        {
+            obstacleChains++;
+        }
+        if (Wave == 13)
+        {
+            maxObstacles++;
+        }
+        if (Wave == 21)
+        {
+            minObstacles++;
+        }
         obstacleWaveCounter++;
         if (obstacleWaveCounter > obstacleWaveDuration)
         {
@@ -359,7 +381,7 @@ public class WaveManager : MonoBehaviour
 
     private void CompleteWave()
     {
-        if (Wave > 1) // obstacle wave
+        if (Wave > 1 && Wave % bossWaveNumber != 0) // obstacle wave
         {
             ManageObstacleWave();
             if (isObstacleWave)
@@ -368,7 +390,7 @@ public class WaveManager : MonoBehaviour
 
         Wave++;
         UpdateAvailableEnemies();
-        if (Wave % 10 != 0)
+        if (Wave % bossWaveNumber != 0)
             StartCoroutine(SpawnWave(GenerateWave()));
         else
             MiniBossWave();

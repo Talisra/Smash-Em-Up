@@ -20,7 +20,6 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
 
     // Graphics
     public List<GameObject> body;
-    private int collidingObjects = 0;
     public GameObject superSpeedKernel;
     public Texture normalTex;
     public Texture flashTex;
@@ -55,9 +54,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     private Vector3 normalScale;
 
     // Damaged
-    private float damagedDelay = 0.15f;
-    private float damagedCounter = 0;
-    private bool takingDamage = false;
+    private int lastCollisionID = 0;
 
     // Hit By Player
     public bool isHit;
@@ -208,25 +205,9 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
         //collidingObjects++;
         if (rb.velocity.magnitude > minVelocityForDamage) // damage is only possible when the enemy has some acceleration
         {
-            if (isAlive && !takingDamage && rb.velocity.magnitude > minVelocityForDamage)
+            if (isAlive && rb.velocity.magnitude > minVelocityForDamage)
             {
-                if (collision.gameObject.tag == "Unpassable" || collision.gameObject.tag == "Enemy")
-                {
-                    Damage(isSuperSpeed ? 2 : 1);
-                }
-            }
-        }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        /*
-        collidingObjects--;
-        if (collidingObjects == 0)
-        {
-            if (rb.velocity.magnitude > minVelocityForDamage) // damage is only possible when the enemy has some acceleration
-            {
-                if (isAlive && !takingDamage && rb.velocity.magnitude > minVelocityForDamage)
+                if (collision.gameObject.GetInstanceID() != lastCollisionID)
                 {
                     if (collision.gameObject.tag == "Unpassable" || collision.gameObject.tag == "Enemy")
                     {
@@ -234,7 +215,8 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
                     }
                 }
             }
-        }*/
+        }
+        lastCollisionID = collision.gameObject.GetInstanceID();
     }
 
     public void ResetComboChain()
@@ -311,6 +293,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     void Flash()
     {
         isFlashing = true;
+        flashCounter = 0;
         foreach(Renderer rend in rends)
         {
             rend.material.SetTexture("_MainTex", flashTex);
@@ -369,6 +352,17 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     // Update is called once per frame
     protected virtual void Update()
     {
+        // Check if the enemy went outside the GameArea 
+        List<float> gameArea = GameManager.Instance.GetGameArea();
+        if (inGame)
+        {
+            if (transform.position.x < gameArea[0] - 5 || transform.position.x > gameArea[2] + 5 || transform.position.y < gameArea[1] - 5 || transform.position.y > gameArea[3] + 5)
+            {
+                ChangeLayerRecursive(14);
+                inGame = false;
+                WaveManager.Instance.RespawnEnemy(this);
+            }
+        }
         if (rb.velocity.magnitude > minVelocityForDamage)
         {
             if (!isSuperSpeed)
@@ -400,14 +394,6 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
                 comboCounter = 0;
             }
         }
-        if (takingDamage)
-        {
-            damagedCounter += Time.deltaTime;
-            if (damagedCounter >= damagedDelay)
-            {
-                takingDamage = false;
-            }
-        }
         if (isHit)
         {
             hitCounter += Time.deltaTime;
@@ -430,12 +416,13 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
         }
         if (thrustInvokeActive)
         {
-            thrustCounter += Time.deltaTime;
+            thrustInvokeCounter += Time.deltaTime;
         }
         if (thrustInvokeCounter >= thrustInvokeDelay)
         {
-            Thrust(new Vector3(Random.Range(-5, 5), Random.Range(-5, 5), 0));
+            Thrust(ThrustLocation());
             thrustInvokeActive = false;
+            thrustInvokeCounter = 0;
         }
         if (isThrusting)
         {

@@ -16,10 +16,6 @@ public class Unpassable : MonoBehaviour
         {
             HitWall(collision.transform.position);
         }
-        if (collision.gameObject.tag == "Player")
-        {
-            AudioManager.Instance.Play("MetalCollision");
-        }
     }
 
     void HitWall(Vector3 coordinates)

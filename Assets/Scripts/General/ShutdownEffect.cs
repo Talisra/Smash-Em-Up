@@ -20,20 +20,22 @@ public class ShutdownEffect : MonoBehaviour
 		Graphics.Blit(source, destination, _material);
 	}
 
-	protected void OnEnable()
-	{
+	public void StartEffect(float videoStartPos)
+    {
 		screen.gameObject.SetActive(true);
 		_player.isLooping = false;
 		_player.renderMode = VideoRenderMode.APIOnly;
 		_player.audioOutputMode = VideoAudioOutputMode.None;
 		_player.clip = Animation;
 		_player.Stop();
+		_player.time = videoStartPos;
 		_player.Play();
-		
+
 		_material = new Material(shader);
-		Invoke("PlaySound", 1.5f);
+		Invoke("PlaySound", 1.5f - videoStartPos);
 		Invoke("Reset", 2f);
 	}
+
 	private void PlaySound()
 	{
 		AudioManager.Instance.Play("ScreenShut");

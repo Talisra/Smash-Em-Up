@@ -1,13 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    public Camera menuCamera;
+
     public bool devMode;
+    private bool isPaused = false;
 
     public Profile profile;
     public Player player;
@@ -20,11 +25,8 @@ public class GameManager : MonoBehaviour
 
     public CeilingSpawner spawner;
 
-
-
-    public int Wave = 1;
-
-    private int enemiesCounter = 0;
+    private PostProcessVolume ppv;
+    private ColorGrading colorGrading;
 
     private bool gameOver = false;
     private int score = 0;
@@ -40,52 +42,18 @@ public class GameManager : MonoBehaviour
     {
         if (Instance == null)
             Instance = this;
+        ppv = Camera.main.GetComponent<PostProcessVolume>();
+        ppv.profile.TryGetSettings(out colorGrading);
+        //colorGrading = ppv.TryGetComponent<>()
         spawner = FindObjectOfType<CeilingSpawner>();
         player = FindObjectOfType<Player>();
         player.AssignSkills(profile.skills);
         GameArea = new List<float>();
         CalculateGameArea();
         Cursor.visible = true;
-        //StartCoroutine(SpawnWave());
-    }
-    /*
-    public IEnumerator SpawnWave()
-    {
-        List<Dictionary<string, int>> wave = GetWave(Wave);
-        foreach (Dictionary<string, int> subWave in wave)
-        {
-            foreach (string enemy in subWave.Keys)
-            {
-                for (int i=0; i<subWave[enemy]; i++)
-                {
-                    enemiesCounter++;
-                }
-            }
-        }
-        foreach (Dictionary<string, int> subWave in wave)
-        {
-            foreach (string enemy in subWave.Keys)
-            {
-                for (int i = 0; i < subWave[enemy]; i++)
-                {
-                    StartCoroutine(SelectRandomUnbusyTunnel().Spawn(enemy));
-                    yield return new WaitForSeconds(Random.Range(1, 5));
-                }
-            }
-        }
-    }*/
-
-    public void AddEnemy()
-    {
-        enemiesCounter++;
+        menuCamera.gameObject.SetActive(false);
     }
 
-    public void RemoveEnemy()
-    {
-        enemiesCounter--;
-        if (enemiesCounter == 0)
-            CompleteWave();
-    }
 
     public List<Dictionary<string, int>> GetWave(int wave)
     {
@@ -119,12 +87,6 @@ public class GameManager : MonoBehaviour
         player.AddPowerUp(1);
     }
 
-    public void CompleteWave()
-    {
-        Wave++;
-        //StartCoroutine(SpawnWave());
-    }
-
     public IEnumerator StartWave()
     {
         yield return new WaitForSeconds(0.5f);
@@ -147,11 +109,12 @@ public class GameManager : MonoBehaviour
         SoundtrackManager.Instance.StopMusic();
         AudioManager.Instance.PlayShutDown();
         StartCoroutine(EndNow());
+
         IEnumerator EndNow()
         {
             CameraEffects.EndGameEffectGlitch();
             yield return new WaitForSeconds(2.5f);
-            CameraEffects.ShutDown();
+            CameraEffects.ShutDown(0);
             yield return new WaitForSeconds(0.9f);
             Cursor.visible = true;
             CameraEffects.glitchEffect.enabled = false;
@@ -167,14 +130,62 @@ public class GameManager : MonoBehaviour
         return gameOver;
     }
 
+    public void EndGameFromMenu()
+    {
+        Time.timeScale = 1;
+        SoundtrackManager.Instance.StopMusic();
+        menuCamera.gameObject.SetActive(false);
+        StartCoroutine(EndFromMenu());
+        IEnumerator EndFromMenu()
+        {
+            CameraEffects.ShutDown(1.45f);
+            yield return new WaitForSeconds(0.45f);
+            CameraEffects.glitchEffect.enabled = false;
+            CameraEffects.glitch_digital.enabled = false;
+            CameraEffects.glitch_analog.enabled = false;
+            SceneManager.LoadScene(0);
+        }
+    }
+
+    public void PauseGame()
+    {
+        SoundtrackManager.Instance.PauseSoundtrack();
+        isPaused = true;
+        player.TakeControl();
+        Time.timeScale = 0;
+        colorGrading.saturation.value = -35;
+        colorGrading.contrast.value = 35;
+        menuCamera.gameObject.SetActive(true);
+    }
+
+    public void UnpauseGame()
+    {
+        SoundtrackManager.Instance.ResumeSoundtrack();
+        isPaused = false;
+        player.GiveControl();
+        Time.timeScale = 1;
+        colorGrading.saturation.value = 5;
+        colorGrading.contrast.value = 15;
+        menuCamera.gameObject.SetActive(false);
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SoundtrackManager.Instance.StopMusic();
-            Cursor.visible = true;
-            SceneManager.LoadScene(0);
+            if (!gameOver)
+            {
+                if (isPaused)
+                {
+                    UnpauseGame();
+                }
+                else
+                {
+                    PauseGame();
+                }
+            }
+
         }
         if (devMode)
         {

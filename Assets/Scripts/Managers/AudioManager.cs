@@ -52,6 +52,17 @@ public class AudioManager : MonoBehaviour
             sound.source.Stop();
         Stop("WhiteNoise");
     }
+
+    public void ToggleMuteTrue()
+    {
+        muteSound = true;
+    }
+
+    public void ToggleMuteFalse()
+    {
+        muteSound = false;
+    }
+
     public void PlayShutDown()
     {
         foreach (Sound sound in shutDown)

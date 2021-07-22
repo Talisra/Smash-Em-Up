@@ -62,9 +62,10 @@ public class CameraEffects : MonoBehaviour
         instance.Glitch(duration, amount);
     }
 
-    public static void ShutDown()
+    public static void ShutDown(float vidStartPos)
     {
         shutdownEffect.enabled = true;
+        shutdownEffect.StartEffect(vidStartPos);
         endGameEffect = false;
     }
 
