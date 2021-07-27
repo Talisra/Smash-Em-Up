@@ -11,6 +11,7 @@ public class AudioManager : MonoBehaviour
     public Sound[] sounds;
     public bool muteSound;
     public Sound[] shutDown;
+    public Sound[] menuSounds;
 
     private List<bool> activeLayers;
     private List<int> layerOrder;
@@ -36,6 +37,7 @@ public class AudioManager : MonoBehaviour
             s.source.clip = s.clip;
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
+            s.source.ignoreListenerVolume = true;
         }
         foreach (Sound s in shutDown)
         {
@@ -43,7 +45,27 @@ public class AudioManager : MonoBehaviour
             s.source.clip = s.clip;
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
+            s.source.ignoreListenerVolume = true;
         }
+        foreach(Sound s in menuSounds)
+        {
+            s.source = gameObject.AddComponent<AudioSource>();
+            s.source.clip = s.clip;
+            s.source.volume = s.volume;
+            s.source.pitch = s.pitch;
+            s.source.ignoreListenerVolume = true;
+            s.source.ignoreListenerPause = true;
+        }
+    }
+
+    public void Mute()
+    {
+        muteSound = true;
+    }
+
+    public void Unmute()
+    {
+        muteSound = false;
     }
 
     public void Reset()
@@ -51,16 +73,6 @@ public class AudioManager : MonoBehaviour
         foreach (Sound sound in shutDown)
             sound.source.Stop();
         Stop("WhiteNoise");
-    }
-
-    public void ToggleMuteTrue()
-    {
-        muteSound = true;
-    }
-
-    public void ToggleMuteFalse()
-    {
-        muteSound = false;
     }
 
     public void PlayShutDown()
@@ -81,6 +93,19 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning("Sound with name " + name + " was not found");
             return;
         } 
+        s.source.Play();
+    }
+
+    public void MenuPlay(string name)
+    {
+        if (name == "")
+            return;
+        Sound s = Array.Find(menuSounds, sound => sound.name == name);
+        if (s == null)
+        {
+            Debug.LogWarning("Sound with name " + name + " was not found");
+            return;
+        }
         s.source.Play();
     }
 

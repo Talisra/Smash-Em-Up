@@ -81,6 +81,9 @@ namespace DigitalRuby.LightningBolt
         [Tooltip("The animation mode for the lightning")]
         public LightningBoltAnimationMode AnimationMode = LightningBoltAnimationMode.PingPong;
 
+        [Tooltip("If set to true, the lightning will be animated also when the game is paused")]
+        public bool ignoreTimePause;
+
         /// <summary>
         /// Assign your own random if you want to have the same lightning appearance
         /// </summary>
@@ -307,7 +310,12 @@ namespace DigitalRuby.LightningBolt
                     Trigger();
                 }
             }
-            timer -= Time.deltaTime;
+            if (ignoreTimePause)
+            {
+                timer -= Time.unscaledDeltaTime;
+            }
+            else
+                timer -= Time.deltaTime;
         }
 
         /// <summary>

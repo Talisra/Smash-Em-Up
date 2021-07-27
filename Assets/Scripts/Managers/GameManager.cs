@@ -12,9 +12,14 @@ public class GameManager : MonoBehaviour
     public Camera menuCamera;
 
     public bool devMode;
-    private bool isPaused = false;
+    [HideInInspector]
+    public bool isPaused = false;
+
+    private InGameMenu menu;
 
     public Profile profile;
+    private int expPool;
+
     public Player player;
     public SideWall LeftWall;
     public SideWall RightWall;
@@ -40,11 +45,12 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        expPool = 0;
         if (Instance == null)
             Instance = this;
         ppv = Camera.main.GetComponent<PostProcessVolume>();
         ppv.profile.TryGetSettings(out colorGrading);
-        //colorGrading = ppv.TryGetComponent<>()
+
         spawner = FindObjectOfType<CeilingSpawner>();
         player = FindObjectOfType<Player>();
         player.AssignSkills(profile.skills);
@@ -53,7 +59,6 @@ public class GameManager : MonoBehaviour
         Cursor.visible = true;
         menuCamera.gameObject.SetActive(false);
     }
-
 
     public List<Dictionary<string, int>> GetWave(int wave)
     {
@@ -85,6 +90,11 @@ public class GameManager : MonoBehaviour
     public void AddScore()
     {
         player.AddPowerUp(1);
+    }
+
+    public void AddExpToPool(int amount)
+    {
+        expPool += amount;
     }
 
     public IEnumerator StartWave()
@@ -133,6 +143,7 @@ public class GameManager : MonoBehaviour
     public void EndGameFromMenu()
     {
         Time.timeScale = 1;
+        AudioListener.pause = false;
         SoundtrackManager.Instance.StopMusic();
         menuCamera.gameObject.SetActive(false);
         StartCoroutine(EndFromMenu());
@@ -149,24 +160,36 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame()
     {
-        SoundtrackManager.Instance.PauseSoundtrack();
+
+        AudioListener.pause = true;
         isPaused = true;
-        player.TakeControl();
         Time.timeScale = 0;
         colorGrading.saturation.value = -35;
         colorGrading.contrast.value = 35;
         menuCamera.gameObject.SetActive(true);
+        if (!menu)
+        {
+            menu = FindObjectOfType<InGameMenu>();
+            menu.SetProfile(profile);
+        }
+        menu.UpdateUI();
+        menu.MoveMenu(-1); // move menu down
     }
 
-    public void UnpauseGame()
+    public void UnpauseGameStart()
     {
-        SoundtrackManager.Instance.ResumeSoundtrack();
+        menu.MoveMenu(1); // move menu up
+        // ^ disabling the camera mplemented at InGameMenu because there is a delay until the menu goes up
+    }
+
+    public void UnpauseGameEnd()
+    {
+        menuCamera.gameObject.SetActive(false);
+        AudioListener.pause = false;
         isPaused = false;
-        player.GiveControl();
         Time.timeScale = 1;
         colorGrading.saturation.value = 5;
         colorGrading.contrast.value = 15;
-        menuCamera.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -178,7 +201,7 @@ public class GameManager : MonoBehaviour
             {
                 if (isPaused)
                 {
-                    UnpauseGame();
+                    UnpauseGameStart();
                 }
                 else
                 {

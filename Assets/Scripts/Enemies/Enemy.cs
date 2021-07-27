@@ -7,6 +7,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
 {
     // References
     public GameObject bullet;
+    [HideInInspector]
     public Player player;
 
     [HideInInspector]
@@ -81,6 +82,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     // Destruction
     public List<GameObject> scraps;
     public GameObject explosionPrefab;
+    public int expGiven = 1;
 
     // UI
     private EnemyHPBar hpBar;
@@ -463,6 +465,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     public virtual void BackToPool()
     {
         WaveManager.Instance.RemoveEnemy(this);
+        GameManager.Instance.AddExpToPool(expGiven);
         inGame = false;
         hpBar.gameObject.SetActive(false);
         //Implement at Inherited enemy

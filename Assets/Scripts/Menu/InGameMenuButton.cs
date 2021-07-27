@@ -8,6 +8,7 @@ public class InGameMenuButton : MonoBehaviour
     public string description;
     public int action; // the action is handled by the menu
     public GameObject buttonAnchor;
+    public Profiler profiler;
     public Text text;
     public Renderer rendScreen;
     public List<Renderer> rendSticklight;

@@ -82,64 +82,6 @@ public class SoundtrackManager : MonoBehaviour
         GenerateTrackOrder();
     }
 
-    public void PauseSoundtrack()
-    {
-        foreach (Session session in sessions)
-        {
-            foreach (Track track in session.tracks)
-            {
-                foreach (TrackLayer layer in track.trackLayers)
-                {
-                    foreach (Subtrack sub in layer.subtracks)
-                    {
-                        if (!track.mute)
-                            sub.source.Pause();
-                    }
-                }
-            }
-        }
-        foreach (Track track in baseSession.tracks)
-        {
-            foreach (TrackLayer layer in track.trackLayers)
-            {
-                foreach (Subtrack sub in layer.subtracks)
-                {
-                    if (!track.mute)
-                        sub.source.Pause();
-                }
-            }
-        }
-    }
-
-    public void ResumeSoundtrack()
-    {
-        foreach (Session session in sessions)
-        {
-            foreach (Track track in session.tracks)
-            {
-                foreach (TrackLayer layer in track.trackLayers)
-                {
-                    foreach (Subtrack sub in layer.subtracks)
-                    {
-                        if (!track.mute)
-                            sub.source.Play();
-                    }
-                }
-            }
-        }
-        foreach (Track track in baseSession.tracks)
-        {
-            foreach (TrackLayer layer in track.trackLayers)
-            {
-                foreach (Subtrack sub in layer.subtracks)
-                {
-                    if (!track.mute)
-                        sub.source.Play();
-                }
-            }
-        }
-    }
-
     public void Mute()
     {
         isMute = true;
@@ -394,22 +336,6 @@ public class SoundtrackManager : MonoBehaviour
                 layerOrder.Add(i);
             }
         }
-        /*
-        for(int i=0; i<layerOrder.Count; i++)
-        {
-            Debug.Log(layerOrder[i] + " " +activeLayers[i]);
-        }*/
     }
-    /*
-    public void LogSessionState(Session session)
-    {
-        Debug.Log("=======================");
-        for (int j = 0; j < activeLayers.Count; j++)
-        {
-            string log = session.tracks[j].subtracks[0].source.clip.name + ": " + (activeLayers[j] == true ? " V Active" : " X Mute") + "|| isPlaying: " + session.tracks[j].subtracks[0].source.isPlaying;
-            Debug.Log(log);
-        }
-        Debug.Log("=======================");
-    }
-    */
+    
 }

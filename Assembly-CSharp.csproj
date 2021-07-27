@@ -80,6 +80,7 @@
     <Compile Include="Assets\Scripts\Pooling\Enemies\MinibossBullet_Pool.cs" />
     <Compile Include="Assets\Scripts\Enemies\Denymatt.cs" />
     <Compile Include="Assets\Imports\LightningBolt\LightningBoltScript.cs" />
+    <Compile Include="Assets\Scripts\Menu\MenuButtonOnOff.cs" />
     <Compile Include="Assets\Imports\Ultimate 10 Plus Shaders\Shaders\Plexus\Plexus.cs" />
     <Compile Include="Assets\Scripts\Enemies\Miniboss\Miniboss.cs" />
     <Compile Include="Assets\Imports\JMO Assets\Cartoon FX\Demo\Assets\CFX_AutoStopLoopedEffect.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Assets\Scripts\Enemies\Boule.cs" />
     <Compile Include="Assets\Scripts\Enemies\Cryser.cs" />
     <Compile Include="Assets\Scripts\General\Part.cs" />
+    <Compile Include="Assets\Scripts\Menu\InGameMenuButton.cs" />
     <Compile Include="Assets\Scripts\Enemies\CryserBody.cs" />
     <Compile Include="Assets\Scripts\UI\EnemyHPBar.cs" />
     <Compile Include="Assets\Audio\Subtrack.cs" />
@@ -177,6 +179,7 @@
     <Compile Include="Assets\Scripts\UI\ComboCounterText.cs" />
     <Compile Include="Assets\Scripts\Environment\CeilingDoor.cs" />
     <Compile Include="Assets\Scripts\General\SuperSpeedEffect.cs" />
+    <Compile Include="Assets\Scripts\Menu\Profiler.cs" />
     <Compile Include="Assets\Scripts\Player\RegularBody.cs" />
     <Compile Include="Assets\Scripts\PowerUps\Containers\SpeedContainer.cs" />
     <Compile Include="Assets\Imports\Ultimate 10 Plus Shaders\Scripts\U10PS_SnowOverTime.cs" />
@@ -186,8 +189,6 @@
     <Compile Include="Assets\Scripts\Scraps\CrystalScrap.cs" />
     <Compile Include="Assets\Scripts\PowerUps\ShieldUp.cs" />
     <Compile Include="Assets\Scripts\Enemies\LaserBeam.cs" />
-    <Compile Include="Assets\Scripts\Menu\InGameMenuButton.cs" />
-    <Compile Include="Assets\Scripts\Menu\MenuButtonOnOff.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />

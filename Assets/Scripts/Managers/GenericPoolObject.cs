@@ -34,7 +34,7 @@ public class GenericPoolObject<T> : MonoBehaviour where T: Component
 
     public void AddObjects(int count)
     {
-        var newObject = GameObject.Instantiate(prefab);
+        var newObject = GameObject.Instantiate(prefab, new Vector3(-50,0,0), Quaternion.identity);
         newObject.gameObject.SetActive(false);
         objects.Enqueue(newObject);
     }

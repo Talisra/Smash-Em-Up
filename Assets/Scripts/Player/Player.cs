@@ -609,11 +609,14 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isSquashed && inControl)
+        if (!isSquashed)
         {
-            // Special attack #1
-            ManageSkillInput(0, 0);
-            ManageSkillInput(1, 1);
+            // Special attacks
+            if (!GameManager.Instance.isPaused)
+            {
+                ManageSkillInput(0, 0);
+                ManageSkillInput(1, 1);
+            }
                      
             //handle attack speed
             if (canAttack == false)
