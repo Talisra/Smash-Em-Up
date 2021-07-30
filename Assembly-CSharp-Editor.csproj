@@ -57,11 +57,49 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Imports\LightningBolt\Editor\LightningBoltEditor.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\Models\BloomModelEditor.cs" />
     <Compile Include="Assets\Imports\JMO Assets\Cartoon FX Easy Editor\Editor\CFXEasyEditor.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\Utils\EditorResources.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\Hologram\Editor\Layout.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\Models\ChromaticAberrationEditor.cs" />
     <Compile Include="Assets\Imports\Kino\Glitch\Editor\DigitalGlitchEditor.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\PostProcessingFactory.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\Models\ColorGradingModelEditor.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\Utils\FxStyles.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\PropertyDrawers\GetSetDrawer.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\Models\ScreenSpaceReflectionModelEditor.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\PropertyDrawers\TrackballGroupDrawer.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\Monitors\ParadeMonitor.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\Models\FogModelEditor.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\Models\DepthOfFieldModelEditor.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\PostProcessingModelEditor.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\Utils\ReflectionUtils.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\Models\VignetteModelEditor.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\Models\DitheringModelEditor.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\PostProcessingBehaviourEditor.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\Models\DefaultPostFxModelEditor.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\Hologram\Editor\HologramShaderGUI.cs" />
     <Compile Include="Assets\Imports\Kino\Glitch\Editor\AnalogGlitchEditor.cs" />
     <Compile Include="Assets\Imports\Environment\_SNAPS_PrototypingAssets\About\Scripts\Editor\ReadmeEditor.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\Models\EyeAdaptationModelEditor.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\PostProcessingInspector.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\Hologram\Editor\Foldout.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\PostProcessingMonitor.cs" />
     <Compile Include="Assets\Imports\Environment\_SNAPS_PrototypingAssets\Scripts\Editor\PackageChecker\PackageChecker.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\Monitors\HistogramMonitor.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\Attributes\PostProcessingModelEditorAttribute.cs" />
+    <Compile Include="Assets\Simple Helvetica\Editor\SimpleHelveticaCustomEditor.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\Models\BuiltinDebugViewsEditor.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\Models\UserLutModelEditor.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\Models\MotionBlurModelEditor.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\Models\AmbientOcclusionModelEditor.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\Models\GrainModelEditor.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\Monitors\WaveformMonitor.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\PropertyDrawers\MinDrawer.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\Utils\EditorGUIHelper.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\Models\AntialiasingModelEditor.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\Monitors\VectorscopeMonitor.cs" />
+    <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor\Utils\CurveEditor.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Imports\JMO Assets\Editor\JMOAssets_CartoonFXFreeWelcome.dll" />

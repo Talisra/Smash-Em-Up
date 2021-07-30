@@ -17,7 +17,6 @@ public class GameManager : MonoBehaviour
 
     private InGameMenu menu;
 
-    public Profile profile;
     private int expPool;
 
     public Player player;
@@ -52,11 +51,13 @@ public class GameManager : MonoBehaviour
         ppv.profile.TryGetSettings(out colorGrading);
 
         spawner = FindObjectOfType<CeilingSpawner>();
+        GameProfile.Instance.SetLevelAndCheckProfile();
         player = FindObjectOfType<Player>();
-        player.AssignSkills(profile.skills);
+        //player.AssignSkills(GameProfile.Instance.GetProfile().skills);
         GameArea = new List<float>();
         CalculateGameArea();
         Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         menuCamera.gameObject.SetActive(false);
     }
 
@@ -170,7 +171,7 @@ public class GameManager : MonoBehaviour
         if (!menu)
         {
             menu = FindObjectOfType<InGameMenu>();
-            menu.SetProfile(profile);
+            menu.SetProfile(GameProfile.Instance.GetProfile());
         }
         menu.UpdateUI();
         menu.MoveMenu(-1); // move menu down

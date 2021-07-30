@@ -80,13 +80,15 @@ public class MenuButtonOnOff : MonoBehaviour
     private void TurnOn()
     {
         ChangeState(0);
-        menu.Action(actionOn);
+        if (menu)
+            menu.Action(actionOn);
     }
 
     private void TurnOff()
     {
         ChangeState(1);
-        menu.Action(actionOff);
+        if (menu)
+            menu.Action(actionOff);
     }
 
     private void OnMouseUp()

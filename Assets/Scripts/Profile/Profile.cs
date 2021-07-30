@@ -1,13 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Profile : MonoBehaviour
+﻿[System.Serializable]
+public class Profile
 {
-    public int level;
+    public int level { get; set; }
     public int currentExp;
     public int expToNext;
-    public string profileName;
+    public string profileName { get; set; }
 
     private int storedExp;
 

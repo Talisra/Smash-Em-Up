@@ -82,6 +82,11 @@ public class SoundtrackManager : MonoBehaviour
         GenerateTrackOrder();
     }
 
+    public float GetBaseTrackForShake()
+    {
+        return baseSession.tracks[0].trackLayers[0].subtracks[0].source.clip.length;
+    }
+
     public void Mute()
     {
         isMute = true;
