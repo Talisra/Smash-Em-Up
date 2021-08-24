@@ -13,10 +13,17 @@ public class ComboManager : MonoBehaviour
     private float delayCounter;
     private float maxDelay;
 
+    private int maxComboFromProfile = 0;
+
     private void Start()
     {
         maxDelay = baseDelay;
         delayCounter = maxDelay;
+    }
+
+    public void SetMaxCombo(int comb)
+    {
+        maxComboFromProfile = comb;
     }
 
     public float GetCurrentDelay()
@@ -37,22 +44,26 @@ public class ComboManager : MonoBehaviour
     public void AddCombo()
     {
         comboCounter++;
+        if (comboCounter > maxComboFromProfile)
+        {
+            ResetCombo();
+        }
         if (comboCounter == 5)
         {
             //audioManager.Play("Combo5");
-            GameManager.Instance.AddScore();
+            GameManager.Instance.AddPowerup(1);
         }
         maxDelay = baseDelay*incrementalDelay;
         delayCounter = maxDelay;
         if (comboCounter == 10)
         {
             //audioManager.Play("Combo5");
-            GameManager.Instance.AddScore();
+            GameManager.Instance.AddPowerup(2);
             ResetCombo();
         }
     }
 
-    private void ResetCombo()
+    public void ResetCombo()
     {
         maxDelay = baseDelay;
         comboCounter = 0;

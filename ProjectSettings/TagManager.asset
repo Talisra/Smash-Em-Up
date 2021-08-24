@@ -20,6 +20,7 @@ TagManager:
   - Container
   - MapBonus
   - Miniboss
+  - EnemyPart
   layers:
   - Default
   - TransparentFX
@@ -38,9 +39,9 @@ TagManager:
   - OutOfArea
   - Tunnel
   - MainMenu
-  - 
-  - 
-  - 
+  - AIO
+  - MapBonuses
+  - Logo
   - 
   - 
   - 

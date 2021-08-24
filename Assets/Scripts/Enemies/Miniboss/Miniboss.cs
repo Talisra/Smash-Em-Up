@@ -18,6 +18,8 @@ public class Miniboss : MonoBehaviour
     public Texture flashTex;
     private List<Texture> normalTextures = new List<Texture>();
 
+    private int currentExpGiven;
+
     // Shockwave
     private bool disableShockwave = false;
     public GameObject shockwaveKernel;
@@ -145,6 +147,7 @@ public class Miniboss : MonoBehaviour
         if (!isDead)
         {
             isDead = true;
+            GameProfile.Instance.AddExpToPool(currentExpGiven);
             AudioManager.Instance.Play("MinibossDie1");
             GameObject bigExpParticle = Instantiate(
                 bigExp2, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z - 5),
@@ -267,27 +270,31 @@ public class Miniboss : MonoBehaviour
         {
             case 0: // initial stats
                 {
+                    currentExpGiven = 10;
                     maxAimSpeed = 1.5f;
                     minAimSpeed = 0.1f;
                     maxFireRate = 3;
                     minFireRate = 2;
                     bulletSpeed = 50;
-                    disableShockwave = false;
+                    disableShockwave = true;
                     SetHP(20);
                     break;
                 }
             case 1:
                 {
+                    currentExpGiven = 33;
                     maxAimSpeed = 2;
                     minAimSpeed = 1.5f;
                     maxFireRate = 2;
                     minFireRate = 1.0f;
                     bulletSpeed = 75;
+                    disableShockwave = false;
                     SetHP(50);
                     break;
                 }
             case 2:
                 {
+                    currentExpGiven = 100;
                     maxAimSpeed = 5.0f;
                     minAimSpeed = 0.1f;
                     maxFireRate = 1.5f;
@@ -299,13 +306,14 @@ public class Miniboss : MonoBehaviour
                 }
             case 3:
                 {
+                    currentExpGiven = 225;
                     maxAimSpeed = 5f;
-                    minAimSpeed = 1f;
-                    maxFireRate = 1.0f;
+                    minAimSpeed = 2f;
+                    maxFireRate = 0.75f;
                     minFireRate = 0.1f;
                     bulletSpeed = 150;
                     disableShockwave = false;
-                    shockwaveDelay = 11;
+                    shockwaveDelay = 10;
                     SetHP(125);
                     break;
                 }

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class HPBar : MonoBehaviour
 {
     public Player player;
+    public Text text;
 
     private Image HPimg;
     private float currentHp;
@@ -22,6 +23,7 @@ public class HPBar : MonoBehaviour
     {
         currentHp = player.GetCurrentHp();
         maxHp = player.GetMaxHp();
+        text.text = currentHp.ToString() + "/" + maxHp.ToString();
         HPimg.fillAmount = currentHp / maxHp;
     }
 }

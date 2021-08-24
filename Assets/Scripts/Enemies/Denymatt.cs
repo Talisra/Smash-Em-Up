@@ -45,7 +45,6 @@ public class Denymatt : Enemy
         }
         if (spark.activeSelf)
         {
-            Debug.Log(sparkSize);
             sparkSize += Time.deltaTime *1.5f;
             spark.transform.localScale = new Vector3(sparkSize, sparkSize, sparkSize);
         }
@@ -58,7 +57,7 @@ public class Denymatt : Enemy
         AudioManager.Instance.Stop(countdownSound);
         if (Vector3.Distance(player.transform.position, transform.position) < 8f)
         {
-            player.TakeTrueDamage(1, true, false, Vector3.zero);
+            player.TakeTrueDamage(2, true, false, Vector3.zero);
         }
     }
 

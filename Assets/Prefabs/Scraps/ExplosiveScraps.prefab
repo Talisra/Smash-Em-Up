@@ -125,8 +125,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8988e35002b519244b1ee8d93fa500eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
   minAmount: 100
   MaxAmount: 200
   minSize: 0.05
   maxSize: 0.12
-  FadeRate: 0.01
+  FadeRate: 0.1

@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class ShieldUp : PowerUp
 {
-    private float duration = 3;
+    private float baseDuration = 5;
     public void SetDuration(int newDuration)
     {
-        duration = newDuration;
+        baseDuration = newDuration;
     }
     public override void Collect()
     {
         AudioManager.Instance.Play(pickSoundString);
-        player.GainShield(duration);
+        player.GainShield(baseDuration);
         Despawn();
     }
 

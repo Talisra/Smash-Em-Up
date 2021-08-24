@@ -8,7 +8,7 @@ public class CrystalScrap : Scraps
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag != "Scrap")
+        if (collision.gameObject.tag == "Unpassable" || collision.gameObject.tag == "Player" || collision.gameObject.tag == "Floor")
             Explode();
     }
 
@@ -29,6 +29,8 @@ public class CrystalScrap : Scraps
     void Update()
     {
         if (transform.position.y < -15)
+        {
             BackToPool();
+        }
     }
 }

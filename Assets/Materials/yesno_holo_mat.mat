@@ -60,14 +60,14 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Alpha: 0.461
+    - _Alpha: 0.688
     - _Brightness: 6
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _FlickerSpeed: 75
-    - _Fold: 3
+    - _Fold: 1
     - _GlitchIntensity: 0.05
     - _GlitchSpeed: 11.9
     - _GlossMapScale: 1
@@ -79,7 +79,7 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _RimPower: 6.11
+    - _RimPower: 6.36
     - _ScanSpeed: 0.12
     - _ScanTiling: 0.4
     - _SmoothnessTextureChannel: 0
@@ -91,6 +91,6 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Direction: {r: 0, g: 1, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _MainColor: {r: 1, g: 0.07980804, b: 0, a: 1}
-    - _RimColor: {r: 0.4339623, g: 0.0041666743, b: 0, a: 1}
+    - _MainColor: {r: 1, g: 0.14344116, b: 0, a: 1}
+    - _RimColor: {r: 1, g: 0.45385426, b: 0, a: 1}
   m_BuildTextureStacks: []

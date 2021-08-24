@@ -12,6 +12,8 @@ public class HoloProfileButton : MonoBehaviour
 
     public DeleteProfile deleteButton;
 
+    private int Slot;
+
     public List<Renderer> border;
     public Renderer background;
     private int colorShaderID = Shader.PropertyToID("_Color");
@@ -28,7 +30,16 @@ public class HoloProfileButton : MonoBehaviour
     private void Start()
     {
         selector = GetComponentInParent<ProfileSelector>();
-        ChangeState(0);
+    }
+
+    public void SetSlot(int slot)
+    {
+        this.Slot = slot;
+    }
+
+    public int GetSlot()
+    {
+        return Slot;
     }
 
     private void WriteProfile()
@@ -55,10 +66,15 @@ public class HoloProfileButton : MonoBehaviour
         if (selector.activeProfile == profile)
         {
             selector.activeProfile = null;
+            GameProfile.Instance.SetProfile(null);
         }
+        ChangeState(0);
+        isSelected = false;
         deleteButton.SetDeleteDisable(true);
         profile = null;
         WriteNewProfile();
+        selector.SelectFirstProfile();
+        MenuManager.Instance.DeleteProfile(Slot);
     }
 
     public Profile GetProfile()

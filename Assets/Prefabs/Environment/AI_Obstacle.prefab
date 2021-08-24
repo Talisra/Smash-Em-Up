@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8217217247131714595}
   - component: {fileID: 8006275728918596830}
   - component: {fileID: 5948160086676566424}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: AI_Obstacle
   m_TagString: Unpassable
   m_Icon: {fileID: 0}
@@ -130,6 +130,7 @@ MonoBehaviour:
   slamSound: BoxImpact
   hitSound: ScrapMetalHit
   targetLocation: {x: 0, y: 0, z: 0}
+  parent: {fileID: 0}
   animationDelaySpeed: 3
   material_orig: {fileID: 2100000, guid: 49a1bf6fec5b3dd4aafb4bec030f1ece, type: 2}
   material_spawn: {fileID: 2100000, guid: 02b422e37c185344bb6de38b4e2e9d69, type: 2}

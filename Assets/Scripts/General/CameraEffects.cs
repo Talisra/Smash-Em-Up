@@ -28,6 +28,7 @@ public class CameraEffects : MonoBehaviour
 
     private void Start()
     {
+        instance._originalPos = instance.gameObject.transform.localPosition;
         endGameEffect = false;
         glitch_digital.intensity = 0;
         glitch_analog.scanLineJitter = 0;
@@ -56,10 +57,14 @@ public class CameraEffects : MonoBehaviour
 
     public static void Shake(float duration, float amount)
     {
-        instance._originalPos = instance.gameObject.transform.localPosition;
         instance.StopAllCoroutines();
         instance.StartCoroutine(instance.cShake(duration, amount));
-        instance.Glitch(duration, amount);
+    }
+
+    public static void WhiteNoiseEffect(float amount)
+    {
+        shutdownEffect.enabled = true;
+        shutdownEffect.WhiteNoiseEffect(amount);
     }
 
     public static void ShutDown(float vidStartPos)
@@ -75,17 +80,12 @@ public class CameraEffects : MonoBehaviour
         endGameEffect = true;
     }
 
-    private void Glitch(float duration, float amount)
+    public static void GlitchOn()
     {
-        if (duration >= 0.5f)
-        {
-            glitchEffect.enabled = true;
-            if (!glitchEffect._xScan)
-                Invoke("StopGlitch", duration*0.75f);
-        }
+        glitchEffect.enabled = true;
     }
 
-    private void StopGlitch()
+    public static void StopGlitch()
     {
         glitchEffect.enabled = false;
         glitchEffect.SetScan(false);

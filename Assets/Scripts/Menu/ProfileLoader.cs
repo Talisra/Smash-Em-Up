@@ -4,54 +4,85 @@ using UnityEngine;
 
 public class ProfileLoader : MonoBehaviour
 {
-    int level = 0;
-    string currentName = "Asd";
+    private string fileDest;
+    private string prefFileName = "/preferences.dat";
 
-    void Start()
+    private void Awake()
     {
-        SaveFile();
-        LoadFile();
+        fileDest = Application.persistentDataPath;
     }
 
-    public void SaveFile()
+    public void SaveProfile(Profile profile)
     {
-        string destination = Application.persistentDataPath + "/save.dat";
+        string profileFileEnd = fileDest + "/profile" + profile.slot + ".dat";
         FileStream file;
-
-        if (File.Exists(destination)) file = File.OpenWrite(destination);
-        else file = File.Create(destination);
-
-        Profile data = new Profile
-        {
-            profileName = "TAL",
-            level = 0
-        };
+        if (File.Exists(profileFileEnd)) file = File.OpenWrite(profileFileEnd);
+        else file = File.Create(profileFileEnd);
         BinaryFormatter bf = new BinaryFormatter();
-        bf.Serialize(file, data);
+        bf.Serialize(file, profile);
         file.Close();
     }
 
-    public void LoadFile()
+    public bool CheckLoad(int slot)
     {
-        string destination = Application.persistentDataPath + "/save.dat";
+        string fileToCheck = fileDest + "/profile" + slot + ".dat";
+        if (File.Exists(fileToCheck))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public Profile LoadProfile(int slot)
+    {
+        string fileToCheck = fileDest + "/profile" + slot + ".dat";
         FileStream file;
 
-        if (File.Exists(destination)) file = File.OpenRead(destination);
+        if (File.Exists(fileToCheck)) file = File.OpenRead(fileToCheck);
         else
         {
-            Debug.LogError("File not found");
-            return;
+            Debug.LogError("Profile file #" + slot + " not found!");
+            return null;
         }
-
         BinaryFormatter bf = new BinaryFormatter();
-        Profile data = (Profile)bf.Deserialize(file);
+        Profile profile = (Profile)bf.Deserialize(file);
         file.Close();
+        return profile;
+    }
 
-        level = data.level;
-        currentName = data.profileName;
+    public void DeleteProfile(int slot)
+    {
+        string fileToCheck = fileDest + "/profile" + slot + ".dat";
+        if (File.Exists(fileToCheck)) 
+            File.Delete(fileToCheck);
+    }
 
-        Debug.Log(data.level);
-        Debug.Log(data.profileName);
+    public void SavePreferences(LocalPreferences prefs)
+    {
+        string profileFileEnd = fileDest + prefFileName;
+        FileStream file;
+        if (File.Exists(profileFileEnd)) file = File.OpenWrite(profileFileEnd);
+        else file = File.Create(profileFileEnd);
+        BinaryFormatter bf = new BinaryFormatter();
+        bf.Serialize(file, prefs);
+        file.Close();
+    }
+
+    public LocalPreferences LoadPreferences()
+    {
+        string fileToCheck = fileDest + prefFileName;
+        FileStream file;
+
+        if (File.Exists(fileToCheck)) file = File.OpenRead(fileToCheck);
+        else
+        {
+            // create new pref file
+            return new LocalPreferences();
+        }
+        BinaryFormatter bf = new BinaryFormatter();
+        LocalPreferences prefs = (LocalPreferences)bf.Deserialize(file);
+        file.Close();
+        return prefs;
     }
 
 }

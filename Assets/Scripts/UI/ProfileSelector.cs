@@ -5,33 +5,60 @@ using UnityEngine;
 
 public class ProfileSelector : MonoBehaviour
 {
+    public ProfileLoader profileLoader;
     public YesNoDialogDeleteProfile deleteDialog;
     public WarningDialog warningDialog;
     public Profiler_Clickable profileInBack;
     public List<HoloProfileButton> profileButtons;
     public InputField input;
     [HideInInspector]
-    public Profile activeProfile;
+    public Profile activeProfile = null;
     private HoloProfileButton newProfilePlace;
     private bool isClosing = false;
 
-    private void Start()
+    private bool isInited = false;
+
+    private void Awake()
     {
+        int slotCounter = 0;
         foreach(HoloProfileButton button in profileButtons)
         {
-            button.SetProfile(null);
+            button.SetSlot(slotCounter++);
         }
-        // READ HERE THE PROFILES FROM A FILE
-        SelectFirstProfile();
     }
 
     private void OnEnable()
     {
-        isClosing = false;
-        foreach (HoloProfileButton button in profileButtons)
+        if (!isInited)
         {
-            button.gameObject.SetActive(true);
+            InitProfiles();
         }
+        foreach(HoloProfileButton holoButton in profileButtons)
+        {
+            holoButton.gameObject.SetActive(true);
+        }
+        isClosing = false;
+    }
+
+    public void InitProfiles()
+    {
+        for (int i = 0; i < MenuManager.Instance.profiles.Count; i++)
+        {
+            Profile tempProfile = MenuManager.Instance.profiles[i];
+            if (tempProfile.level != 0) // Initing the primitive array at MenuManager somehow creates
+                                        // empty profiles with level 0, so here we know if the profile
+                                        // is real (level !=0) or not
+            {
+                profileButtons[i].SetProfile(tempProfile);
+            }
+            else
+                profileButtons[i].SetProfile(null);
+        }
+        if (MenuManager.Instance.selectedProfileIdx != -1)
+        {
+            SelectProfile(profileButtons[MenuManager.Instance.selectedProfileIdx]);
+        }
+        isInited = true;
     }
 
     public void SelectProfile(HoloProfileButton holoButton)
@@ -61,7 +88,7 @@ public class ProfileSelector : MonoBehaviour
         }
     }
 
-    private void SelectFirstProfile() // selects the first profile available, and put no profile if there are no profiles available.
+    public void SelectFirstProfile() // selects the first profile available, and put no profile if there are no profiles available.
     {
         for(int i=0; i < profileButtons.Count; i++)
         {
@@ -71,6 +98,7 @@ public class ProfileSelector : MonoBehaviour
                 break;
             }
         }
+        activeProfile = null;
         profileInBack.SetProfile(null);
         profileInBack.UpdateUI();
     }    
@@ -79,7 +107,6 @@ public class ProfileSelector : MonoBehaviour
     {
         holoButton.AskDeleteProfile();
         holoButton.deleteButton.ChangeState(3);
-        SelectFirstProfile();
     }
 
     public void CreateProfile()
@@ -91,7 +118,7 @@ public class ProfileSelector : MonoBehaviour
         }
     }
 
-    public void AcceptProfile()
+    public void AcceptProfile() // creates a new profile if possible
     {
         this.gameObject.SetActive(true);
         foreach (HoloProfileButton button in profileButtons)
@@ -113,11 +140,7 @@ public class ProfileSelector : MonoBehaviour
             this.gameObject.SetActive(false);
             return;
         }
-        Profile newprofile = new Profile
-        {
-            profileName = input.text,
-            level = 1
-        };
+        Profile newprofile = new Profile(input.text, newProfilePlace.GetSlot());
         newProfilePlace.SetProfile(newprofile);
         newProfilePlace.deleteButton.SetDeleteDisable(false);
         SelectProfile(newProfilePlace);
@@ -143,11 +166,6 @@ public class ProfileSelector : MonoBehaviour
     {
         isClosing = true;
         MenuManager.Instance.RefreshProfile(activeProfile);
-        this.gameObject.SetActive(false);
-        if (activeProfile == null)
-        {
-            warningDialog.Call("No profile has been selected!\nSelect a profile\nor create a new one!");
-        }
         this.gameObject.SetActive(false);
         input.text = "";
         input.gameObject.SetActive(false);

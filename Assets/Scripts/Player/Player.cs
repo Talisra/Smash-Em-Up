@@ -11,9 +11,12 @@ public class Player : MonoBehaviour
     public Animator animator;
     public Rigidbody rb;
 
+    public ComboManager comboManager;
+
     public GameObject smashAnimPrefab;
+    public GameObject disablePlayerEffect;
     // Skills
-    private Skill[] skills;
+    private Skill[] skills = new Skill[2];
     private Skill currentSkill = null; // -1 idle, while any other skill indicates the current skill active.
 
     // Death
@@ -40,15 +43,19 @@ public class Player : MonoBehaviour
     public Transform WeakPointTop;
     public Transform WeakPointBot;
 
-    // Attributes
+    // HP
     public float maxHP = 10;
     private float currentHP;
+    private float HPglitchThreshold = 0.2f;
+    private int extraHP = 0;
+    private int extraHeal = 0;
 
     // Movement
     public float MoveSpeed = 0.1f;
     public float normalRotationCoefficient = 1f;
     public float deltaCap = 10f;
-    private float MaxSpeed = 11.0f;
+    private float MaxSpeed = 11.0f; // Base: 4. optimal: 11.
+    private float extraSpeed = 0;
     private float velocity = 3.0f;
     private Vector2 mousePosition;
     private Vector3 position = Vector3.zero;
@@ -61,16 +68,22 @@ public class Player : MonoBehaviour
     // Attack
     public int maxPowerUps;
     public float power = 15f;
-    public float basePower = 25f;
-    private int currentPowerUps = 5;
+    public float basePower = 20f;
+    private int currentPowerUps = 0;
+    private int extraPowerups = 0;
     private bool canAttack = true;
     private float attackDelay = 0.4f;
     private float atkDelayCounter = 0;
 
     private int attackSequence = 0;
+    private int attackSequenceImplemented = 3; // how much combos are implemented, look at BasicSmash()
     private bool inAtkCombo = false;
     private float atkSeqComboTime = 2f;
     private float atkSeqComboCounter = 0;
+
+
+    private int speedForMaul = 1000;
+    public GameObject maulEffect;
 
     //Invulnerability & Shield
     private bool isInvul = false;
@@ -80,24 +93,52 @@ public class Player : MonoBehaviour
     private bool isShielded = false;
     private float shieldTime = 0;
     private float shieldDelayCounter = 0;
+    private float extraShield = 0;
 
     // Stun
     private bool isStunned = false;
     private float stunDelay = 0.5f;
     private float stunDelayCounter = 0;
 
+    // Profile Caps
+    private int attackSequenceCap = 0;
+
     void Awake()
     {
-        //audioManager = FindObjectOfType<AudioManager>();
+        comboManager = FindObjectOfType<ComboManager>();
         animator = animationAnchor.GetComponent<Animator>();
         currentHP = maxHP;
         rotationCoefficient = normalRotationCoefficient;
         rb = GetComponent<Rigidbody>();
+        skills[0] = null;
+        skills[1] = null;
+    }
+
+    public void InitWithProfile(Profile profile)
+    {
+        //attackSequenceCap = attackSequenceImplemented;
+
+        attackSequenceCap = profile.atkSeqCap;
+        extraHP = profile.extraHP;
+        maxHP = maxHP + extraHP;
+        currentHP = maxHP;
+        extraShield = profile.extraShield;
+        extraSpeed = profile.extraSpeed;
+        comboManager.SetMaxCombo(profile.maxCombo);
+        extraPowerups = profile.extraPowerUps;
+        currentPowerUps = extraPowerups;
+        extraHeal = profile.extraHeal;
+        speedForMaul = profile.maulMinSpeed;
     }
 
     public void AssignSkills(Skill[] skills) // skills[0] is left mouse, while skills[1] is right mouse
     {
         this.skills = skills;
+        foreach(Skill skill in skills)
+        {
+            if (skill != null)
+                skill.Init();
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -107,7 +148,6 @@ public class Player : MonoBehaviour
         {
             // Hitting an enemy will add force to the enemy, depends on deltaX.
             // The higher deltaX, more force added.
-            
             if (collision.gameObject.tag == "Enemy")
             {
                 Enemy enemy = collision.gameObject.GetComponent<Enemy>();
@@ -119,7 +159,13 @@ public class Player : MonoBehaviour
                         SkillSmash(enemy);
                     }
                     else if (canAttack)
+                    {
                         BasicSmash(enemy);
+                        if (Mathf.Abs(rb.velocity.x) >= speedForMaul)
+                        {
+                            Maul(enemy);
+                        }
+                    }
                 }
             }
             // Bullet that hitting the Head will do no damage
@@ -129,21 +175,21 @@ public class Player : MonoBehaviour
             }
             else if(collision.gameObject.tag == "Miniboss")
             {
-                if (Mathf.Abs(rb.velocity.x) > 0 && canAttack && currentSkill==null)
+                Miniboss miniboss = collision.gameObject.GetComponentInParent<Miniboss>();
+                if (Mathf.Abs(rb.velocity.x) > 0.1f && canAttack && currentSkill==null)
                 {
-                    Miniboss miniboss = collision.gameObject.GetComponentInParent<Miniboss>();
-                    miniboss.TakeDamage(1, collision.GetContact(0).point);
+                    miniboss.TakeDamage(attackSequence == 3? 2 : 1, collision.GetContact(0).point);
                     BasicSmash(collision.GetContact(0).point);
+                    comboManager.AddCombo();
                 }
                 else if (currentSkill != null)
                 {
-                    Miniboss miniboss = collision.gameObject.GetComponentInParent<Miniboss>();
                     if (miniboss.canTakeDmg)
                     {
                         currentSkill.OnSmashVoid(collision.GetContact(0).point);
                         miniboss.TakeDamage(currentSkill.minibossDmg, collision.GetContact(0).point);
+                        comboManager.AddCombo();
                     }
-
                 }
             }
         }
@@ -213,6 +259,13 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void PullDown()
+    {
+        rb.AddForce(new Vector3(0, -20, 0), ForceMode.VelocityChange);
+        rb.useGravity = true;
+        disablePlayerEffect.gameObject.SetActive(true);
+    }
+
     public void AddPowerUp(int amount)
     {
         currentPowerUps += amount;
@@ -255,12 +308,14 @@ public class Player : MonoBehaviour
 
     public void Heal(int amount)
     {
+        int finalAmount = amount + extraHeal;
         if (isDead)
             return;
-        if (currentHP + amount >= maxHP)
+        if (currentHP + finalAmount >= maxHP)
             currentHP = maxHP;
         else
-            currentHP += amount;
+            currentHP += finalAmount;
+        CheckHP();
     }
     public void Squash(GameObject colliderObj)
     {
@@ -278,6 +333,11 @@ public class Player : MonoBehaviour
     public void GiveControl()
     {
         inControl = true;
+        if (disablePlayerEffect.gameObject.activeSelf)
+        {
+            disablePlayerEffect.SetActive(false);
+            rb.useGravity = false;
+        }
     }
 
     public void TakeControl()
@@ -297,7 +357,7 @@ public class Player : MonoBehaviour
     {
         isShielded = true;
         shieldDelayCounter = 0;
-        shieldTime = amount;
+        shieldTime = amount + extraShield;
         GameObject shield = PrefabPooler.Instance.Get(
             "Shield", transform.position, Quaternion.identity) as GameObject;
         shield.GetComponent<ShieldFX>().SetShield(gameObject, amount);
@@ -319,10 +379,13 @@ public class Player : MonoBehaviour
     {
         if (!isInvul && !isShielded)
         {
+            GameProfile.Instance.ShowTutorialForPlayer(5);
+            comboManager.ResetCombo();
             GameManager.Instance.FlashRedScreen();
             body.ShowDamage();
             bottom.ShowDamage();
             currentHP -= amount;
+            CheckHP();
             if (currentHP <= 0)
             {
                 Die();
@@ -339,10 +402,12 @@ public class Player : MonoBehaviour
     {
         if (!isShielded)
         {
+            comboManager.ResetCombo();
             GameManager.Instance.FlashRedScreen();
             body.ShowDamage();
             bottom.ShowDamage();
             currentHP -= amount;
+            CheckHP();
             if (currentHP <= 0)
             {
                 Die();
@@ -352,6 +417,18 @@ public class Player : MonoBehaviour
                 GainShield(0.75f);
             if (showHit)
                 BleedExplosion(hitCoordinates);
+        }
+    }
+
+    private void CheckHP()
+    {
+        if (currentHP/maxHP < HPglitchThreshold)
+        {
+            CameraEffects.GlitchOn();
+        }
+        else if (currentHP / maxHP >= HPglitchThreshold)
+        {
+            CameraEffects.StopGlitch();
         }
     }
 
@@ -449,6 +526,14 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void Maul(Enemy enemy)
+    {
+        enemy.Damage(1);
+        GameObject effect = Instantiate(maulEffect, enemy.transform.position, Quaternion.identity) as GameObject;
+        Destroy(effect, 1);
+        AudioManager.Instance.Play("Maul");
+    }
+
     public void SkillSmash(Enemy enemy)
     {
         enemy.ResetComboChain();
@@ -478,8 +563,8 @@ public class Player : MonoBehaviour
                         0, 0);
                     animationLeft = "AtkLeft";
                     animationRight = "AtkRight";
-                    ShowSmashParticle(enemy.transform.position, 2f);
-                    attackSequence++;
+                    ShowSmashParticle(enemy.transform.position, 1.5f);
+                    ManageAttackSequence();
                     break;
                 }
             case 1:
@@ -487,27 +572,41 @@ public class Player : MonoBehaviour
                     CameraEffects.Shake(0.15f, 0.3f);
                     AudioManager.Instance.Play("Smash2");
                     powerVector = new Vector3(
-                        Mathf.Sign(enemyDirection) * basePower*2f + Mathf.Log((deltaX < 1 ? 1 : deltaX)) * power*1.5f,
+                        Mathf.Sign(enemyDirection) * basePower*1.5f + Mathf.Log((deltaX < 1 ? 1 : deltaX)) * power*1.25f,
                         0, 0);
                     animationLeft = "AtkLeft2";
                     animationRight = "AtkRight2";
-                    ShowSmashParticle(enemy.transform.position, 2.5f);
-                    attackSequence++;
+                    ShowSmashParticle(enemy.transform.position, 2f);
+                    ManageAttackSequence();
                     break;
                 }
-            case 2: // == maxAtkSequence!
+            case 2:
+                {
+                    enemy.GiveSuperSpeed(0.3f);
+                    CameraEffects.Shake(0.2f, 0.35f);
+                    AudioManager.Instance.Play("Smash3");
+                    powerVector = new Vector3(
+                        Mathf.Sign(enemyDirection) * basePower * 2f + Mathf.Log((deltaX < 1 ? 1 : deltaX)) * power * 1.5f,
+                        0, 0);
+                    animationLeft = "AtkLeft3";
+                    animationRight = "AtkRight3";
+                    ShowSmashParticle(enemy.transform.position, 2.5f);
+                    ManageAttackSequence();
+                    break;
+                }
+            case 3: // == maxAtkSequence!
                 {
                     enemy.Damage(1);
                     enemy.GiveSuperSpeed(0.5f);
                     CameraEffects.Shake(0.4f, 0.4f);
-                    AudioManager.Instance.Play("Smash3");
+                    AudioManager.Instance.Play("Smash4");
                     AudioManager.Instance.Play("SmashF");
                     powerVector = new Vector3(
                         Mathf.Sign(enemyDirection) * basePower*5f + Mathf.Log((deltaX < 1 ? 1 : deltaX)) * power*2f,
                         0, 0);
                     animationLeft = "AtkLeftF";
                     animationRight = "AtkRightF";
-                    attackSequence = 0;
+                    ManageAttackSequence();
                     ShowSmashParticle(enemy.transform.position, 3f);
                     break;
                 }
@@ -536,8 +635,8 @@ public class Player : MonoBehaviour
                     AudioManager.Instance.Play("Smash1");
                     animationLeft = "AtkLeft";
                     animationRight = "AtkRight";
-                    ShowSmashParticle(target, 2f);
-                    attackSequence++;
+                    ShowSmashParticle(target, 1.5f);
+                    ManageAttackSequence();
                     break;
                 }
             case 1:
@@ -546,18 +645,28 @@ public class Player : MonoBehaviour
                     AudioManager.Instance.Play("Smash2");
                     animationLeft = "AtkLeft2";
                     animationRight = "AtkRight2";
-                    ShowSmashParticle(target, 2.5f);
-                    attackSequence++;
+                    ShowSmashParticle(target, 2f);
+                    ManageAttackSequence();
                     break;
                 }
-            case 2: // == maxAtkSequence!
+            case 2:
+                {
+                    CameraEffects.Shake(0.2f, 0.35f);
+                    AudioManager.Instance.Play("Smash3");
+                    animationLeft = "AtkLeft3";
+                    animationRight = "AtkRight3";
+                    ShowSmashParticle(target, 2.5f);
+                    ManageAttackSequence();
+                    break;
+                }
+            case 3: // == maxAtkSequence!
                 {
                     CameraEffects.Shake(0.4f, 0.4f);
-                    AudioManager.Instance.Play("Smash3");
+                    AudioManager.Instance.Play("Smash4");
                     AudioManager.Instance.Play("SmashF");
                     animationLeft = "AtkLeftF";
                     animationRight = "AtkRightF";
-                    attackSequence = 0;
+                    ManageAttackSequence();
                     ShowSmashParticle(target, 3f);
                     break;
                 }
@@ -566,6 +675,15 @@ public class Player : MonoBehaviour
             animator.Play(animationLeft);
         else if (target.x < 0)
             animator.Play(animationRight);
+    }
+
+    private void ManageAttackSequence() // manages the idx of atk seq cap and how much are implemented
+    {
+        attackSequence++;
+        if (attackSequence > attackSequenceCap || attackSequence > attackSequenceImplemented)
+        {
+            attackSequence = 0;
+        }
     }
 
     private void ShowSmashParticle(Vector3 pos, float scale)
@@ -591,6 +709,10 @@ public class Player : MonoBehaviour
 
     private void ManageSkillInput(int mouseButton, int skillIndex)
     {
+        if (skills[skillIndex] == null)
+        {
+            return;
+        }
         if (Input.GetMouseButtonDown(mouseButton))
         {
             if (canUseSkill(skills[skillIndex]))
@@ -712,6 +834,7 @@ public class Player : MonoBehaviour
             float xForce = velocity * -deltaX - rb.velocity.x;
             xForce = Mathf.Clamp(xForce, -MaxSpeed, MaxSpeed);
             float yForce = velocity * -deltaY - rb.velocity.y;
+            yForce = Mathf.Clamp(yForce, -MaxSpeed, MaxSpeed);
             rb.AddForce(new Vector3(xForce, yForce, 0), ForceMode.VelocityChange);
             Quaternion rotationTarget = Quaternion.Euler(0, 0,
             Mathf.Clamp(

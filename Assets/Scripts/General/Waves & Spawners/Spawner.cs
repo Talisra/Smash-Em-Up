@@ -22,6 +22,9 @@ public class Spawner : MonoBehaviour
             case 3: // Denymatt
                 enemy = DenymattPool.Instance.Get(spawnPoint, Quaternion.identity);
                 break;
+            case 4: // Trinati
+                enemy = TrinatiPool.Instance.Get(spawnPoint, Quaternion.identity);
+                break;
             default: return null;
         }
         WaveManager.Instance.AddEnemy(enemy);

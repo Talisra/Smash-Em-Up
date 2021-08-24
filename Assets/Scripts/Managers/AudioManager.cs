@@ -53,6 +53,7 @@ public class AudioManager : MonoBehaviour
             s.source.clip = s.clip;
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
+            s.source.loop = s.loop;
             s.source.ignoreListenerVolume = true;
             s.source.ignoreListenerPause = true;
         }
@@ -98,6 +99,8 @@ public class AudioManager : MonoBehaviour
 
     public void MenuPlay(string name)
     {
+        if (muteSound)
+            return;
         if (name == "")
             return;
         Sound s = Array.Find(menuSounds, sound => sound.name == name);
@@ -107,6 +110,21 @@ public class AudioManager : MonoBehaviour
             return;
         }
         s.source.Play();
+    }
+
+    public void MenuStop(string name) // stop a sound that is in play, will do nothing if the sound isnt playing
+    {
+        if (muteSound)
+            return;
+        if (name == "")
+            return;
+        Sound s = Array.Find(menuSounds, sound => sound.name == name);
+        if (s == null)
+        {
+            Debug.LogWarning("Sound with name " + name + " was not found");
+            return;
+        }
+        s.source.Stop();
     }
 
     public void Stop(string name) // stop a sound that is in play, will do nothing if the sound isnt playing

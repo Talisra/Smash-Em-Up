@@ -10,11 +10,11 @@ public class Profiler : MonoBehaviour
     public Text level;
     public List<Renderer> ledRend;
     public Color profilerColor = Color.blue;
-    private Profile playerProfile;
+    private Profile playerProfile = null;
 
     protected virtual void Start()
     {
-        playerProfile = null;
+        UpdateUI();
         expBar.color = profilerColor;
         expBarFill.color = profilerColor;
         playerName.color = profilerColor;
@@ -24,12 +24,12 @@ public class Profiler : MonoBehaviour
             rend.material.SetColor("_Color", profilerColor);
             rend.material.SetColor("_EmissionColor", profilerColor);
         }
-        UpdateUI();
     }
 
     public void SetProfile(Profile profile)
     {
         playerProfile = profile;
+        UpdateUI();
     }
 
     public void UpdateUI()

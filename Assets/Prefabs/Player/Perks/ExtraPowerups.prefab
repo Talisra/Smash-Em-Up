@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8156334796567725831
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3399793141121191961}
+  - component: {fileID: 6642814882720370842}
+  m_Layer: 0
+  m_Name: ExtraPowerups
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3399793141121191961
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8156334796567725831}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 18.236525, y: -7.12687, z: -15.163275}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6642814882720370842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8156334796567725831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 544ff36fae22aef4889d81ad66f74fdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  perkName: Power UP!
+  image: {fileID: 21300000, guid: 8871c1fe16400bf499c7113743bc43df, type: 3}
+  description: Increase the number PowerUPs at the start of the game.
+  isSkill: 0
+  skill: {fileID: 0}
+  skillIndexAtPerksManager: 0
+  currentPerkLevel: 0
+  levelsAquired: 04000000070000000a0000000d00000010000000
+  levelDescriptions:
+  - +1 Power UP!
+  - +2 Power UP!
+  - +3 Power UP!
+  - +4 Power UP!
+  - +5 Power UP!

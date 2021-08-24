@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class CubeScraps : Scraps
 {
-    public float FadeRate = 1000f;
+    public float FadeRate = 100f;
     private bool hasCollided = false;
 
+    private float alpha = 1;
+    private Color origColor;
     private Renderer rend;
 
-    void Start()
+    void Awake()
     {
         rend = GetComponent<Renderer>();
+        origColor = rend.material.color;
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -23,12 +27,18 @@ public class CubeScraps : Scraps
         }
     }
 
+    private void OnEnable()
+    {
+        rend.material.color = origColor;
+        alpha = 1;
+    }
+
     void Update()
     {
-        Color oldCol = rend.material.color;
-        Color newCol = new Color(oldCol.r, oldCol.g, oldCol.b, oldCol.a - (FadeRate * Time.deltaTime));
+        alpha -= FadeRate * Time.deltaTime;
+        Color newCol = new Color(origColor.r, origColor.g, origColor.b, alpha);
         rend.material.color = newCol;
-        if (oldCol.a <0)
+        if (alpha < 0)
         {
             Dismiss();
         }

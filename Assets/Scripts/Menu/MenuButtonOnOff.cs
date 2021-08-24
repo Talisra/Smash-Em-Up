@@ -14,7 +14,8 @@ public class MenuButtonOnOff : MonoBehaviour
 
     private bool cursorEntered = false;
     private bool cursorClicked = false;
-    private bool isOn;
+    [HideInInspector]
+    public bool isOn;
 
     public Renderer rendScreen;
     public List<Renderer> rendSticklight;
@@ -33,12 +34,11 @@ public class MenuButtonOnOff : MonoBehaviour
     private Color lightRedEmitColor = new Color(1, 0.2f, 0.2f) * 2.7f;
     private Color darkRedEmitColor = new Color(0.3f, 0, 0);
 
-    private void Start()
+    private void Awake()
     {
         menu = GetComponentInParent<InGameMenu>();
         origScreenColor = rendScreen.material.GetColor(colorShaderID);
         origEmitColor = rendSticklight[0].material.GetColor(emitShaderID);
-        TurnOn(); // Profile will decide if this buttons is prefferd on or off
     }
 
     private void ChangeState(int state)
@@ -77,15 +77,17 @@ public class MenuButtonOnOff : MonoBehaviour
         }
     }
 
-    private void TurnOn()
+    public void TurnOn()
     {
+        isOn = true;
         ChangeState(0);
         if (menu)
             menu.Action(actionOn);
     }
 
-    private void TurnOff()
+    public void TurnOff()
     {
+        isOn = false;
         ChangeState(1);
         if (menu)
             menu.Action(actionOff);
@@ -97,7 +99,6 @@ public class MenuButtonOnOff : MonoBehaviour
         if (cursorEntered)
         {
             buttonAnchor.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 0.05f);
-            isOn = !isOn;
             if (isOn)
             {
                 TurnOff();
@@ -124,15 +125,11 @@ public class MenuButtonOnOff : MonoBehaviour
 
     private void OnMouseExit()
     {
-        cursorEntered = false;
         if (isOn)
-        {
-            TurnOff();
-        }
+            ChangeState(0);
         else
-        {
-            TurnOn();
-        }
+            ChangeState(1);
+        cursorEntered = false;
         if (cursorClicked)
         {
             buttonAnchor.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 0.05f);

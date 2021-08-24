@@ -1,11 +1,13 @@
-﻿public class Boule : Enemy
+﻿using UnityEngine;
+
+public class Boule : Enemy
 {
     private bool hitByPlayer = false;
 
     protected override void OnEnable()
     {
         base.OnEnable();
-        hitByPlayer = false;
+        hitByPlayer = inGame ? true : false;
     }
 
     public override void HitByPlayer()

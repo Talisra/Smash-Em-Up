@@ -13,7 +13,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     [HideInInspector]
     public Rigidbody rb;
     protected Collider[] enemyColliders;
-    private ComboManager comboManager;
+    protected ComboManager comboManager;
     [HideInInspector]
     public bool tempDisable = false;
     [HideInInspector]
@@ -38,6 +38,8 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     protected float minVelocityForDamage = 10f;
 
     // Thrust
+    public bool manualThrust = false;
+    [HideInInspector]
     public bool isThrusting;
     public float thrustSpeed;
     protected float thrustCounter = 0;
@@ -49,27 +51,30 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
 
     // Squash
     public bool isSquashable;
+    [HideInInspector]
     public bool isTouchingPlayer = false;
+    [HideInInspector]
     public bool isSquashed = false;
     public Vector3 squashVector;
     private Vector3 normalScale;
 
     // Damaged
-    private int lastCollisionID = 0;
+    protected int lastCollisionID = 0;
 
     // Hit By Player
+    [HideInInspector]
     public bool isHit;
     private float hitCounter;
     private float hitDelay = 0.5f;
     public GameObject hitFX;
 
     // Combos
-    private bool inCombo = false;
+    protected bool inCombo = false;
     private float comboCounter = 0;
     private float comboDelay = 2f;
 
     // SuperSpeed
-    private bool isSuperSpeed = false;
+    protected bool isSuperSpeed = false;
     private float superSpeedCounter = 0;
     private float superSpeedDelay;
     public float superSpeedVelocity = 75;
@@ -132,6 +137,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
             transform.localScale = normalScale;
             isSquashed = false;
             rb.isKinematic = false;
+            rb.velocity = Vector3.zero;
             isSuperSpeed = false;
             superSpeedKernel.SetActive(false);
             hpBar.gameObject.SetActive(true);
@@ -202,7 +208,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
         return target;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    protected virtual void OnCollisionEnter(Collision collision)
     {
         //collidingObjects++;
         if (rb.velocity.magnitude > minVelocityForDamage) // damage is only possible when the enemy has some acceleration
@@ -213,6 +219,11 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
                 {
                     if (collision.gameObject.tag == "Unpassable" || collision.gameObject.tag == "Enemy")
                     {
+                        if (inCombo)
+                        {
+                            ResetComboChain();
+                            comboManager.AddCombo();
+                        }
                         Damage(isSuperSpeed ? 2 : 1);
                     }
                 }
@@ -271,11 +282,6 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     {
         if (isAlive && inGame)
         {
-            if (inCombo)
-            {
-                ResetComboChain();
-                comboManager.AddCombo();
-            }
             AudioManager.Instance.Play(hitAudio);
             Instantiate(hitFX, transform.position, Quaternion.identity);
             curHealth -= amount;
@@ -420,11 +426,14 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
         {
             thrustInvokeCounter += Time.deltaTime;
         }
-        if (thrustInvokeCounter >= thrustInvokeDelay)
+        if (!manualThrust)
         {
-            Thrust(ThrustLocation());
-            thrustInvokeActive = false;
-            thrustInvokeCounter = 0;
+            if (thrustInvokeCounter >= thrustInvokeDelay)
+            {
+                Thrust(ThrustLocation());
+                thrustInvokeActive = false;
+                thrustInvokeCounter = 0;
+            }
         }
         if (isThrusting)
         {
@@ -465,7 +474,7 @@ public abstract class Enemy : MonoBehaviour, IPoolableObject
     public virtual void BackToPool()
     {
         WaveManager.Instance.RemoveEnemy(this);
-        GameManager.Instance.AddExpToPool(expGiven);
+        GameProfile.Instance.AddExpToPool(expGiven);
         inGame = false;
         hpBar.gameObject.SetActive(false);
         //Implement at Inherited enemy

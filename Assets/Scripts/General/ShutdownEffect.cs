@@ -20,6 +20,21 @@ public class ShutdownEffect : MonoBehaviour
 		Graphics.Blit(source, destination, _material);
 	}
 
+	public void WhiteNoiseEffect(float amount) // should not be higher than 1.2f
+    {
+		screen.gameObject.SetActive(true);
+		_player.isLooping = false;
+		_player.renderMode = VideoRenderMode.APIOnly;
+		_player.audioOutputMode = VideoAudioOutputMode.None;
+		_player.clip = Animation;
+		_player.Stop();
+		_player.Play();
+		_material = new Material(shader);
+		AudioManager.Instance.Play("WhiteNoiseStart");
+		Invoke("StopWhiteNoise", amount);
+		Invoke("Reset", amount);
+	}
+
 	public void StartEffect(float videoStartPos)
     {
 		screen.gameObject.SetActive(true);
@@ -30,10 +45,16 @@ public class ShutdownEffect : MonoBehaviour
 		_player.Stop();
 		_player.time = videoStartPos;
 		_player.Play();
-
 		_material = new Material(shader);
 		Invoke("PlaySound", 1.5f - videoStartPos);
 		Invoke("Reset", 2f);
+	}
+
+	private void StopWhiteNoise()
+    {
+		screen.gameObject.SetActive(false);
+		AudioManager.Instance.Stop("WhiteNoiseStart");
+		_player.Stop();
 	}
 
 	private void PlaySound()

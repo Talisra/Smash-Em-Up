@@ -9,12 +9,16 @@ public class FanFloor : MonoBehaviour
     private bool isFanFloor = true;
     public List<GameObject> AffectedObjects;
     public Vector3 ForceVector;
+    public List<Cog> cogs;
+
 
     private int rematchTimes = 0;
     private WaveManager waveManager;
     public Miniboss miniboss;
     public GameObject miniboss_dead;
     public Gyroscope_dead gyroscope_dead;
+
+    public BoxCollider fanTrigger;
 
     private void Start()
     {
@@ -39,6 +43,7 @@ public class FanFloor : MonoBehaviour
     {
         if (isFanFloor)
         {
+            fanTrigger.enabled = false;
             animator.Play("FanDown");
             miniboss.gameObject.SetActive(true);
             miniboss.SetDifficulty(rematchTimes);
@@ -47,6 +52,7 @@ public class FanFloor : MonoBehaviour
         }
         else
         {
+            fanTrigger.enabled = true;
             animator.Play("FanUp");
             gyroscope_dead.Reset();
         }

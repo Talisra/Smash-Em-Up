@@ -94,7 +94,7 @@ public class CeilingSpawner : Spawner
             ShieldUp shieldp = ShieldUpPool.Instance.Get(
             spawnTarget,
             Quaternion.identity);
-            shieldp.SetDuration(10);
+            shieldp.SetDuration(5);
             return shieldp;
         }
         

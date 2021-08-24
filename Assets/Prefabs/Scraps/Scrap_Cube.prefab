@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3486268122159436828}
   - component: {fileID: 7134063167327126818}
   m_Layer: 0
-  m_Name: Scrap_Cube
+  m_Name: Scrap_Cube 1
   m_TagString: Scrap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -125,8 +125,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8988e35002b519244b1ee8d93fa500eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
   minAmount: 75
   MaxAmount: 120
   minSize: 0.11
   maxSize: 0.24
-  FadeRate: 0.01
+  FadeRate: 0.1

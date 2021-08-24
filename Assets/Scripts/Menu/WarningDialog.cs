@@ -8,12 +8,12 @@ public class WarningDialog : MonoBehaviour
     public ProfileSelector selector;
     public Text text;
 
-    public void Call(string message)
+    public virtual void Call(string message)
     {
         text.text = message;
         this.gameObject.SetActive(true);
     }
-    public void OK()
+    public virtual void OK()
     {
         gameObject.SetActive(false);
         selector.gameObject.SetActive(true);

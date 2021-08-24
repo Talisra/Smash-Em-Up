@@ -23,7 +23,7 @@ public abstract class Skill : MonoBehaviour
         Destroy(particle, parts.main.duration);
     }
 
-    private void Start()
+    public void Init()
     {
         player = FindObjectOfType<Player>();
     }

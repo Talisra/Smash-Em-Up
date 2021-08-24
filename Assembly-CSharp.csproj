@@ -58,12 +58,15 @@
   <ItemGroup>
     <Compile Include="Assets\Imports\JMO Assets\Cartoon FX\Scripts\CFX_LightFlicker.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Utils\MaterialFactory.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Trinati.cs" />
     <Compile Include="Assets\Imports\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_Translate.cs" />
     <Compile Include="Assets\Scripts\Scraps\CubeScraps.cs" />
     <Compile Include="Assets\Scripts\General\ShutdownEffect.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Components\DepthOfFieldComponent.cs" />
+    <Compile Include="Assets\Scripts\Enemies\TrinatiShield.cs" />
     <Compile Include="Assets\Scripts\Scraps\MinibossScraps.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
+    <Compile Include="Assets\Scripts\UI\DraggableSkill.cs" />
     <Compile Include="Assets\Scripts\Enemies\Cuball.cs" />
     <Compile Include="Assets\Scripts\General\GameProfile.cs" />
     <Compile Include="Assets\Imports\Particle Ribbon by Moonflower Carnivore\Scripts\ReverseNormals.cs" />
@@ -75,7 +78,9 @@
     <Compile Include="Assets\Scripts\Menu\MainMenuMenu.cs" />
     <Compile Include="Assets\Imports\Sci-fi Tower\Scripts\RotationData.cs" />
     <Compile Include="Assets\Imports\Sci-fi Tower\Scripts\ChangeTurretMaterial.cs" />
+    <Compile Include="Assets\Scripts\Menu\YesNoDialogQuit.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Attributes\GetSetAttribute.cs" />
+    <Compile Include="Assets\Scripts\General\Item.cs" />
     <Compile Include="Assets\Scripts\Environment\SideWall.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Models\ScreenSpaceReflectionModel.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Components\ChromaticAberrationComponent.cs" />
@@ -89,26 +94,37 @@
     <Compile Include="Assets\Scripts\Pooling\Powerups\HealthUpPool.cs" />
     <Compile Include="Assets\Scripts\Enemies\Miniboss\MinibossBullet.cs" />
     <Compile Include="Assets\Scripts\Pooling\Enemies\MinibossBullet_Pool.cs" />
+    <Compile Include="Assets\Scripts\Enemies\TrinatiShieldScrap.cs" />
+    <Compile Include="Assets\Scripts\Menu\YesNoDialog.cs" />
     <Compile Include="Assets\Scripts\Enemies\Denymatt.cs" />
     <Compile Include="Assets\Imports\LightningBolt\LightningBoltScript.cs" />
+    <Compile Include="Assets\Scripts\General\Wheel.cs" />
     <Compile Include="Assets\Scripts\Menu\MenuButtonOnOff.cs" />
+    <Compile Include="Assets\Scripts\Pooling\Enemies\TrinityBulletPool.cs" />
     <Compile Include="Assets\Scripts\UI\Profiler_Clickable.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Attributes\TrackballAttribute.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\PostProcessingModel.cs" />
+    <Compile Include="Assets\Prefabs\Player\Perks\ComboPerk.cs" />
     <Compile Include="Assets\Imports\Ultimate 10 Plus Shaders\Shaders\Plexus\Plexus.cs" />
     <Compile Include="Assets\Scripts\Enemies\Miniboss\Miniboss.cs" />
     <Compile Include="Assets\Imports\JMO Assets\Cartoon FX\Demo\Assets\CFX_AutoStopLoopedEffect.cs" />
+    <Compile Include="Assets\Scripts\Player\Skills\DoubleBash.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Components\DitheringComponent.cs" />
+    <Compile Include="Assets\Scripts\UI\ButtonClickSounds.cs" />
+    <Compile Include="Assets\Scripts\UI\SkillSlot.cs" />
     <Compile Include="Assets\Scripts\Managers\AIObstacleManager.cs" />
     <Compile Include="Assets\Imports\PowerUp\Scripts\Utility\Singleton.cs" />
     <Compile Include="Assets\Scripts\Environment\FanFloor.cs" />
     <Compile Include="Assets\Scripts\Environment\AIobstacle.cs" />
     <Compile Include="Assets\Imports\Kino\Glitch\DigitalGlitch.cs" />
     <Compile Include="Assets\Scripts\Pooling\Enemies\BoulePool.cs" />
+    <Compile Include="Assets\Scripts\UI\OKbutton.cs" />
     <Compile Include="Assets\Scripts\Menu\MenuButton.cs" />
+    <Compile Include="Assets\Prefabs\Player\Perks\MaulPerk.cs" />
     <Compile Include="Assets\Imports\Particle Ribbon by Moonflower Carnivore\Scripts\randomParticleRotation.cs" />
     <Compile Include="Assets\Scripts\Pooling\Powerups\SpeedContainerPool.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Models\BuiltinDebugViewsModel.cs" />
+    <Compile Include="Assets\Scripts\Menu\HoloSmallButton.cs" />
     <Compile Include="Assets\Scripts\General\Auxiliary.cs" />
     <Compile Include="Assets\Scripts\General\ReconstructableObject.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Attributes\MinAttribute.cs" />
@@ -120,6 +136,8 @@
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Models\UserLutModel.cs" />
     <Compile Include="Assets\Scripts\Environment\WaveCounter.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Components\ScreenSpaceReflectionComponent.cs" />
+    <Compile Include="Assets\Prefabs\Player\Perks\HammerVelocity.cs" />
+    <Compile Include="Assets\Prefabs\Player\Perks\RepairPerk.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Models\EyeAdaptationModel.cs" />
     <Compile Include="Assets\Audio\Sound.cs" />
     <Compile Include="Assets\Scripts\Player\AnimationAnchor.cs" />
@@ -131,6 +149,8 @@
     <Compile Include="Assets\Scripts\Enemies\Miniboss\Miniboss_dead.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Utils\ColorGradingCurve.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Models\MotionBlurModel.cs" />
+    <Compile Include="Assets\Scripts\Profile\Perk.cs" />
+    <Compile Include="Assets\Prefabs\Player\Perks\RepairSkill.cs" />
     <Compile Include="Assets\Scripts\Pooling\Enemies\CuballPool.cs" />
     <Compile Include="Assets\Scripts\Environment\Fan.cs" />
     <Compile Include="Assets\Scripts\Player\Skills\Skill.cs" />
@@ -151,10 +171,12 @@
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Components\TaaComponent.cs" />
     <Compile Include="Assets\Scripts\Enemies\BasicBullet.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Utils\RenderTextureFactory.cs" />
+    <Compile Include="Assets\Prefabs\Player\Perks\RaiseHeal.cs" />
     <Compile Include="Assets\Scripts\Enemies\LockInitRotation.cs" />
     <Compile Include="Assets\Scripts\Managers\ComboManager.cs" />
     <Compile Include="Assets\Imports\JMO Assets\Cartoon FX\Scripts\CFX_LightIntensityFade.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Models\ChromaticAberrationModel.cs" />
+    <Compile Include="Assets\Scripts\Profile\LocalPreferences.cs" />
     <Compile Include="Assets\Scripts\Managers\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Pooling\Powerups\ShieldUpPool.cs" />
     <Compile Include="Assets\Scripts\General\ThrustEffect.cs" />
@@ -168,9 +190,12 @@
     <Compile Include="Assets\Audio\Track.cs" />
     <Compile Include="Assets\Scripts\Scraps\LaserScrap.cs" />
     <Compile Include="Assets\Imports\PowerUp\Scripts\TakeablePowerUp.cs" />
+    <Compile Include="Assets\Scripts\UI\PerksDescription.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Components\VignetteComponent.cs" />
     <Compile Include="Assets\Imports\JMO Assets\Cartoon FX\Scripts\CFX_AutoRotate.cs" />
+    <Compile Include="Assets\Prefabs\Player\Perks\Spinner.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\PostProcessingComponent.cs" />
+    <Compile Include="Assets\Prefabs\Player\Perks\DurableShield.cs" />
     <Compile Include="Assets\Scripts\Menu\GameLogo.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Components\EyeAdaptationComponent.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Utils\GraphicsUtils.cs" />
@@ -179,6 +204,7 @@
     <Compile Include="Assets\Imports\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_New.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Components\BloomComponent.cs" />
     <Compile Include="Assets\Imports\PowerUp\Scripts\PowerUpRotation.cs" />
+    <Compile Include="Assets\Scripts\UI\x_observer.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Models\FogModel.cs" />
     <Compile Include="Assets\Imports\PowerUp\Scripts\PowerUpManager.cs" />
     <Compile Include="Assets\Scripts\General\Waves &amp; Spawners\Tunnel.cs" />
@@ -188,26 +214,36 @@
     <Compile Include="Assets\Imports\EffectExamples\Misc Effects\Scripts\SpawnEffect.cs" />
     <Compile Include="Assets\Scripts\UI\HPBar.cs" />
     <Compile Include="Assets\Scripts\UI\MinibossUI.cs" />
+    <Compile Include="Assets\Scripts\UI\EXPwindow.cs" />
+    <Compile Include="Assets\Prefabs\Player\Perks\ExtraHP.cs" />
+    <Compile Include="Assets\Scripts\Menu\ProfileLoader.cs" />
     <Compile Include="Assets\Audio\TrackLayer.cs" />
     <Compile Include="Assets\Scripts\UI\MenuCamera.cs" />
     <Compile Include="Assets\Scripts\UI\HoloProfileButton.cs" />
     <Compile Include="Assets\Imports\Ultimate 10 Plus Shaders\Scripts\U10PS_MouseRotation.cs" />
     <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
     <Compile Include="Assets\Imports\VHS\Scripts\VHSPostProcessEffect.cs" />
+    <Compile Include="Assets\Scripts\Pooling\Enemies\TrinatiPool.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Models\VignetteModel.cs" />
+    <Compile Include="Assets\Scripts\Cog.cs" />
     <Compile Include="Assets\Imports\Environment\_SNAPS_PrototypingAssets\About\Scripts\Readme.cs" />
     <Compile Include="Assets\Scripts\IPoolableObject.cs" />
     <Compile Include="Assets\Audio\Session.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Components\ColorGradingComponent.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Components\FogComponent.cs" />
+    <Compile Include="Assets\Scripts\UI\PerksDialog.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\PostProcessingProfile.cs" />
     <Compile Include="Assets\Scripts\Environment\AttachPoint.cs" />
+    <Compile Include="Assets\Scripts\UI\PerkPanelUI.cs" />
     <Compile Include="Assets\Scripts\Player\Head.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Models\DepthOfFieldModel.cs" />
     <Compile Include="Assets\Scripts\Enemies\Boule.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Components\FxaaComponent.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Components\MotionBlurComponent.cs" />
+    <Compile Include="Assets\Scripts\UI\TutorialCanvas.cs" />
     <Compile Include="Assets\Scripts\Enemies\Cryser.cs" />
+    <Compile Include="Assets\Scripts\Menu\YesNoDialogDeleteProfile.cs" />
+    <Compile Include="Assets\Prefabs\Player\Perks\Guillotine.cs" />
     <Compile Include="Assets\Scripts\General\Part.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Components\GrainComponent.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Models\BloomModel.cs" />
@@ -216,42 +252,44 @@
     <Compile Include="Assets\Scripts\UI\EnemyHPBar.cs" />
     <Compile Include="Assets\Audio\Subtrack.cs" />
     <Compile Include="Assets\Scripts\Pooling\Powerups\CannonPool.cs" />
+    <Compile Include="Assets\Scripts\UI\PerkPanel.cs" />
     <Compile Include="Assets\Scripts\General\ShieldFX.cs" />
     <Compile Include="Assets\Scripts\Menu\MenuPlayer.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Models\ColorGradingModel.cs" />
     <Compile Include="Assets\Imports\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_RandomDirectionTranslate.cs" />
     <Compile Include="Assets\Scripts\PowerUps\MapBonus.cs" />
     <Compile Include="Assets\Scripts\Managers\WaveManager.cs" />
-    <Compile Include="Assets\Simple Helvetica\SimpleHelvetica.cs" />
+    <Compile Include="Assets\Scripts\UI\PerksObserver.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Attributes\TrackballGroupAttribute.cs" />
     <Compile Include="Assets\Scripts\Pooling\Enemies\DenymattPool.cs" />
+    <Compile Include="Assets\Prefabs\Player\Perks\DoubleSmash.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerBottom.cs" />
     <Compile Include="Assets\Scripts\Pooling\Enemies\CryserPool.cs" />
     <Compile Include="Assets\Scripts\UI\ComboCounterText.cs" />
+    <Compile Include="Assets\Scripts\Profile\EXPtable.cs" />
     <Compile Include="Assets\Scripts\Environment\CeilingDoor.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Models\AntialiasingModel.cs" />
     <Compile Include="Assets\Scripts\General\SuperSpeedEffect.cs" />
     <Compile Include="Assets\Scripts\Menu\Profiler.cs" />
     <Compile Include="Assets\Scripts\Player\RegularBody.cs" />
     <Compile Include="Assets\Scripts\PowerUps\Containers\SpeedContainer.cs" />
+    <Compile Include="Assets\Scripts\Menu\WarningDialog.cs" />
+    <Compile Include="Assets\Scripts\Managers\PerksManager.cs" />
     <Compile Include="Assets\Scripts\General\TV_Screen_Menu.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Components\UserLutComponent.cs" />
     <Compile Include="Assets\Imports\Ultimate 10 Plus Shaders\Scripts\U10PS_SnowOverTime.cs" />
     <Compile Include="Assets\Scripts\UI\ProfileSelector.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
+    <Compile Include="Assets\Prefabs\Player\Perks\ExtraPowerups.cs" />
+    <Compile Include="Assets\Scripts\Enemies\TrinityBullet.cs" />
     <Compile Include="Assets\Imports\Kino\Glitch\AnalogGlitch.cs" />
     <Compile Include="Assets\Scripts\Pooling\Scraps\PrefabPooler.cs" />
     <Compile Include="Assets\Imports\HologramShader\Assets\PostProcessing\Runtime\Models\AmbientOcclusionModel.cs" />
     <Compile Include="Assets\Scripts\Scraps\CrystalScrap.cs" />
+    <Compile Include="Assets\Prefabs\Player\Perks\AttackSequence.cs" />
     <Compile Include="Assets\Scripts\PowerUps\ShieldUp.cs" />
     <Compile Include="Assets\Scripts\Enemies\LaserBeam.cs" />
-    <Compile Include="Assets\Scripts\Menu\HoloSmallButton.cs" />
-    <Compile Include="Assets\Scripts\Menu\YesNoDialogDeleteProfile.cs" />
-    <Compile Include="Assets\Scripts\Menu\WarningDialog.cs" />
-    <Compile Include="Assets\Scripts\UI\OKbutton.cs" />
-    <Compile Include="Assets\Scripts\Menu\ProfileLoader.cs" />
-    <Compile Include="Assets\Scripts\Menu\YesNoDialogQuit.cs" />
-    <Compile Include="Assets\Scripts\Menu\YesNoDialog.cs" />
+    <Compile Include="Assets\Scripts\General\Credits.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
@@ -285,7 +323,6 @@
      <None Include="Assets\Imports\Particle Ribbon by Moonflower Carnivore\Shaders\Particle Alpha Blend HDR.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\Imports\HologramShader\Assets\PostProcessing\Resources\Shaders\ColorGrading.cginc" />
-     <None Include="Assets\Simple Helvetica\readme.txt" />
      <None Include="Assets\Imports\HologramShader\Assets\PostProcessing\Editor Resources\Monitors\HistogramRender.shader" />
      <None Include="Assets\Imports\HologramShader\Assets\PostProcessing\Resources\Shaders\UberSecondPass.cginc" />
      <None Include="Assets\Imports\EffectExamples\Magic Effects\Shaders\Ice.shader" />
@@ -533,6 +570,15 @@
     </Reference>
     <Reference Include="UnityEditor">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.1.12f1\Editor\Data\Managed\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Analytics.Editor">
+      <HintPath>Library\PackageCache\com.unity.analytics@3.5.3\Unity.Analytics.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Analytics.Tracker">
+      <HintPath>Library\PackageCache\com.unity.analytics@3.5.3\Unity.Analytics.Tracker.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Analytics.StandardEvents">
+      <HintPath>Library\PackageCache\com.unity.analytics@3.5.3\AnalyticsStandardEvents\Unity.Analytics.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.1.12f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll</HintPath>
@@ -882,6 +928,9 @@
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.Monetization">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.Monetization.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.ProGrids">
       <HintPath>Library\ScriptAssemblies\Unity.ProGrids.dll</HintPath>
     </Reference>
@@ -891,6 +940,9 @@
     <Reference Include="Unity.ProBuilder">
       <HintPath>Library\ScriptAssemblies\Unity.ProBuilder.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.Advertisements">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.Advertisements.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.ProBuilder.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.ProBuilder.Editor.dll</HintPath>
     </Reference>
@@ -899,6 +951,12 @@
     </Reference>
     <Reference Include="Unity.ProGrids.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.ProGrids.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Purchasing">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.Purchasing.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Purchasing">
+      <HintPath>Library\ScriptAssemblies\UnityEditor.Purchasing.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
@@ -912,8 +970,14 @@
     <Reference Include="Unity.Postprocessing.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Postprocessing.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.XR.LegacyInputHelpers">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Rider.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Analytics">
+      <HintPath>Library\ScriptAssemblies\Analytics.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
@@ -924,14 +988,29 @@
     <Reference Include="Unity.2D.Tilemap.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Tilemap.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.SpatialTracking">
+      <HintPath>Library\ScriptAssemblies\UnityEditor.SpatialTracking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpatialTracking">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.SpatialTracking.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VisualStudio.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Advertisements.Editor">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.Advertisements.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.ProBuilder.AddOns.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.ProBuilder.AddOns.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Analytics.DataPrivacy">
+      <HintPath>Library\ScriptAssemblies\Unity.Analytics.DataPrivacy.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.XR.LegacyInputHelpers">
+      <HintPath>Library\ScriptAssemblies\UnityEditor.XR.LegacyInputHelpers.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>

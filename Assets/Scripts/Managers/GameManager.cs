@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -11,13 +11,14 @@ public class GameManager : MonoBehaviour
 
     public Camera menuCamera;
 
+    public TutorialCanvas tutorialCanvas;
+
     public bool devMode;
     [HideInInspector]
     public bool isPaused = false;
+    private bool inTutorial = false;
 
     private InGameMenu menu;
-
-    private int expPool;
 
     public Player player;
     public SideWall LeftWall;
@@ -31,6 +32,8 @@ public class GameManager : MonoBehaviour
 
     private PostProcessVolume ppv;
     private ColorGrading colorGrading;
+    private Vignette vignette;
+    private float BaseVignetteIntensity = 0.684f;
 
     private bool gameOver = false;
     private int score = 0;
@@ -40,24 +43,36 @@ public class GameManager : MonoBehaviour
     private float mapW;
     private float mapH;
 
+
+
     private List<float> GameArea;
     // Start is called before the first frame update
     void Start()
     {
-        expPool = 0;
         if (Instance == null)
             Instance = this;
         ppv = Camera.main.GetComponent<PostProcessVolume>();
         ppv.profile.TryGetSettings(out colorGrading);
-
+        ppv.profile.TryGetSettings(out vignette);
+        vignette.intensity.value = 0;
         spawner = FindObjectOfType<CeilingSpawner>();
         GameProfile.Instance.SetLevelAndCheckProfile();
         player = FindObjectOfType<Player>();
-        //player.AssignSkills(GameProfile.Instance.GetProfile().skills);
+        player.InitWithProfile(GameProfile.Instance.GetProfile());
+        player.AssignSkills(GameProfile.Instance.GetSkills());
         GameArea = new List<float>();
         CalculateGameArea();
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+        menu = FindObjectOfType<InGameMenu>();
+        menu.SetProfile(GameProfile.Instance.GetProfile());
+        menu.SetPreferences(GameProfile.Instance.muteSound, GameProfile.Instance.muteMusic);
+        StartGameEffect();
+    }
+
+    public void StartGameEffect()
+    {
+        CameraEffects.WhiteNoiseEffect(1.5f);
         menuCamera.gameObject.SetActive(false);
     }
 
@@ -88,14 +103,9 @@ public class GameManager : MonoBehaviour
         return score;
     }
 
-    public void AddScore()
+    public void AddPowerup(int amount)
     {
         player.AddPowerUp(1);
-    }
-
-    public void AddExpToPool(int amount)
-    {
-        expPool += amount;
     }
 
     public IEnumerator StartWave()
@@ -114,8 +124,16 @@ public class GameManager : MonoBehaviour
     {
         hitFlash.FlashDamage();
     }
+
+    public void SavePrefs()
+    {
+        GameProfile.Instance.muteSound = !menu.sound.isOn;
+        GameProfile.Instance.muteMusic = !menu.music.isOn;
+    }
+
     public void EndGame()
     {
+        SavePrefs();
         gameOver = true;
         SoundtrackManager.Instance.StopMusic();
         AudioManager.Instance.PlayShutDown();
@@ -143,8 +161,10 @@ public class GameManager : MonoBehaviour
 
     public void EndGameFromMenu()
     {
+        SavePrefs();
         Time.timeScale = 1;
         AudioListener.pause = false;
+        AudioManager.Instance.MenuStop("WhiteNoiseMenu");
         SoundtrackManager.Instance.StopMusic();
         menuCamera.gameObject.SetActive(false);
         StartCoroutine(EndFromMenu());
@@ -161,48 +181,71 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame()
     {
-
         AudioListener.pause = true;
         isPaused = true;
         Time.timeScale = 0;
         colorGrading.saturation.value = -35;
         colorGrading.contrast.value = 35;
         menuCamera.gameObject.SetActive(true);
-        if (!menu)
-        {
-            menu = FindObjectOfType<InGameMenu>();
-            menu.SetProfile(GameProfile.Instance.GetProfile());
-        }
         menu.UpdateUI();
         menu.MoveMenu(-1); // move menu down
     }
 
-    public void UnpauseGameStart()
+    public void UnpauseGameInit()
     {
         menu.MoveMenu(1); // move menu up
         // ^ disabling the camera mplemented at InGameMenu because there is a delay until the menu goes up
     }
 
-    public void UnpauseGameEnd()
+
+    public void UnpauseGame()
     {
         menuCamera.gameObject.SetActive(false);
         AudioListener.pause = false;
+        AudioManager.Instance.MenuStop("WhiteNoiseMenu");
         isPaused = false;
         Time.timeScale = 1;
         colorGrading.saturation.value = 5;
         colorGrading.contrast.value = 15;
     }
 
+    public void ShowTutorialScreen(int tutorialIdx)
+    {
+        AudioListener.pause = true;
+        isPaused = true;
+        inTutorial = true;
+        Time.timeScale = 0;
+        tutorialCanvas.gameObject.SetActive(true);
+        tutorialCanvas.ShowTutorialScreen(tutorialIdx);
+    }
+
+    public void DismissCurrentTutorial()
+    {
+        AudioListener.pause = false;
+        isPaused = false;
+        inTutorial = false;
+        Time.timeScale = 1;
+        tutorialCanvas.gameObject.SetActive(false);
+    }
+
     // Update is called once per frame
     void Update()
     {
+        if (vignette.intensity.value < BaseVignetteIntensity)
+        {
+            vignette.intensity.value += Time.deltaTime;
+            if (vignette.intensity.value >= BaseVignetteIntensity)
+            {
+                vignette.intensity.value = BaseVignetteIntensity;
+            }
+        }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (!gameOver)
+            if (!gameOver && !inTutorial)
             {
                 if (isPaused)
                 {
-                    UnpauseGameStart();
+                    UnpauseGameInit();
                 }
                 else
                 {

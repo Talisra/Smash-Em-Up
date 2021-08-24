@@ -48,331 +48,493 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: abea15859e4281e4382cf9cf564975c7, type: 3}
     volume: 0.4
     pitch: 1.4
+    loop: 0
     source: {fileID: 0}
   - name: Smash2
     clip: {fileID: 8300000, guid: abea15859e4281e4382cf9cf564975c7, type: 3}
     volume: 0.5
     pitch: 1.2
+    loop: 0
     source: {fileID: 0}
   - name: Smash3
     clip: {fileID: 8300000, guid: abea15859e4281e4382cf9cf564975c7, type: 3}
     volume: 0.6
     pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Smash4
+    clip: {fileID: 8300000, guid: abea15859e4281e4382cf9cf564975c7, type: 3}
+    volume: 0.6
+    pitch: 0.8
+    loop: 0
     source: {fileID: 0}
   - name: SmashF
     clip: {fileID: 8300000, guid: 307a1a2f6a3f2324b951adbdb137cf97, type: 3}
     volume: 0.6
     pitch: 1
+    loop: 0
     source: {fileID: 0}
   - name: Wall_Impact
     clip: {fileID: 8300000, guid: 79c77b1244f5d0a41b88fb6e2eb44861, type: 3}
     volume: 0.517
     pitch: 1.2
+    loop: 0
     source: {fileID: 0}
   - name: Explosion1
     clip: {fileID: 8300000, guid: ae1b0c0b3e476df43ad52f97562c41c0, type: 3}
     volume: 0.84
     pitch: 1
+    loop: 0
     source: {fileID: 0}
   - name: Explosion_Evaporate
     clip: {fileID: 8300000, guid: 33cc3a56f00cd8140820d54acd2169a7, type: 3}
     volume: 0.371
     pitch: 0.81
+    loop: 0
     source: {fileID: 0}
   - name: Explosion2
     clip: {fileID: 8300000, guid: 303870064f342504d9cbf0a4ae242eb1, type: 3}
     volume: 0.754
     pitch: 1.2
+    loop: 0
     source: {fileID: 0}
   - name: Tap
     clip: {fileID: 8300000, guid: b79bb63c0529e60489781f74c3d02947, type: 3}
     volume: 0.391
     pitch: 0.78
+    loop: 0
     source: {fileID: 0}
   - name: MetalCollision
     clip: {fileID: 8300000, guid: 21c3524e0330c744e882341622f05c4a, type: 3}
     volume: 0.254
     pitch: 1.14
+    loop: 0
     source: {fileID: 0}
   - name: PlayerDamage
     clip: {fileID: 8300000, guid: 92ad902eef9eb81408e449eeea1f918f, type: 3}
     volume: 0.75
     pitch: 0.78
+    loop: 0
     source: {fileID: 0}
   - name: CuballCharge
     clip: {fileID: 8300000, guid: 486138d7471174b41a4501aaca44ff44, type: 3}
     volume: 0.2
     pitch: 1.5
+    loop: 0
     source: {fileID: 0}
   - name: CubulletFired
     clip: {fileID: 8300000, guid: 0c50231a02c5af3498eb33099319c2de, type: 3}
     volume: 0.468
     pitch: 1.52
+    loop: 0
     source: {fileID: 0}
   - name: CubulletDestroy
     clip: {fileID: 8300000, guid: bf8e42890a76ec24c95d7977e68fdb90, type: 3}
     volume: 1
     pitch: 1.16
+    loop: 0
     source: {fileID: 0}
   - name: BrickBreak
     clip: {fileID: 8300000, guid: ae1b0c0b3e476df43ad52f97562c41c0, type: 3}
     volume: 0.43
     pitch: 0.83
+    loop: 0
     source: {fileID: 0}
   - name: SuperSmash
-    clip: {fileID: 8300000, guid: 9b3300c0e39988c4f9fafe8392789776, type: 3}
+    clip: {fileID: 8300000, guid: abea15859e4281e4382cf9cf564975c7, type: 3}
     volume: 0.734
-    pitch: 0.83
+    pitch: 0.85
+    loop: 0
+    source: {fileID: 0}
+  - name: Bash
+    clip: {fileID: 8300000, guid: 94df3e728a4f9d54c9e2aa699b494859, type: 3}
+    volume: 0.411
+    pitch: 1
+    loop: 0
     source: {fileID: 0}
   - name: PlayerExplosion
     clip: {fileID: 8300000, guid: ae1b0c0b3e476df43ad52f97562c41c0, type: 3}
     volume: 1
     pitch: 0.73
+    loop: 0
     source: {fileID: 0}
   - name: SmallExplosion
     clip: {fileID: 8300000, guid: 303870064f342504d9cbf0a4ae242eb1, type: 3}
     volume: 0.469
     pitch: 2.02
+    loop: 0
     source: {fileID: 0}
   - name: BigShatter
     clip: {fileID: 8300000, guid: a05a54ad25e8e2446a2a9c4146b180c9, type: 3}
     volume: 0.097
     pitch: 1.31
+    loop: 0
     source: {fileID: 0}
   - name: TinyShatter
     clip: {fileID: 8300000, guid: 168d11b7cddfa4949a6f10586312055b, type: 3}
     volume: 0.419
     pitch: 0.81
+    loop: 0
     source: {fileID: 0}
   - name: Spark1
     clip: {fileID: 8300000, guid: 45f890f64f889e142bbed70345896d77, type: 3}
     volume: 0.245
     pitch: 0.7
+    loop: 0
     source: {fileID: 0}
   - name: Spark2
     clip: {fileID: 8300000, guid: 3487d7246cccafe4384c107c33068053, type: 3}
     volume: 0.58
     pitch: 0.59
+    loop: 0
     source: {fileID: 0}
   - name: Hit1
     clip: {fileID: 8300000, guid: a845e29f59a72574e83b83a1dc171aff, type: 3}
     volume: 0.312
     pitch: 0.93
+    loop: 0
     source: {fileID: 0}
   - name: Hit2
     clip: {fileID: 8300000, guid: 70d1abbd34b91f4489492914943ed011, type: 3}
     volume: 0.606
     pitch: 0.76
+    loop: 0
     source: {fileID: 0}
   - name: Spark_Dead
     clip: {fileID: 8300000, guid: f9db8598f7bb5c7448ef99b299c7fbe3, type: 3}
     volume: 0.391
     pitch: 1
+    loop: 0
     source: {fileID: 0}
   - name: Laser
     clip: {fileID: 8300000, guid: 135f8c24f8574b84d8a32a79fc181f05, type: 3}
     volume: 0.41
     pitch: 0.84
+    loop: 0
     source: {fileID: 0}
   - name: ScrapMetalHit
     clip: {fileID: 8300000, guid: 92d23b21d53d20f41b7118b64fce910e, type: 3}
     volume: 0.15
     pitch: 1.71
+    loop: 0
     source: {fileID: 0}
   - name: ChargeHit
     clip: {fileID: 8300000, guid: 13ce31399306b9e4085acf3c01c4d901, type: 3}
     volume: 0.697
     pitch: 1.25
+    loop: 0
     source: {fileID: 0}
   - name: BoxImpact
     clip: {fileID: 8300000, guid: a845e29f59a72574e83b83a1dc171aff, type: 3}
     volume: 0.587
     pitch: 0.9
+    loop: 0
     source: {fileID: 0}
   - name: BoxOpen
     clip: {fileID: 8300000, guid: cf542ffa44858844f8bf2195202cf86a, type: 3}
     volume: 0.989
     pitch: 0.91
+    loop: 0
     source: {fileID: 0}
   - name: Screech
     clip: {fileID: 8300000, guid: 4b3f8254cde360a4ab643dcc42bbac11, type: 3}
     volume: 0.364
     pitch: 1.71
+    loop: 0
     source: {fileID: 0}
   - name: DoorClosed
     clip: {fileID: 8300000, guid: ae9cbaebdc168bb4ab72e6f88ed63654, type: 3}
     volume: 1
     pitch: 1.22
+    loop: 0
     source: {fileID: 0}
   - name: Slam_metal
     clip: {fileID: 8300000, guid: 94df3e728a4f9d54c9e2aa699b494859, type: 3}
     volume: 0.862
     pitch: 0.68
+    loop: 0
     source: {fileID: 0}
   - name: Heal
     clip: {fileID: 8300000, guid: 86b1de76b67f82f4ea24b0340d16771f, type: 3}
     volume: 1
     pitch: 0.94
+    loop: 0
     source: {fileID: 0}
   - name: Click
     clip: {fileID: 8300000, guid: 094883d45533c884f941a7dab201bcbc, type: 3}
     volume: 0.621
     pitch: 1.25
+    loop: 0
     source: {fileID: 0}
   - name: ContainerOpen
     clip: {fileID: 8300000, guid: 5f8878b1c07279948945dd37f46af396, type: 3}
     volume: 0.742
     pitch: 1.54
+    loop: 0
     source: {fileID: 0}
   - name: ContainerSummon
     clip: {fileID: 8300000, guid: 32a085624b9f652458773be29e8fc6c1, type: 3}
     volume: 0.817
     pitch: 1.26
+    loop: 0
     source: {fileID: 0}
   - name: ContainerBreak
     clip: {fileID: 8300000, guid: 523ebf68884d98049942c0866eb29b2c, type: 3}
     volume: 0.78
     pitch: 1.41
+    loop: 0
     source: {fileID: 0}
   - name: Cannon_Norm
     clip: {fileID: 8300000, guid: 13249423054df0a4981afc94dac599d4, type: 3}
     volume: 0.913
     pitch: 1
+    loop: 0
     source: {fileID: 0}
   - name: Cannon_8bit
     clip: {fileID: 8300000, guid: d6f2f510ef6e8dd4b9d72f4fe76ce4c1, type: 3}
     volume: 0.476
     pitch: 1
+    loop: 0
     source: {fileID: 0}
   - name: Cannon_Dub
     clip: {fileID: 8300000, guid: 3094a9a294925b245aa8a35f28370c01, type: 3}
     volume: 0.78
     pitch: 1
+    loop: 0
     source: {fileID: 0}
   - name: Concrete_Hit
     clip: {fileID: 8300000, guid: 503c91320c7d3874fad75d7b3b1440c4, type: 3}
     volume: 0.35
     pitch: 1
+    loop: 0
     source: {fileID: 0}
   - name: Pipe_Hit
     clip: {fileID: 8300000, guid: b0b77778861a05141b4a812748c1ab70, type: 3}
     volume: 0.35
     pitch: 1
+    loop: 0
     source: {fileID: 0}
   - name: Floor_Hit
     clip: {fileID: 8300000, guid: 92d23b21d53d20f41b7118b64fce910e, type: 3}
     volume: 0.25
     pitch: 1
+    loop: 0
     source: {fileID: 0}
   - name: Squash
     clip: {fileID: 8300000, guid: fc4e39efd6e2922428c81beb3f6e37ea, type: 3}
     volume: 0.306
     pitch: 1
+    loop: 0
     source: {fileID: 0}
   - name: Shield
     clip: {fileID: 8300000, guid: 71703e3432ab9494d95ab07117d5bff7, type: 3}
     volume: 0.5
     pitch: 1
+    loop: 0
     source: {fileID: 0}
   - name: Spark
     clip: {fileID: 8300000, guid: 45f890f64f889e142bbed70345896d77, type: 3}
     volume: 1
     pitch: 2
+    loop: 0
     source: {fileID: 0}
   - name: WhiteNoise
     clip: {fileID: 8300000, guid: 272ca79126fddbe47b383740349509a8, type: 3}
     volume: 0.3
     pitch: 1
+    loop: 0
     source: {fileID: 0}
   - name: ScreenShut
     clip: {fileID: 8300000, guid: ebbf93560fea66043ae91efa18626854, type: 3}
     volume: 0.3
     pitch: 2
+    loop: 0
     source: {fileID: 0}
   - name: RoundAtkwu
     clip: {fileID: 8300000, guid: cff60d270ba09ef4fa1cea73ed717db1, type: 3}
     volume: 1
     pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Bashwu
+    clip: {fileID: 8300000, guid: cff60d270ba09ef4fa1cea73ed717db1, type: 3}
+    volume: 1
+    pitch: 0.66
+    loop: 0
     source: {fileID: 0}
   - name: SmallShatter
     clip: {fileID: 8300000, guid: 97a96f41269e73e4984446ae6afc4655, type: 3}
     volume: 0.3
     pitch: 1
+    loop: 0
     source: {fileID: 0}
   - name: SmallBum
     clip: {fileID: 8300000, guid: 258a1c79536af394cbb65e627f7e3335, type: 3}
     volume: 1
     pitch: 0.8
+    loop: 0
     source: {fileID: 0}
   - name: MiniBossFire
     clip: {fileID: 8300000, guid: ac4c2568d2a0041aca9d47120e725bfc, type: 3}
     volume: 0.621
     pitch: 1.22
+    loop: 0
     source: {fileID: 0}
   - name: MiniBossBulletDestroy
     clip: {fileID: 8300000, guid: 0b896a5d8de0b154aa185aacfe9e9b4b, type: 3}
     volume: 0.528
     pitch: 1.72
+    loop: 0
     source: {fileID: 0}
   - name: MinibossCharge
     clip: {fileID: 8300000, guid: 486138d7471174b41a4501aaca44ff44, type: 3}
     volume: 0.528
     pitch: 1.33
+    loop: 0
     source: {fileID: 0}
   - name: MinibossChargeSpark
     clip: {fileID: 8300000, guid: 8ee04d32aee5b0e4da82aaaaaf904df0, type: 3}
     volume: 0.734
     pitch: 1
+    loop: 0
     source: {fileID: 0}
   - name: MinibossRelease1
     clip: {fileID: 8300000, guid: 4fa2d6f6c988cfd4b89db9617c549b62, type: 3}
     volume: 1
     pitch: 0.5
+    loop: 0
     source: {fileID: 0}
   - name: MinibossRelease2
     clip: {fileID: 8300000, guid: f9bfa0791a5960342bb79542cc883b56, type: 3}
     volume: 0.6
     pitch: 1
+    loop: 0
     source: {fileID: 0}
   - name: MinibossDMG
     clip: {fileID: 8300000, guid: 94df3e728a4f9d54c9e2aa699b494859, type: 3}
     volume: 0.6
     pitch: 1.42
+    loop: 0
     source: {fileID: 0}
   - name: MinibossDie1
     clip: {fileID: 8300000, guid: f9db8598f7bb5c7448ef99b299c7fbe3, type: 3}
     volume: 1
     pitch: 0.5
+    loop: 0
     source: {fileID: 0}
   - name: MinibossDie2
     clip: {fileID: 8300000, guid: 03e043640b214034a840ff0c68ec5af9, type: 3}
     volume: 0.654
     pitch: 1.15
+    loop: 0
     source: {fileID: 0}
   - name: DenymattExp
     clip: {fileID: 8300000, guid: ad6dc6420ade60242854bc8fb588fa31, type: 3}
     volume: 0.491
     pitch: 1
+    loop: 0
     source: {fileID: 0}
   - name: DenymattHit
     clip: {fileID: 8300000, guid: ee27929f6d2a40744b6c98062d02a646, type: 3}
     volume: 0.491
     pitch: 1
+    loop: 0
     source: {fileID: 0}
   - name: CountDown
     clip: {fileID: 8300000, guid: 5eb51d146bb7f574f88f6ad708ab46e9, type: 3}
     volume: 0.075
     pitch: 1
+    loop: 0
     source: {fileID: 0}
   - name: Fuse
     clip: {fileID: 8300000, guid: fe41a72f1682df54ca76d0155acee192, type: 3}
     volume: 0.402
     pitch: 0.67
+    loop: 0
     source: {fileID: 0}
   - name: AIOspawn
     clip: {fileID: 8300000, guid: cd4b323d117710b498c797b63f42cedf, type: 3}
     volume: 0.77
     pitch: 1.26
+    loop: 0
+    source: {fileID: 0}
+  - name: LvlupBIT
+    clip: {fileID: 8300000, guid: 8598f0633e7879745a6a2f9420a453d6, type: 3}
+    volume: 0.463
+    pitch: 1.5
+    loop: 0
+    source: {fileID: 0}
+  - name: LvlupSFX
+    clip: {fileID: 8300000, guid: eef713b858e5f3f4fb201c694f194ceb, type: 3}
+    volume: 0.81
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: ExpCount
+    clip: {fileID: 8300000, guid: 58cfd9c6f10cf9647bd994caf87f71db, type: 3}
+    volume: 0.81
+    pitch: 2
+    loop: 0
+    source: {fileID: 0}
+  - name: WhiteNoiseStart
+    clip: {fileID: 8300000, guid: 913e03284e1adba4faa4a530f717cbe4, type: 3}
+    volume: 0.381
+    pitch: 0.7
+    loop: 0
+    source: {fileID: 0}
+  - name: Repair1
+    clip: {fileID: 8300000, guid: 7da9372519ac8d14f9a72b9eaa527deb, type: 3}
+    volume: 1
+    pitch: 1.8
+    loop: 0
+    source: {fileID: 0}
+  - name: Repair2
+    clip: {fileID: 8300000, guid: 4d3e53cba62f2f04da1d8120a4719210, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Maul
+    clip: {fileID: 8300000, guid: d780e7bbe5c474427853cd58538d35ca, type: 3}
+    volume: 1
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: TriExplode1
+    clip: {fileID: 8300000, guid: 9583184eb6956454ab766b40abd7e95a, type: 3}
+    volume: 1
+    pitch: 0.75
+    loop: 0
+    source: {fileID: 0}
+  - name: TriExplode2
+    clip: {fileID: 8300000, guid: 92df3be7b0794a64c922eb5e8e0098f1, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: TrinatiShieldDamage
+    clip: {fileID: 8300000, guid: dc856977757fcd44787bbc595e9fe410, type: 3}
+    volume: 0.8
+    pitch: 1.4
+    loop: 0
+    source: {fileID: 0}
+  - name: TrinatiShieldDead
+    clip: {fileID: 8300000, guid: 0d1c10848dbcc4ca7b09233e39a167fd, type: 3}
+    volume: 1
+    pitch: 0.85
+    loop: 0
+    source: {fileID: 0}
+  - name: TrinityBulletDie
+    clip: {fileID: 8300000, guid: b79bb63c0529e60489781f74c3d02947, type: 3}
+    volume: 0.5
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
+  - name: TrinityBulletFire
+    clip: {fileID: 8300000, guid: 92df3be7b0794a64c922eb5e8e0098f1, type: 3}
+    volume: 0.25
+    pitch: 3
+    loop: 0
     source: {fileID: 0}
   muteSound: 0
   shutDown:
@@ -380,20 +542,43 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: a36f0e7157ef3aa4e96bc27129c1780a, type: 3}
     volume: 1
     pitch: 1
+    loop: 0
     source: {fileID: 0}
   - name: SD2
     clip: {fileID: 8300000, guid: 9360fed4d4e2abd4b9f4f4c4f4207731, type: 3}
     volume: 0.25
     pitch: 1
+    loop: 0
     source: {fileID: 0}
   - name: WhiteNoise
     clip: {fileID: 8300000, guid: 9494fa18046536645b8e097b1832e846, type: 3}
     volume: 0.5
     pitch: 1
+    loop: 0
     source: {fileID: 0}
   - name: WhiteNoise2
     clip: {fileID: 8300000, guid: 913e03284e1adba4faa4a530f717cbe4, type: 3}
     volume: 0.5
     pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  menuSounds:
+  - name: Button_Hover
+    clip: {fileID: 8300000, guid: f8be9b3364a52704d87cf26a2f1c746f, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Button_Click
+    clip: {fileID: 8300000, guid: 60331cc9e73fa6c408e767013533190f, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: WhiteNoiseMenu
+    clip: {fileID: 8300000, guid: 913e03284e1adba4faa4a530f717cbe4, type: 3}
+    volume: 0.075
+    pitch: 2.32
+    loop: 1
     source: {fileID: 0}
   isLevel: 0

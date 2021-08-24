@@ -95,6 +95,12 @@ public class Cannon : MapBonus, IPoolableObject
         transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
         animator.Play("Cannon_Eat");
         storedEnemy = enemy;
+        Boule boule;
+        if (enemy.TryGetComponent<Boule>(out boule))
+        {
+
+            boule.HitByPlayer();
+        }
         storedEnemy.tempDisable = true;
         storedEnemy.gameObject.SetActive(false);
         storedEnemy.StopMovement();

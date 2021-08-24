@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2370595551820155333}
   - component: {fileID: 8567490186239713960}
   - component: {fileID: 2261081422019840282}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Object011 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 6798517970685636451}
   - component: {fileID: 273721357725925941}
   - component: {fileID: 690144133624502797}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Anchor
   m_TagString: MapBonus
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 2263382867354215827}
   - component: {fileID: 2611491935667444509}
   - component: {fileID: 1282366607329949941}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Object011 (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -254,7 +254,7 @@ GameObject:
   - component: {fileID: 3418614552145279298}
   - component: {fileID: 8139467862219975260}
   - component: {fileID: 2196434822912599085}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: EnemyCannon
   m_TagString: MapBonus
   m_Icon: {fileID: 0}
@@ -318,7 +318,7 @@ GameObject:
   - component: {fileID: 3418614553021510744}
   - component: {fileID: 3418614553022805094}
   - component: {fileID: 3418614553023805094}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Sphere004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -399,7 +399,7 @@ GameObject:
   - component: {fileID: 3418614553021510746}
   - component: {fileID: 3418614553022805088}
   - component: {fileID: 3418614553023805088}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Object011
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -480,7 +480,7 @@ GameObject:
   - component: {fileID: 1994673501083691917}
   - component: {fileID: 509250962546374689}
   - component: {fileID: 854774641582629364}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Object011 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -561,7 +561,7 @@ GameObject:
   - component: {fileID: 1751111158712335655}
   - component: {fileID: 4289674077351399906}
   - component: {fileID: 1086814214458428229}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Object011 (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -640,7 +640,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1313469299513989502}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: ParticleAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -670,7 +670,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7614901097049973117}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rings
   m_TagString: Untagged
   m_Icon: {fileID: 0}

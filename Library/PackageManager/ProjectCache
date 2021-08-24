@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637566954455693917
-    m_Hash: 1736780073
+      ticks: 637648764113153982
+    m_Hash: 2432547411
   m_LockFileStatus:
     m_FilePath: C:/Users/User/Documents/GitHub/Smash 'em Up/Smash-Em-Up/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637566954455703892
-    m_Hash: 2227908292
+      ticks: 637648764134792449
+    m_Hash: 472835467
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_PackageAssets:
@@ -121,6 +121,270 @@ m_PackageAssets:
         url: 
         revision: 
         path: 
+    - packageId: com.unity.ads@3.5.0
+      testable: 0
+      isDirectDependency: 1
+      version: 3.5.0
+      source: 1
+      resolvedPath: C:\Users\User\Documents\GitHub\Smash 'em Up\Smash-Em-Up\Library\PackageCache\com.unity.ads@3.5.0
+      assetPath: Packages/com.unity.ads
+      name: com.unity.ads
+      displayName: Advertisement
+      author:
+        name: 
+        email: 
+        url: 
+      category: 
+      type: 
+      description: Unity Ads is a video ad network for iOS and Android that allows
+        you to quickly and effectively monetize your games.
+      status: 4
+      errors: []
+      versions:
+        all:
+        - 0.0.3
+        - 0.0.4
+        - 0.0.5
+        - 0.0.6
+        - 0.0.7
+        - 0.0.8
+        - 0.0.10
+        - 0.0.11
+        - 0.0.12
+        - 0.0.13
+        - 0.0.14
+        - 0.0.15
+        - 0.0.16
+        - 2.0.0
+        - 2.0.3
+        - 2.0.4
+        - 2.0.7
+        - 2.0.8
+        - 2.3.1
+        - 2.3.2
+        - 3.0.1
+        - 3.0.2
+        - 3.0.3
+        - 3.1.1
+        - 3.2.0
+        - 3.3.0
+        - 3.3.1
+        - 3.4.0
+        - 3.4.1
+        - 3.4.2
+        - 3.4.4
+        - 3.4.5
+        - 3.4.7
+        - 3.4.9
+        - 3.5.0
+        - 3.5.2
+        - 3.6.1
+        - 3.7.0
+        - 3.7.1
+        - 3.7.3
+        - 3.7.5
+        compatible:
+        - 0.0.3
+        - 0.0.4
+        - 0.0.5
+        - 0.0.6
+        - 0.0.7
+        - 0.0.8
+        - 0.0.10
+        - 0.0.11
+        - 0.0.12
+        - 0.0.13
+        - 0.0.14
+        - 0.0.15
+        - 0.0.16
+        - 2.0.0
+        - 2.0.3
+        - 2.0.4
+        - 2.0.7
+        - 2.0.8
+        - 2.3.1
+        - 2.3.2
+        - 3.0.1
+        - 3.0.2
+        - 3.0.3
+        - 3.1.1
+        - 3.2.0
+        - 3.3.0
+        - 3.3.1
+        - 3.4.0
+        - 3.4.1
+        - 3.4.2
+        - 3.4.4
+        - 3.4.5
+        - 3.4.7
+        - 3.4.9
+        - 3.5.0
+        - 3.5.2
+        - 3.6.1
+        - 3.7.0
+        - 3.7.1
+        - 3.7.3
+        - 3.7.5
+        verified: 3.5.2
+      dependencies:
+      - name: com.unity.ugui
+        version: 1.0.0
+      resolvedDependencies:
+      - name: com.unity.ugui
+        version: 1.0.0
+      - name: com.unity.modules.ui
+        version: 1.0.0
+      - name: com.unity.modules.imgui
+        version: 1.0.0
+      keywords:
+      - ads
+      - unity
+      registry:
+        id: main
+        name: 
+        url: https://packages.unity.com
+        scopes: []
+        isDefault: 1
+        capabilities: 7
+      hasRegistry: 1
+      hideInEditor: 1
+      entitlements:
+        isAllowed: 1
+      isAssetStorePackage: 0
+      datePublishedTicks: 637378601570000000
+      documentationUrl: 
+      hasRepository: 1
+      repository:
+        type: git
+        url: https://github.cds.internal.unity3d.com/unity/com.unity.ads.git
+        revision: 1381cd092159b0c7fef7b2dafa7796ebf313e37c
+        path: 
+    - packageId: com.unity.analytics@3.5.3
+      testable: 0
+      isDirectDependency: 1
+      version: 3.5.3
+      source: 1
+      resolvedPath: C:\Users\User\Documents\GitHub\Smash 'em Up\Smash-Em-Up\Library\PackageCache\com.unity.analytics@3.5.3
+      assetPath: Packages/com.unity.analytics
+      name: com.unity.analytics
+      displayName: Analytics Library
+      author:
+        name: 
+        email: 
+        url: 
+      category: 
+      type: 
+      description: The Unity Analytics Library contains the Analytics Event Tracker
+        component, the Data Privacy plug-in, and the Standard Events API.
+      status: 4
+      errors: []
+      versions:
+        all:
+        - 0.0.3
+        - 0.0.4
+        - 0.0.5
+        - 0.0.7
+        - 0.0.8
+        - 0.0.9
+        - 0.0.10
+        - 0.0.11
+        - 0.0.12
+        - 0.0.13
+        - 0.0.14
+        - 0.0.15
+        - 0.0.16
+        - 0.0.17
+        - 0.0.19
+        - 2.0.5
+        - 2.0.11
+        - 2.0.13
+        - 2.0.14
+        - 2.0.15
+        - 2.0.16
+        - 3.0.5
+        - 3.0.9
+        - 3.1.1
+        - 3.2.0
+        - 3.2.2
+        - 3.2.3
+        - 3.3.0
+        - 3.3.2-preview
+        - 3.3.2
+        - 3.3.4
+        - 3.3.5
+        - 3.4.0
+        - 3.5.3
+        - 3.6.11
+        compatible:
+        - 0.0.3
+        - 0.0.4
+        - 0.0.5
+        - 0.0.7
+        - 0.0.8
+        - 0.0.9
+        - 0.0.10
+        - 0.0.11
+        - 0.0.12
+        - 0.0.13
+        - 0.0.14
+        - 0.0.15
+        - 0.0.16
+        - 0.0.17
+        - 0.0.19
+        - 2.0.5
+        - 2.0.11
+        - 2.0.13
+        - 2.0.14
+        - 2.0.15
+        - 2.0.16
+        - 3.0.5
+        - 3.0.9
+        - 3.1.1
+        - 3.2.0
+        - 3.2.2
+        - 3.2.3
+        - 3.3.0
+        - 3.3.2-preview
+        - 3.3.2
+        - 3.3.4
+        - 3.3.5
+        - 3.4.0
+        - 3.5.3
+        - 3.6.11
+        verified: 3.5.3
+      dependencies:
+      - name: com.unity.ugui
+        version: 1.0.0
+      resolvedDependencies:
+      - name: com.unity.ugui
+        version: 1.0.0
+      - name: com.unity.modules.ui
+        version: 1.0.0
+      - name: com.unity.modules.imgui
+        version: 1.0.0
+      keywords:
+      - analytics
+      - unity
+      registry:
+        id: main
+        name: 
+        url: https://packages.unity.com
+        scopes: []
+        isDefault: 1
+        capabilities: 7
+      hasRegistry: 1
+      hideInEditor: 1
+      entitlements:
+        isAllowed: 1
+      isAssetStorePackage: 0
+      datePublishedTicks: 637381916200000000
+      documentationUrl: 
+      hasRepository: 1
+      repository:
+        type: git
+        url: https://github.cds.internal.unity3d.com/unity/com.unity.analytics.git
+        revision: 02d361e53eda59ceb7d02ba9bd15ff55a093ad83
+        path: 
     - packageId: com.unity.collab-proxy@1.3.9
       testable: 0
       isDirectDependency: 1
@@ -160,7 +424,12 @@ m_PackageAssets:
         - 1.3.7
         - 1.3.8
         - 1.3.9
+        - 1.4.9
         - 1.5.7
+        - 1.6.0
+        - 1.7.1
+        - 1.8.0
+        - 1.9.0
         - 2.0.0-preview.6
         - 2.0.0-preview.8
         - 2.0.0-preview.15
@@ -173,6 +442,9 @@ m_PackageAssets:
         - 2.1.0-preview.6
         compatible:
         - 1.3.9
+        - 1.4.9
+        - 1.6.0
+        - 1.8.0
         - 2.0.0-preview.6
         - 2.0.0-preview.8
         - 2.0.0-preview.15
@@ -263,6 +535,7 @@ m_PackageAssets:
         - 3.0.4
         - 3.0.5
         - 3.0.6
+        - 3.0.7
         compatible:
         - 1.0.2
         - 1.0.6
@@ -288,6 +561,7 @@ m_PackageAssets:
         - 3.0.4
         - 3.0.5
         - 3.0.6
+        - 3.0.7
         verified: 1.2.1
       dependencies:
       - name: com.unity.test-framework
@@ -357,6 +631,8 @@ m_PackageAssets:
         - 2.0.5
         - 2.0.7
         - 2.0.8
+        - 2.0.9
+        - 2.0.11
         compatible:
         - 1.0.2
         - 1.0.3
@@ -371,7 +647,9 @@ m_PackageAssets:
         - 2.0.5
         - 2.0.7
         - 2.0.8
-        verified: 2.0.8
+        - 2.0.9
+        - 2.0.11
+        verified: 2.0.11
       dependencies: []
       resolvedDependencies: []
       keywords: []
@@ -518,11 +796,13 @@ m_PackageAssets:
         - 3.0.1
         - 3.0.3
         - 3.1.0
+        - 3.1.1
         compatible:
         - 2.3.0
         - 3.0.1
         - 3.0.3
         - 3.1.0
+        - 3.1.1
         verified: 2.3.0
       dependencies: []
       resolvedDependencies: []
@@ -610,6 +890,7 @@ m_PackageAssets:
         - 4.4.0-preview.1
         - 4.4.0
         - 4.5.0
+        - 4.5.2
         - 5.0.0-pre.7
         - 5.0.0-pre.10
         - 5.0.1
@@ -638,6 +919,7 @@ m_PackageAssets:
         - 4.4.0-preview.1
         - 4.4.0
         - 4.5.0
+        - 4.5.2
         - 5.0.0-pre.7
         - 5.0.0-pre.10
         - 5.0.1
@@ -775,6 +1057,167 @@ m_PackageAssets:
         url: git+https://github.com/Unity-Technologies/com.unity.progrids.git
         revision: 381f2b0b5dda11525d53e2c608284a3f68d1beff
         path: 
+    - packageId: com.unity.purchasing@2.1.1
+      testable: 0
+      isDirectDependency: 1
+      version: 2.1.1
+      source: 1
+      resolvedPath: C:\Users\User\Documents\GitHub\Smash 'em Up\Smash-Em-Up\Library\PackageCache\com.unity.purchasing@2.1.1
+      assetPath: Packages/com.unity.purchasing
+      name: com.unity.purchasing
+      displayName: In App Purchasing
+      author:
+        name: 
+        email: 
+        url: 
+      category: 
+      type: 
+      description: 'Unity IAP supports the iOS, Mac, tvOS, Google Play, Facebook
+        Gameroom, Windows, Amazon, and Samsung Galaxy app stores. Additionally, it
+        can work in tandem with the Unity Distribution Portal in order to synchronize
+        catalogs and transactions with even more stores.
+
+
+        With Unity IAP,
+        setting up in-app purchases for your game across multiple app stores has
+        never been easier.
+
+
+        Use one common API to access all stores for
+        free. With just a few lines of code, you can fully understand and optimize
+        your in-game economy.
+
+
+        Unity IAP automatically couples with Unity
+        Analytics enabling you to monitor and act on trends in your revenue and purchase
+        data across multiple platforms.
+
+
+        Includes client-side receipt validation
+        for Apple App Store and Google Play.
+
+
+        After installing this package,
+        please make sure to open the Services Window and enable In-App Purchasing
+        to use its features. In the In-App Purchasing settings, please make sure
+        to import the Asset Store plugin if you have not already done so. This is
+        necessary to include all of the features.'
+      status: 4
+      errors: []
+      versions:
+        all:
+        - 0.0.3
+        - 0.0.4
+        - 0.0.5
+        - 0.0.6
+        - 0.0.7
+        - 0.0.8
+        - 0.0.9
+        - 0.0.10
+        - 0.0.11
+        - 0.0.12
+        - 0.0.13
+        - 0.0.14
+        - 0.0.15
+        - 0.0.16
+        - 0.0.17
+        - 0.0.18
+        - 0.0.19
+        - 2.0.0
+        - 2.0.1
+        - 2.0.3
+        - 2.0.5
+        - 2.0.6
+        - 2.1.0
+        - 2.1.1
+        - 2.2.0
+        - 2.2.1
+        - 2.2.2
+        - 3.0.0-pre.3
+        - 3.0.0-pre.4
+        - 3.0.0-pre.5
+        - 3.0.0-pre.6
+        - 3.0.1
+        - 3.0.2
+        - 3.1.0
+        - 3.2.1
+        - 3.2.2
+        - 3.2.3
+        - 4.0.0
+        compatible:
+        - 0.0.3
+        - 0.0.4
+        - 0.0.5
+        - 0.0.6
+        - 0.0.7
+        - 0.0.8
+        - 0.0.9
+        - 0.0.10
+        - 0.0.11
+        - 0.0.12
+        - 0.0.13
+        - 0.0.14
+        - 0.0.15
+        - 0.0.16
+        - 0.0.17
+        - 0.0.18
+        - 0.0.19
+        - 2.0.0
+        - 2.0.1
+        - 2.0.3
+        - 2.0.5
+        - 2.0.6
+        - 2.1.0
+        - 2.1.1
+        - 2.2.0
+        - 2.2.1
+        - 2.2.2
+        - 3.0.0-pre.3
+        - 3.0.0-pre.4
+        - 3.0.0-pre.5
+        - 3.0.0-pre.6
+        - 3.0.1
+        - 3.0.2
+        - 3.1.0
+        - 3.2.1
+        - 3.2.2
+        - 3.2.3
+        - 4.0.0
+        verified: 2.1.1
+      dependencies:
+      - name: com.unity.ugui
+        version: 1.0.0
+      resolvedDependencies:
+      - name: com.unity.ugui
+        version: 1.0.0
+      - name: com.unity.modules.ui
+        version: 1.0.0
+      - name: com.unity.modules.imgui
+        version: 1.0.0
+      keywords:
+      - purchasing
+      - iap
+      - unity
+      registry:
+        id: main
+        name: 
+        url: https://packages.unity.com
+        scopes: []
+        isDefault: 1
+        capabilities: 7
+      hasRegistry: 1
+      hideInEditor: 1
+      entitlements:
+        isAllowed: 1
+      isAssetStorePackage: 0
+      datePublishedTicks: 637357776810000000
+      documentationUrl: 
+      hasRepository: 1
+      repository:
+        type: git
+        url: https://github.cds.internal.unity3d.com/unity/com.unity.purchasing.git
+        revision: ab79b0c58006f61970a2136b4cba9ca76fde0edc
+        path: 
     - packageId: com.unity.test-framework@1.1.18
       testable: 0
       isDirectDependency: 1
@@ -823,13 +1266,17 @@ m_PackageAssets:
         - 1.1.20
         - 1.1.22
         - 1.1.24
+        - 1.1.26
+        - 1.1.27
         compatible:
         - 1.1.18
         - 1.1.19
         - 1.1.20
         - 1.1.22
         - 1.1.24
-        verified: 1.1.24
+        - 1.1.26
+        - 1.1.27
+        verified: 1.1.27
       dependencies:
       - name: com.unity.ext.nunit
         version: 1.0.0
@@ -1105,10 +1552,12 @@ m_PackageAssets:
         - 1.5.2
         - 1.5.4
         - 1.5.5
+        - 1.5.6
         - 1.6.0-pre.1
         - 1.6.0-pre.3
         - 1.6.0-pre.4
         - 1.6.0-pre.5
+        - 1.6.1
         compatible:
         - 1.2.6
         - 1.2.7
@@ -1162,10 +1611,12 @@ m_PackageAssets:
         - 1.5.2
         - 1.5.4
         - 1.5.5
+        - 1.5.6
         - 1.6.0-pre.1
         - 1.6.0-pre.3
         - 1.6.0-pre.4
         - 1.6.0-pre.5
+        - 1.6.1
         verified: 1.3.7
       dependencies: []
       resolvedDependencies: []
@@ -1257,6 +1708,63 @@ m_PackageAssets:
         type: 
         url: 
         revision: 
+        path: 
+    - packageId: com.unity.xr.legacyinputhelpers@2.1.4
+      testable: 0
+      isDirectDependency: 1
+      version: 2.1.4
+      source: 1
+      resolvedPath: C:\Users\User\Documents\GitHub\Smash 'em Up\Smash-Em-Up\Library\PackageCache\com.unity.xr.legacyinputhelpers@2.1.4
+      assetPath: Packages/com.unity.xr.legacyinputhelpers
+      name: com.unity.xr.legacyinputhelpers
+      displayName: XR Legacy Input Helpers
+      author:
+        name: 
+        email: 
+        url: 
+      category: XR
+      type: 
+      description: This package includes the tracked pose driver for the legacy input
+        system, the XR Bindings Seeding Tool and 3Dof Arm Model support for the Tracked
+        Pose Driver. The Tracked Pose Driver is a monobehavior that enables GameObjects
+        to track input devices, the XR Bindings Seeding Tool adds a menu item under
+        the 'Assets' menu which populates the Input Asset with Unity's crossplatform
+        Input Bindings
+      status: 4
+      errors: []
+      versions:
+        all:
+        - 2.1.4
+        compatible:
+        - 2.1.4
+        verified: 2.1.4
+      dependencies: []
+      resolvedDependencies: []
+      keywords:
+      - TPD
+      - Tracked Pose Driver
+      - XR
+      - Input
+      - Helpers
+      registry:
+        id: main
+        name: 
+        url: https://packages.unity.com
+        scopes: []
+        isDefault: 1
+        capabilities: 7
+      hasRegistry: 1
+      hideInEditor: 1
+      entitlements:
+        isAllowed: 1
+      isAssetStorePackage: 0
+      datePublishedTicks: 0
+      documentationUrl: 
+      hasRepository: 1
+      repository:
+        type: git
+        url: https://github.cds.internal.unity3d.com/unity/com.unity.xr.legacyinputhelpers.git
+        revision: 658d345b94c9a7d015f00d946ef160193439a203
         path: 
     - packageId: com.unity.modules.ai@1.0.0
       testable: 0

@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &278170564027819693
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6862157306478241810}
+  - component: {fileID: 4564608475845997066}
+  - component: {fileID: 5349958014080729693}
+  m_Layer: 0
+  m_Name: Guillotine
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6862157306478241810
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278170564027819693}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.4418335, y: 1.5827637, z: -18.54216}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4564608475845997066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278170564027819693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00fbffcc2669ca8459cab3dd86d4ccc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  perkName: Gillotine
+  image: {fileID: 21300000, guid: 28196851d775eaa4ebbc8cebb6007a27, type: 3}
+  description: A strong attack that squash the enemies hit into the wall
+  isSkill: 1
+  skill: {fileID: 5349958014080729693}
+  skillIndexAtPerksManager: 0
+  currentPerkLevel: 0
+  levelsAquired: 14000000
+  levelDescriptions:
+  - 'Charge: Hold the button to aim, release to launch the attack'
+--- !u!114 &5349958014080729693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278170564027819693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78226081922cf5341837d7a649a6a542, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCharge: 1
+  isMultiHit: 0
+  cost: 5
+  animationName: Charge
+  invTime: 1
+  takeControl: 1
+  hitPrefab: {fileID: 100002, guid: 063f92c362912904781de3d323f5962d, type: 3}
+  minibossDmg: 3

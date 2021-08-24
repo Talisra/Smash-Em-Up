@@ -7,6 +7,8 @@ public class InGameMenu : MonoBehaviour
 {
     public YesNoDialogQuit dialog;
     public Profiler profiler;
+    public MenuButtonOnOff sound;
+    public MenuButtonOnOff music;
     private int moveDir;
     private float moveSpeed = 50;
     private float startY;
@@ -15,6 +17,17 @@ public class InGameMenu : MonoBehaviour
     private void Start()
     {
         startY = transform.position.y;
+    }
+    public void SetPreferences(bool muteSound, bool muteMusic)
+    {
+        if (muteSound)
+            sound.TurnOff();
+        else
+            sound.TurnOn();
+        if (muteMusic)
+            music.TurnOff();
+        else
+            music.TurnOn();
     }
 
     public void SetProfile(Profile profile)
@@ -46,7 +59,7 @@ public class InGameMenu : MonoBehaviour
             {
                 transform.position = new Vector3(transform.position.x, startY, transform.position.z);
                 moveDir = 0;
-                GameManager.Instance.UnpauseGameEnd();
+                GameManager.Instance.UnpauseGame();
             } else if (transform.position.y <= startY && moveDir == -1)// moving down
             {
                 transform.position = new Vector3(transform.position.x, startY, transform.position.z);
@@ -60,7 +73,7 @@ public class InGameMenu : MonoBehaviour
         switch (action)
         {
             case 0:
-                GameManager.Instance.UnpauseGameStart();
+                GameManager.Instance.UnpauseGameInit();
                 break;
             case 1:
                 dialog.gameObject.SetActive(true);
