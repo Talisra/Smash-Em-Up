@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Stem Mixer</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap">
+<style>
+/* Layout: a hardware desk. Transport strip on top, section pads, then one channel column per section. */
+:root {
+  --bg: #0c0f15;
+  --panel: #141922;
+  --line: #252d3a;
+  --fg: #dde4ee;
+  --dim: #7b8698;
+  --amber: #ffb02e;
+  --live: #39dcbc;
+  --danger: #ff6b6b;
+  --display: "Chakra Petch", "Segoe UI", system-ui, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; }
+body {
+  background: var(--bg); color: var(--fg); font: 14px/1.4 var(--body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 16px 40px;
+}
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+header { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+h1 { font: 700 20px/1 var(--display); letter-spacing: .06em; text-transform: uppercase; margin: 0; }
+h1 small { color: var(--dim); font-weight: 500; letter-spacing: .04em; margin-left: 8px; font-size: 13px; }
+.transport { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-left: auto; }
+#play { width: 52px; height: 40px; border: 1px solid var(--line); background: var(--panel); border-radius: 6px; font-size: 18px; }
+#play.on { background: var(--live); color: var(--bg); border-color: var(--live); }
+.readout { min-width: 9.5em; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; background: #080a0e; color: var(--live); }
+label.field { display: flex; align-items: center; gap: 6px; color: var(--dim); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
+label.field input[type=number] { width: 6.5em; background: #080a0e; border: 1px solid var(--line); border-radius: 4px; padding: 4px 6px; color: var(--fg); }
+input[type=range] { accent-color: var(--amber); }
+
+.bar2 { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; padding: 14px 0; }
+.pads { display: flex; flex-wrap: wrap; gap: 8px; }
+.pad { min-width: 64px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); text-align: left; }
+.pad b { display: block; font: 700 18px/1 var(--display); }
+.pad span { font: 11px var(--mono); color: var(--dim); }
+.pad.cur { border-color: var(--live); box-shadow: inset 0 0 0 1px var(--live); }
+.pad.cur b { color: var(--live); }
+.pad.next { animation: blink .45s steps(2) infinite; border-color: var(--amber); }
+@keyframes blink { 50% { border-color: var(--line); } }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.seg button { border: 0; background: transparent; padding: 6px 10px; color: var(--dim); }
+.seg button.on { background: var(--line); color: var(--fg); }
+.tools { display: flex; gap: 8px; margin-left: auto; flex-wrap: wrap; }
+.btn { border: 1px solid var(--line); background: var(--panel); border-radius: 6px; padding: 6px 10px; }
+
+#msg { margin: 0 0 12px; padding: 10px 12px; border: 1px solid var(--amber); border-radius: 6px; color: var(--amber); }
+#msg code { color: var(--fg); }
+
+.desk { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; align-items: start; }
+.col { border: 1px solid var(--line); border-radius: 8px; background: var(--panel); min-width: 0; }
+.col.cur { border-color: var(--live); }
+.col h2 { display: flex; align-items: baseline; gap: 8px; margin: 0; padding: 10px 12px; border-bottom: 1px solid var(--line); font: 700 15px/1 var(--display); letter-spacing: .05em; text-transform: uppercase; }
+.col h2 .len { margin-left: auto; font: 11px var(--mono); color: var(--dim); text-transform: none; letter-spacing: 0; }
+.col.cur h2 { color: var(--live); }
+.col h2 button { border: 0; background: none; padding: 0; text-align: left; font: inherit; letter-spacing: inherit; text-transform: inherit; color: inherit; }
+.stem { display: grid; grid-template-columns: 26px 1fr auto; grid-template-areas: "led name tools" "led vol vol"; gap: 2px 8px; padding: 8px 12px 10px; border-bottom: 1px solid var(--line); position: relative; }
+.stem:last-child { border-bottom: 0; }
+.led { grid-area: led; align-self: start; width: 22px; height: 22px; margin-top: 1px; border-radius: 50%; border: 1px solid var(--line); background: #080a0e; }
+.stem.on .led { background: var(--amber); border-color: var(--amber); box-shadow: 0 0 8px color-mix(in srgb, var(--amber) 60%, transparent); }
+.name { grid-area: name; min-width: 0; overflow-wrap: anywhere; }
+.name .note { display: block; color: var(--dim); font-size: 11px; }
+.stem:not(.on) .name { color: var(--dim); }
+.stools { grid-area: tools; display: flex; gap: 4px; align-items: start; }
+.stools .bars { font: 11px var(--mono); color: var(--dim); padding-top: 3px; margin-right: 2px; }
+.sm { border: 1px solid var(--line); background: transparent; border-radius: 4px; padding: 0 6px; height: 22px; font-size: 11px; color: var(--dim); }
+.sm.solo.on { background: var(--live); border-color: var(--live); color: var(--bg); }
+.sm.x:hover { color: var(--danger); border-color: var(--danger); }
+.vol { grid-area: vol; display: flex; align-items: center; gap: 8px; }
+.vol input { flex: 1; min-width: 0; }
+.vol output { width: 2.8em; text-align: right; font: 11px var(--mono); color: var(--dim); }
+.prog { position: absolute; left: 0; bottom: -1px; height: 2px; background: var(--live); width: 0; opacity: .7; }
+.stem.loading .name::after { content: " · loading"; color: var(--dim); font-size: 11px; }
+.empty { padding: 14px 12px; color: var(--dim); font-size: 12px; }
+
+#drop { position: fixed; inset: 0; display: grid; place-items: center; background: color-mix(in srgb, var(--bg) 85%, transparent); border: 3px dashed var(--amber); font: 700 22px var(--display); color: var(--amber); letter-spacing: .05em; z-index: 5; }
+footer { margin-top: 18px; color: var(--dim); font-size: 12px; max-width: 70ch; }
+kbd { font: 11px var(--mono); border: 1px solid var(--line); border-radius: 3px; padding: 0 4px; }
+@media (prefers-reduced-motion: reduce) { .pad.next { animation: none; } }
+</style>
+</head>
+<body>
+<header>
+  <h1 id="title">Smash 'em Up <small>stems</small></h1>
+  <div class="transport">
+    <button id="play" title="Play / stop (Space)">▶</button>
+    <div class="readout mono" id="pos">— · —</div>
+    <label class="field" for="bpm">BPM <input id="bpm" type="number" min="0" max="400" step="0.01"></label>
+    <label class="field" for="master">Master <input id="master" type="range" min="0" max="1.5" step="0.01" value="0.9"></label>
+  </div>
+</header>
+
+<div class="bar2">
+  <div class="pads" id="pads"></div>
+  <div class="seg" id="mode">
+    <button data-v="loop" title="Stay on the current section">Loop</button>
+    <button data-v="chain" title="Move to the next section after each pass">Chain</button>
+  </div>
+  <label class="field" for="passes">Passes <input id="passes" type="number" min="1" max="64" step="1" value="1"></label>
+  <div class="seg" id="quant">
+    <button data-v="bar" title="Section jumps land on the next bar">Next bar</button>
+    <button data-v="end" title="Section jumps wait for the section to finish">Section end</button>
+  </div>
+  <div class="tools">
+    <button class="btn" id="openDir">Open folder</button>
+    <button class="btn" id="addFiles">Add files</button>
+    <button class="btn" id="reset">Smash set</button>
+  </div>
+</div>
+<input id="dirInput" type="file" webkitdirectory multiple hidden>
+<input id="fileInput" type="file" accept="audio/*,.mp3,.wav,.ogg,.flac,.m4a" multiple hidden>
+
+<p id="msg" hidden></p>
+<main class="desk" id="desk"></main>
+
+<footer>
+  <kbd>Space</kbd> play/stop · <kbd>1</kbd>–<kbd>9</kbd> jump to a section · click a stem's light to mute it.
+  Drop a folder of stems anywhere: each subfolder is a section, files at the top or in <code>_All</code> play under every section.
+  Dropping loose files adds them to the current section. BPM 0 loops each stem at its own length.
+</footer>
+<div id="drop" hidden>Drop stems</div>
+
+<script>
+const params = new URLSearchParams(location.search);
+const BASE = params.get('base') ?? '../Assets/Audio/Soundtrack/';
+
+// The game's SoundtrackManager prefab: sessions A/B/C cycle every 16 bars, _All (kick, snare, impact) runs under them.
+// Volumes are the prefab's track masterVolume. Each section's lead slot held two layers and the game picked one per run.
+const SMASH = {
+  title: "Smash 'em Up",
+  bpm: 133.28,
+  groups: [
+    { name: '_All', global: true, stems: [
+      ['KICK 2.mp3', 1, 1], ['SNARE 3.mp3', 1, 1], ['Impact 1.mp3', 1, 1],
+    ] },
+    { name: 'A', stems: [
+      ['BASS A (PICK).mp3', .3, 1], ['EG 4.mp3', .6, 1], ['MOOG 7.mp3', 1, 1],
+      ['A FUZZ SOLO.mp3', .6, 1, 'lead, game picks one'], ['A MELODY.mp3', .6, 0, 'lead, game picks one'],
+      ['STEPPY DELAY 6.mp3', 1, 1], ['BELL.mp3', .3, 1],
+      ['A FUZZ SOLO 2.mp3', .6, 0, 'not in game'], ['A BENDS.mp3', .6, 0, 'not in game'],
+      ['PING PONG 5.mp3', .6, 0, 'not in game'], ['PING PONG FADE IN STRONG.mp3', .6, 0, 'not in game'],
+      ['LASER GUN 8.mp3', .6, 0, 'not in game'],
+    ] },
+    { name: 'B', stems: [
+      ['_ASS B KILL.mp3', .3, 1, null, 'BASS B KILL'], ['EG.mp3', .6, 1], ['EG FLUENT.mp3', .6, 1], ['MOOG.mp3', 1, 1],
+      ['B BENDS.mp3', .6, 1, 'lead, game picks one'], ['B MELODY.mp3', .6, 0, 'lead, game picks one'],
+      ['TYPE MACHINE + DRUMS.mp3', 1, 1], ['SYNTH OFF.mp3', .75, 1],
+      ['PING PONG.mp3', .6, 0, 'not in game'],
+    ] },
+    { name: 'C', stems: [
+      ['_ASS C FAST.mp3', .3, 1, null, 'BASS C FAST'], ['EG.mp3', .7, 1], ['MOOG.mp3', 1, 1],
+      ['C BENDS LOW.mp3', .6, 1, 'lead, game picks one'], ['C MELODY.mp3', .6, 0, 'lead, game picks one'],
+      ['TYPE MACHINE + DRUMS.mp3', 1, 1], ['SYNTH OFF.mp3', .75, 1],
+      ['_ASS C.mp3', .3, 0, 'not in game', 'BASS C'],
+    ] },
+  ],
+};
+
+const AUDIO_EXT = /\.(mp3|wav|ogg|oga|flac|m4a|aac|opus|webm)$/i;
+const ctx = new (window.AudioContext || window.webkitAudioContext)();
+const sr = ctx.sampleRate;
+const master = ctx.createGain();
+master.connect(ctx.destination);
+
+const S = {
+  title: '', bpm: 0, groups: [], mode: 'loop', quant: 'bar', passes: 1,
+  playing: false, cur: 0, queued: null, switchAtF: null, nextIdx: null, timer: 0,
+};
+let uid = 0;
+
+const $ = (id) => document.getElementById(id);
+const sections = () => S.groups.filter((g) => !g.global);
+const globals = () => S.groups.filter((g) => g.global);
+
+function makeStem(o) {
+  const gain = ctx.createGain();
+  gain.gain.value = 0;
+  gain.connect(master);
+  return { id: ++uid, name: o.name, note: o.note || '', vol: o.vol ?? 1, on: o.on ?? true, solo: false,
+    url: o.url, file: o.file, raw: null, buf: null, loopEnd: 0, gain, src: null, startF: 0, el: null, failed: false };
+}
+
+async function decode(s) {
+  const data = s.file ? await s.file.arrayBuffer() : await (await fetchOk(s.url)).arrayBuffer();
+  s.raw = await ctx.decodeAudioData(data);
+}
+async function fetchOk(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(r.status + ' ' + url);
+  return r;
+}
+
+function barF() { return S.bpm > 0 ? Math.round(sr * 240 / S.bpm) : 0; }
+function stemLenF(s) {
+  const b = barF();
+  return b ? Math.max(1, Math.round(s.raw.length / b)) * b : s.raw.length;
+}
+function groupLenF(g) {
+  let L = 0;
+  for (const s of g.stems) if (s.raw) L = Math.max(L, stemLenF(s));
+  return L || barF() || sr;
+}
+
+// Every loop is a whole number of bars and a bar is a whole number of samples, so all stems share one grid
+// and never drift. MP3 padding past the grid is skipped by loopEnd; a stem shorter than its bars is padded.
+function prepare(s) {
+  const L = stemLenF(s);
+  if (s.raw.length >= L) { s.buf = s.raw; }
+  else {
+    const b = ctx.createBuffer(s.raw.numberOfChannels, L, sr);
+    for (let c = 0; c < s.raw.numberOfChannels; c++) b.copyToChannel(s.raw.getChannelData(c), c);
+    s.buf = b;
+  }
+  s.loopEnd = L / sr;
+}
+
+function applyGains() {
+  const all = S.groups.flatMap((g) => g.stems);
+  const anySolo = all.some((s) => s.solo);
+  for (const s of all) {
+    const v = s.on && (!anySolo || s.solo) ? s.vol : 0;
+    s.gain.gain.setTargetAtTime(v, ctx.currentTime, 0.012);
+  }
+}
+
+function startStem(s, atF, offsetF = 0) {
+  if (!s.raw) return;
+  prepare(s);
+  const src = ctx.createBufferSource();
+  src.buffer = s.buf; src.loop = true; src.loopStart = 0; src.loopEnd = s.loopEnd;
+  src.connect(s.gain);
+  src.start(atF / sr, offsetF / sr);
+  s.src = src; s.startF = atF - offsetF;
+}
+function stopStem(s, atF) {
+  if (!s.src) return;
+  try { s.src.stop(atF == null ? 0 : atF / sr); } catch (e) {}
+  s.src = null;
+}
+function startGroup(g, atF) { g.startF = atF; for (const s of g.stems) startStem(s, atF); }
+function stopGroup(g, atF) { for (const s of g.stems) stopStem(s, atF); }
+
+async function play() {
+  if (S.playing) return;
+  await ctx.resume();
+  const secs = sections();
+  if (!secs.length && !globals().length) return;
+  S.cur = Math.min(S.cur, Math.max(0, secs.length - 1));
+  const atF = Math.ceil((ctx.currentTime + 0.12) * sr);
+  for (const g of globals()) startGroup(g, atF);
+  if (secs[S.cur]) startGroup(secs[S.cur], atF);
+  S.playing = true; S.queued = null; S.switchAtF = null; S.nextIdx = null;
+  S.timer = setInterval(tick, 25);
+  renderChrome();
+}
+function stop() {
+  for (const g of S.groups) stopGroup(g);
+  S.playing = false; S.queued = null; S.switchAtF = null; S.nextIdx = null;
+  clearInterval(S.timer);
+  renderChrome();
+}
+
+function tick() {
+  const nowF = ctx.currentTime * sr;
+  const secs = sections();
+  if (S.switchAtF != null && nowF >= S.switchAtF) {
+    S.cur = S.nextIdx; S.switchAtF = null; S.nextIdx = null;
+    renderChrome();
+  }
+  if (S.switchAtF != null || !secs.length) return;
+  const g = secs[S.cur];
+  const L = groupLenF(g), el = nowF - g.startF, lead = 0.03 * sr;
+  let target = null, atF = 0;
+  if (S.queued != null) {
+    target = S.queued;
+    const q = S.quant === 'bar' && barF() ? barF() : L;
+    atF = g.startF + Math.ceil((el + lead) / q) * q;
+  } else if (S.mode === 'chain' && secs.length > 1) {
+    target = (S.cur + 1) % secs.length;
+    atF = g.startF + Math.max(S.passes, Math.ceil((el + lead) / L)) * L;
+  }
+  if (target == null || atF - nowF > 0.3 * sr) return;
+  stopGroup(g, atF);
+  startGroup(secs[target], atF);
+  S.switchAtF = atF; S.nextIdx = target; S.queued = null;
+  renderChrome();
+}
+
+function jump(i) {
+  const secs = sections();
+  if (!secs[i]) return;
+  if (!S.playing) { S.cur = i; renderChrome(); return; }
+  if (S.switchAtF != null) return;
+  S.queued = i;
+  renderChrome();
+}
+
+// ---------- sets ----------
+
+async function loadSet(set) {
+  stop();
+  for (const g of S.groups) for (const s of g.stems) s.gain.disconnect();
+  S.title = set.title; S.bpm = set.bpm; S.cur = 0;
+  S.groups = set.groups.map((g) => ({ name: g.name, global: !!g.global, startF: 0, stems: g.stems.map(makeStem) }));
+  $('bpm').value = S.bpm;
+  render();
+  await decodeAll();
+}
+
+async function decodeAll() {
+  const todo = S.groups.flatMap((g) => g.stems).filter((s) => !s.raw && !s.failed);
+  let failed = 0;
+  await Promise.all(todo.map(async (s) => {
+    try { await decode(s); } catch (e) { s.failed = true; failed++; console.warn(e); }
+    updateStemEl(s);
+  }));
+  for (const g of S.groups) g.stems = g.stems.filter((s) => !s.failed || s.url);
+  applyGains();
+  render();
+  if (failed) {
+    const fromFile = location.protocol === 'file:';
+    showMsg(fromFile
+      ? 'The browser blocks reading the stems from a file:// page. Serve the repo (<code>python3 -m http.server</code> in the repo root, then open <code>localhost:8000/Tools/soundtrack-player.html</code>) or drop the <code>Assets/Audio/Soundtrack</code> folder here.'
+      : `${failed} stem${failed > 1 ? 's' : ''} didn't load (see the console). Drop the <code>Assets/Audio/Soundtrack</code> folder here to load them from disk.`);
+  }
+}
+
+function smashSet() {
+  return {
+    title: SMASH.title, bpm: SMASH.bpm,
+    groups: SMASH.groups.map((g) => ({
+      name: g.name, global: g.global,
+      stems: g.stems.map(([file, vol, on, note, label]) => ({
+        name: label || file.replace(/\.[^.]+$/, ''), vol, on: !!on, note,
+        url: BASE + encodeURIComponent(g.name) + '/' + encodeURIComponent(file),
+      })),
+    })),
+  };
+}
+
+// files: [{ path: 'Song/B/drums.wav', file }]
+function setFromFiles(files) {
+  files = files.filter((f) => AUDIO_EXT.test(f.path));
+  if (!files.length) return null;
+  let parts = files.map((f) => f.path.split('/').filter(Boolean));
+  let title = 'Dropped stems';
+  while (parts.every((p) => p.length > 1 && p[0] === parts[0][0])) { title = parts[0][0]; parts = parts.map((p) => p.slice(1)); }
+  const byGroup = new Map();
+  parts.forEach((p, i) => {
+    const key = p.length > 1 ? p[0] : '';
+    if (!byGroup.has(key)) byGroup.set(key, []);
+    byGroup.get(key).push({ name: p[p.length - 1].replace(/\.[^.]+$/, ''), file: files[i].file });
+  });
+  const keys = [...byGroup.keys()].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+  const isGlobal = (k) => k === '' || /^_?(all|always|base)$/i.test(k);
+  const onlyRoot = keys.length === 1 && keys[0] === '';
+  const groups = keys.map((k) => ({
+    name: onlyRoot ? 'Song' : isGlobal(k) ? '_All' : k,
+    global: !onlyRoot && isGlobal(k),
+    stems: byGroup.get(k).sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true })),
+  }));
+  groups.sort((a, b) => b.global - a.global);
+  return { title, bpm: 0, groups };
+}
+
+async function addLooseFiles(files) {
+  const audio = files.filter((f) => AUDIO_EXT.test(f.name));
+  if (!audio.length) return;
+  let g = sections()[S.cur];
+  if (!g) { g = { name: 'Song', global: false, startF: 0, stems: [] }; S.groups.push(g); }
+  const stems = audio.map((file) => makeStem({ name: file.name.replace(/\.[^.]+$/, ''), file }));
+  g.stems.push(...stems);
+  render();
+  await Promise.all(stems.map(async (s) => { try { await decode(s); } catch (e) { s.failed = true; } }));
+  g.stems = g.stems.filter((s) => !s.failed);
+  applyGains();
+  const live = S.playing && (g === sections()[S.cur] || g.global) && S.switchAtF == null;
+  if (live) {
+    const nowF = Math.ceil((ctx.currentTime + 0.05) * sr);
+    for (const s of stems) if (s.raw) startStem(s, nowF, (nowF - g.startF) % stemLenF(s));
+  }
+  render();
+}
+
+async function entriesToFiles(entries) {
+  const out = [];
+  async function walk(entry, path) {
+    if (entry.isFile) {
+      const file = await new Promise((res, rej) => entry.file(res, rej));
+      out.push({ path: path + file.name, file });
+    } else if (entry.isDirectory) {
+      const reader = entry.createReader();
+      let batch;
+      do {
+        batch = await new Promise((res, rej) => reader.readEntries(res, rej));
+        for (const e of batch) await walk(e, path + entry.name + '/');
+      } while (batch.length);
+    }
+  }
+  for (const e of entries) if (e) await walk(e, '');
+  return out;
+}
+
+// ---------- UI ----------
+
+function showMsg(html) { const m = $('msg'); m.innerHTML = html; m.hidden = !html; }
+
+function lenLabel(L) {
+  const b = barF();
+  return b ? `${Math.round(L / b)} bar${Math.round(L / b) === 1 ? '' : 's'}` : `${(L / sr).toFixed(1)}s`;
+}
+
+function renderChrome() {
+  $('play').textContent = S.playing ? '■' : '▶';
+  $('play').classList.toggle('on', S.playing);
+  $('bpm').disabled = S.playing;
+  const secs = sections();
+  $('pads').innerHTML = '';
+  secs.forEach((g, i) => {
+    const b = document.createElement('button');
+    b.className = 'pad' + (i === S.cur ? ' cur' : '') + ((S.queued === i || S.nextIdx === i) ? ' next' : '');
+    b.innerHTML = `<b></b><span>${lenLabel(groupLenF(g))}</span>`;
+    b.querySelector('b').textContent = g.name;
+    b.title = i < 9 ? `Key ${i + 1}` : '';
+    b.onclick = () => jump(i);
+    $('pads').append(b);
+  });
+  for (const el of document.querySelectorAll('.col')) {
+    el.classList.toggle('cur', el.dataset.sec === String(S.cur));
+  }
+  for (const [id, v] of [['mode', S.mode], ['quant', S.quant]])
+    for (const b of $(id).children) b.classList.toggle('on', b.dataset.v === v);
+}
+
+function render() {
+  $('title').innerHTML = '';
+  $('title').append(S.title || 'Stems', Object.assign(document.createElement('small'), { textContent: 'stems' }));
+  const desk = $('desk');
+  desk.innerHTML = '';
+  const secs = sections();
+  for (const g of S.groups) {
+    const col = document.createElement('section');
+    col.className = 'col';
+    const si = secs.indexOf(g);
+    if (si >= 0) col.dataset.sec = si;
+    const h = document.createElement('h2');
+    if (g.global) h.append(g.name === '_All' ? 'Always on' : g.name);
+    else {
+      const b = document.createElement('button');
+      b.textContent = g.name; b.title = 'Jump here';
+      b.onclick = () => jump(si);
+      h.append(b);
+    }
+    const len = document.createElement('span');
+    len.className = 'len';
+    len.textContent = lenLabel(groupLenF(g));
+    h.append(len);
+    col.append(h);
+    if (!g.stems.length) col.append(Object.assign(document.createElement('div'), { className: 'empty', textContent: 'No stems' }));
+    for (const s of g.stems) col.append(stemRow(g, s));
+    desk.append(col);
+  }
+  renderChrome();
+}
+
+function stemRow(g, s) {
+  const row = document.createElement('div');
+  row.className = 'stem';
+  row.innerHTML = `
+    <button class="led" aria-label="Mute or unmute"></button>
+    <div class="name"><span class="n"></span><span class="note"></span></div>
+    <div class="stools"><span class="bars"></span><button class="sm solo" title="Solo">S</button><button class="sm x" title="Remove">✕</button></div>
+    <div class="vol"><input type="range" min="0" max="1.5" step="0.01" aria-label="Volume"><output class="mono"></output></div>
+    <div class="prog"></div>`;
+  row.querySelector('.n').textContent = s.name;
+  row.querySelector('.note').textContent = s.failed ? "didn't load" : s.note;
+  const range = row.querySelector('input'), out = row.querySelector('output');
+  range.id = 'vol-' + s.id;
+  range.value = s.vol; out.textContent = s.vol.toFixed(2);
+  range.oninput = () => { s.vol = +range.value; out.textContent = s.vol.toFixed(2); applyGains(); };
+  row.querySelector('.led').onclick = () => { s.on = !s.on; applyGains(); updateStemEl(s); };
+  row.querySelector('.solo').onclick = () => { s.solo = !s.solo; applyGains(); updateStemEl(s); };
+  row.querySelector('.x').onclick = () => {
+    stopStem(s); s.gain.disconnect();
+    g.stems = g.stems.filter((x) => x !== s);
+    render();
+  };
+  s.el = row;
+  updateStemEl(s);
+  return row;
+}
+
+function updateStemEl(s) {
+  const r = s.el;
+  if (!r) return;
+  r.classList.toggle('on', s.on);
+  r.classList.toggle('loading', !s.raw && !s.failed);
+  r.querySelector('.solo').classList.toggle('on', s.solo);
+  r.querySelector('.bars').textContent = s.raw ? lenLabel(stemLenF(s)) : '';
+}
+
+function frame() {
+  requestAnimationFrame(frame);
+  const secs = sections();
+  if (!S.playing) { $('pos').textContent = secs[S.cur] ? `${secs[S.cur].name} · stopped` : 'no stems'; return; }
+  const nowF = ctx.currentTime * sr;
+  const g = secs[S.cur];
+  const b = barF();
+  if (g) {
+    const L = groupLenF(g), el = Math.max(0, nowF - g.startF) % L;
+    if (b) {
+      const bar = Math.floor(el / b), beat = Math.floor((el % b) / (b / 4));
+      $('pos').textContent = `${g.name} · ${String(bar + 1).padStart(2, '0')}/${String(L / b).padStart(2, '0')} · ${beat + 1}`;
+    } else $('pos').textContent = `${g.name} · ${(el / sr).toFixed(1)}/${(L / sr).toFixed(1)}s`;
+  }
+  for (const grp of S.groups) for (const s of grp.stems) {
+    if (!s.el) continue;
+    const p = s.el.querySelector('.prog');
+    p.style.width = s.src && s.buf && nowF >= s.startF ? (((nowF - s.startF) % (s.loopEnd * sr)) / (s.loopEnd * sr) * 100).toFixed(1) + '%' : '0';
+  }
+}
+
+$('play').onclick = () => (S.playing ? stop() : play());
+$('master').oninput = (e) => { master.gain.setTargetAtTime(+e.target.value, ctx.currentTime, 0.012); };
+master.gain.value = +$('master').value;
+$('bpm').onchange = (e) => { S.bpm = Math.max(0, +e.target.value || 0); render(); };
+$('passes').onchange = (e) => { S.passes = Math.max(1, Math.round(+e.target.value || 1)); };
+for (const id of ['mode', 'quant']) $(id).onclick = (e) => {
+  const v = e.target.dataset?.v;
+  if (!v) return;
+  S[id] = v; renderChrome();
+};
+$('reset').onclick = () => { showMsg(''); loadSet(smashSet()); };
+$('openDir').onclick = () => $('dirInput').click();
+$('addFiles').onclick = () => $('fileInput').click();
+$('dirInput').onchange = (e) => {
+  const set = setFromFiles([...e.target.files].map((file) => ({ path: file.webkitRelativePath || file.name, file })));
+  e.target.value = '';
+  if (set) { showMsg(''); loadSet(set); }
+};
+$('fileInput').onchange = (e) => { addLooseFiles([...e.target.files]); e.target.value = ''; };
+
+let dragDepth = 0;
+addEventListener('dragenter', (e) => { e.preventDefault(); dragDepth++; $('drop').hidden = false; });
+addEventListener('dragleave', () => { if (--dragDepth <= 0) { dragDepth = 0; $('drop').hidden = true; } });
+addEventListener('dragover', (e) => e.preventDefault());
+addEventListener('drop', async (e) => {
+  e.preventDefault(); dragDepth = 0; $('drop').hidden = true;
+  const items = [...e.dataTransfer.items].filter((i) => i.kind === 'file');
+  const entries = items.map((i) => i.webkitGetAsEntry && i.webkitGetAsEntry());
+  if (entries.some((en) => en && en.isDirectory)) {
+    const set = setFromFiles(await entriesToFiles(entries));
+    if (set) { showMsg(''); loadSet(set); }
+  } else addLooseFiles([...e.dataTransfer.files]);
+});
+
+addEventListener('keydown', (e) => {
+  if (e.target.matches('input[type=number]')) return;
+  if (e.code === 'Space') { e.preventDefault(); S.playing ? stop() : play(); }
+  else if (/^Digit[1-9]$/.test(e.code)) jump(+e.code.slice(5) - 1);
+});
+
+requestAnimationFrame(frame);
+loadSet(smashSet());
+</script>
+</body>
+</html>
